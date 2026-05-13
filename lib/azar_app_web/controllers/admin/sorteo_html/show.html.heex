@@ -1,0 +1,166 @@
+<div class="max-w-5xl mx-auto px-4 py-8">
+
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <a href="/admin/sorteos" class="text-blue-600 hover:underline text-sm">
+        ← Volver a sorteos
+      </a>
+      <h1 class="text-2xl font-bold text-gray-800 mt-1"><%= @sorteo["nombre"] %></h1>
+    </div>
+    <%= if @sorteo["realizado"] do %>
+      <span class="px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
+        Realizado
+      </span>
+    <% else %>
+      <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+        Pendiente
+      </span>
+    <% end %>
+  </div>
+
+  <%= if @flash["info"] do %>
+    <div class="mb-4 p-3 bg-green-100 text-green-800 rounded">
+      <%= @flash["info"] %>
+    </div>
+  <% end %>
+
+  <%= if @flash["error"] do %>
+    <div class="mb-4 p-3 bg-red-100 text-red-800 rounded">
+      <%= @flash["error"] %>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white border rounded-lg p-4 shadow-sm">
+      <p class="text-xs text-gray-500 uppercase">Fecha</p>
+      <p class="text-lg font-semibold text-gray-800"><%= @sorteo["fecha"] %></p>
+    </div>
+    <div class="bg-white border rounded-lg p-4 shadow-sm">
+      <p class="text-xs text-gray-500 uppercase">Valor billete</p>
+      <p class="text-lg font-semibold text-gray-800">$<%= @sorteo["valor_billete"] %></p>
+    </div>
+    <div class="bg-white border rounded-lg p-4 shadow-sm">
+      <p class="text-xs text-gray-500 uppercase">Fracciones</p>
+      <p class="text-lg font-semibold text-gray-800"><%= @sorteo["cantidad_fracciones"] %></p>
+    </div>
+    <div class="bg-white border rounded-lg p-4 shadow-sm">
+      <p class="text-xs text-gray-500 uppercase">Ingresos</p>
+      <p class="text-lg font-semibold text-green-700">$<%= @ingresos %></p>
+    </div>
+  </div>
+
+  <%= if @sorteo["realizado"] and @sorteo["numeros_ganadores"] != [] do %>
+    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
+      <h2 class="font-semibold text-yellow-800 mb-2">🏆 Números ganadores</h2>
+      <div class="flex gap-6">
+        <%= for {numero, idx} <- Enum.with_index(@sorteo["numeros_ganadores"]) do %>
+          <% premio = Enum.at(@sorteo["premios"], idx) %>
+          <div class="text-center">
+            <span class="block text-2xl font-bold text-yellow-700"><%= numero %></span>
+            <%= if premio do %>
+              <span class="text-xs text-yellow-600"><%= premio["nombre"] %></span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Premios -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-lg font-semibold text-gray-700">Premios</h2>
+      <%= if !@sorteo["realizado"] do %>
+        <% url_nuevo_premio = "/admin/sorteos/" <> @sorteo["id"] <> "/premios/nuevo" %>
+        <a href={url_nuevo_premio} class="text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">
+          + Agregar premio
+        </a>
+      <% end %>
+    </div>
+
+    <%= if @sorteo["premios"] == [] do %>
+      <p class="text-gray-400 text-sm">Sin premios registrados.</p>
+    <% else %>
+      <div class="space-y-2">
+        <%= for premio <- @sorteo["premios"] do %>
+          <% url_delete_premio = "/admin/sorteos/" <> @sorteo["id"] <> "/premios/" <> premio["id"] %>
+          <div class="flex items-center justify-between bg-white border rounded-lg px-4 py-3 shadow-sm">
+            <div>
+              <p class="font-medium text-gray-800"><%= premio["nombre"] %></p>
+              <p class="text-sm text-gray-500">$<%= premio["valor"] %></p>
+            </div>
+            <%= if !@sorteo["realizado"] do %>
+              <form action={url_delete_premio} method="post" onsubmit="return confirm('¿Eliminar este premio?')">
+                <input type="hidden" name="_method" value="delete" />
+                <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+                <button type="submit" class="text-red-400 hover:text-red-600 text-sm">
+                  Eliminar
+                </button>
+              </form>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Clientes -->
+  <div>
+    <h2 class="text-lg font-semibold text-gray-700 mb-3">Clientes</h2>
+
+    <div class="mb-4">
+      <h3 class="text-sm font-semibold text-gray-500 uppercase mb-2">Billete completo</h3>
+      <%= if @clientes["compradores_completo"] == [] do %>
+        <p class="text-gray-400 text-sm">Sin compradores.</p>
+      <% else %>
+        <div class="overflow-x-auto rounded border border-gray-200">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
+              <tr>
+                <th class="px-4 py-2 text-left">Documento</th>
+                <th class="px-4 py-2 text-left">Billete</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <%= for c <- @clientes["compradores_completo"] do %>
+                <tr>
+                  <td class="px-4 py-2 text-gray-700"><%= c["doc"] %></td>
+                  <td class="px-4 py-2 text-gray-700">#<%= c["billete"] %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-semibold text-gray-500 uppercase mb-2">Por fracción</h3>
+      <%= if @clientes["compradores_fraccion"] == [] do %>
+        <p class="text-gray-400 text-sm">Sin compradores.</p>
+      <% else %>
+        <div class="overflow-x-auto rounded border border-gray-200">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
+              <tr>
+                <th class="px-4 py-2 text-left">Documento</th>
+                <th class="px-4 py-2 text-left">Billete</th>
+                <th class="px-4 py-2 text-left">Fracción</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <%= for c <- @clientes["compradores_fraccion"] do %>
+                <tr>
+                  <td class="px-4 py-2 text-gray-700"><%= c["doc"] %></td>
+                  <td class="px-4 py-2 text-gray-700">#<%= c["billete"] %></td>
+                  <td class="px-4 py-2 text-gray-700"><%= c["fraccion"] %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,113 @@
+<div class="max-w-2xl mx-auto px-4 py-8">
+
+  <div class="mb-6">
+    <a href="/admin/sorteos" class="text-blue-600 hover:underline text-sm">
+      ← Volver a sorteos
+    </a>
+    <h1 class="text-2xl font-bold text-gray-800 mt-1">Nuevo sorteo</h1>
+  </div>
+
+  <%= if @flash["error"] do %>
+    <div class="mb-4 p-3 bg-red-100 text-red-800 rounded">
+      <%= @flash["error"] %>
+    </div>
+  <% end %>
+
+  <div class="bg-white border rounded-lg shadow-sm p-6">
+    <form action="/admin/sorteos" method="post">
+      <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+
+      <!-- Nombre -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Nombre del sorteo
+        </label>
+        <input
+          type="text"
+          name="sorteo[nombre]"
+          placeholder="Ej: Lotería de Navidad 2025"
+          required
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <!-- Fecha -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Fecha del sorteo
+        </label>
+        <input
+          type="date"
+          name="sorteo[fecha]"
+          required
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <!-- Valor billete -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Valor del billete completo (COP)
+        </label>
+        <input
+          type="number"
+          name="sorteo[valor_billete]"
+          placeholder="Ej: 50000"
+          min="1"
+          required
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <!-- Cantidad fracciones -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Cantidad de fracciones por billete
+        </label>
+        <input
+          type="number"
+          name="sorteo[cantidad_fracciones]"
+          placeholder="Ej: 10"
+          min="1"
+          required
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <!-- Cantidad billetes -->
+      <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Cantidad de billetes
+        </label>
+        <input
+          type="number"
+          name="sorteo[cantidad_billetes]"
+          placeholder="Ej: 100"
+          min="1"
+          required
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <p class="text-xs text-gray-400 mt-1">
+          Se generarán automáticamente los billetes numerados desde 1001.
+        </p>
+      </div>
+
+      <div class="flex gap-3">
+        <button
+          type="submit"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-medium text-sm"
+        >
+          Crear sorteo
+        </button>
+        <a
+          href="/admin/sorteos"
+          class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded font-medium text-sm"
+        >
+          Cancelar
+        </a>
+      </div>
+
+    </form>
+  </div>
+
+</div>
