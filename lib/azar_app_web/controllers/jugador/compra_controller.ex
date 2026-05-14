@@ -2,7 +2,6 @@ defmodule AzarAppWeb.Jugador.CompraController do
   use AzarAppWeb, :controller
   alias AzarApp.Sorteos
 
-  # POST /sorteos/:id/comprar-billete
   def comprar_billete(conn, %{"id" => sorteo_id, "numero" => numero, "cliente_doc" => doc}) do
     numero = String.to_integer(numero)
 
@@ -19,7 +18,6 @@ defmodule AzarAppWeb.Jugador.CompraController do
     end
   end
 
-  # POST /sorteos/:id/comprar-fraccion
   def comprar_fraccion(conn, %{"id" => sorteo_id, "numero" => numero, "fraccion" => fraccion, "cliente_doc" => doc}) do
     numero   = String.to_integer(numero)
     fraccion = String.to_integer(fraccion)
@@ -37,7 +35,6 @@ defmodule AzarAppWeb.Jugador.CompraController do
     end
   end
 
-  # DELETE /sorteos/:sorteo_id/devolver/:numero
   def devolver(conn, %{"sorteo_id" => sorteo_id, "numero" => numero, "cliente_doc" => doc}) do
     numero = String.to_integer(numero)
 

@@ -1,48 +1,31 @@
 defmodule AzarApp.SorteoServer do
-  @moduledoc """
-  GenServer responsable de un sorteo específico.
-  Carga su estado desde JsonStore al arrancar y persiste
-  cada cambio en disco inmediatamente.
-
-  Se registra en el Registry bajo su propio id:
-    {:via, Registry, {AzarApp.SorteoRegistry, sorteo_id}}
-  """
-
   use GenServer
-  alias AzarApp.JsonStore
+  alias AzarApp.{JsonStore, Clientes}
 
   # ── API pública ────────────────────────────────────────────────────────────
 
-  @doc "Arranca un SorteoServer para el sorteo dado."
   def start_link(sorteo_id) do
     GenServer.start_link(__MODULE__, sorteo_id, name: via(sorteo_id))
   end
 
-  @doc "Devuelve el estado completo del sorteo."
   def get(sorteo_id),
     do: GenServer.call(via(sorteo_id), :get)
 
-  @doc "Actualiza campos del sorteo. Recibe un mapa con los campos a mergear."
   def update(sorteo_id, campos),
     do: GenServer.call(via(sorteo_id), {:update, campos})
 
-  @doc "Compra un billete completo para un cliente."
   def comprar_billete(sorteo_id, numero_billete, cliente_doc),
     do: GenServer.call(via(sorteo_id), {:comprar_billete, numero_billete, cliente_doc})
 
-  @doc "Compra una fracción de un billete."
   def comprar_fraccion(sorteo_id, numero_billete, fraccion, cliente_doc),
     do: GenServer.call(via(sorteo_id), {:comprar_fraccion, numero_billete, fraccion, cliente_doc})
 
-  @doc "Devuelve una compra (solo si el sorteo no se ha realizado)."
   def devolver_compra(sorteo_id, numero_billete, cliente_doc),
     do: GenServer.call(via(sorteo_id), {:devolver_compra, numero_billete, cliente_doc})
 
-  @doc "Ejecuta el sorteo: asigna números ganadores al azar."
   def ejecutar(sorteo_id),
     do: GenServer.call(via(sorteo_id), :ejecutar)
 
-  @doc "Devuelve los billetes disponibles (completos y fracciones)."
   def billetes_disponibles(sorteo_id),
     do: GenServer.call(via(sorteo_id), :billetes_disponibles)
 
@@ -51,11 +34,8 @@ defmodule AzarApp.SorteoServer do
   @impl true
   def init(sorteo_id) do
     case JsonStore.get(:sorteos, sorteo_id) do
-      {:ok, sorteo} ->
-        {:ok, sorteo}
-
-      :error ->
-        {:stop, {:sorteo_no_encontrado, sorteo_id}}
+      {:ok, sorteo} -> {:ok, sorteo}
+      :error        -> {:stop, {:sorteo_no_encontrado, sorteo_id}}
     end
   end
 
@@ -73,12 +53,10 @@ defmodule AzarApp.SorteoServer do
 
   @impl true
   def handle_call({:comprar_billete, numero, cliente_doc}, _from, sorteo) do
-    if sorteo["realizado"] do
+    if sorteo.realizado do
       {:reply, {:error, "El sorteo ya fue realizado"}, sorteo}
     else
-      billetes = sorteo["billetes"]
-
-      case encontrar_billete(billetes, numero) do
+      case encontrar_billete(sorteo.billetes, numero) do
         nil ->
           {:reply, {:error, "Billete #{numero} no existe"}, sorteo}
 
@@ -91,9 +69,7 @@ defmodule AzarApp.SorteoServer do
             |> Map.put("propietario_doc", cliente_doc)
             |> Map.put("tipo", "completo")
 
-          nuevos_billetes = reemplazar_billete(billetes, nuevo_billete)
-          nuevo_sorteo    = Map.put(sorteo, "billetes", nuevos_billetes)
-
+          nuevo_sorteo = %{sorteo | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)}
           JsonStore.upsert(:sorteos, nuevo_sorteo)
           {:reply, {:ok, nuevo_billete}, nuevo_sorteo}
       end
@@ -102,13 +78,10 @@ defmodule AzarApp.SorteoServer do
 
   @impl true
   def handle_call({:comprar_fraccion, numero, fraccion, cliente_doc}, _from, sorteo) do
-    if sorteo["realizado"] do
+    if sorteo.realizado do
       {:reply, {:error, "El sorteo ya fue realizado"}, sorteo}
     else
-      billetes           = sorteo["billetes"]
-      max_fracciones     = sorteo["cantidad_fracciones"]
-
-      case encontrar_billete(billetes, numero) do
+      case encontrar_billete(sorteo.billetes, numero) do
         nil ->
           {:reply, {:error, "Billete #{numero} no existe"}, sorteo}
 
@@ -119,10 +92,10 @@ defmodule AzarApp.SorteoServer do
           fracciones_tomadas = Map.get(billete, "fracciones_tomadas", [])
 
           cond do
-            fraccion < 1 or fraccion > max_fracciones ->
-              {:reply, {:error, "Fracción inválida. Debe estar entre 1 y #{max_fracciones}"}, sorteo}
+            fraccion < 1 or fraccion > sorteo.cantidad_fracciones ->
+              {:reply, {:error, "Fracción inválida. Debe estar entre 1 y #{sorteo.cantidad_fracciones}"}, sorteo}
 
-            fraccion in fracciones_tomadas ->
+            fraccion in Enum.map(fracciones_tomadas, & &1["fraccion"]) ->
               {:reply, {:error, "Fracción #{fraccion} ya está vendida"}, sorteo}
 
             true ->
@@ -131,16 +104,12 @@ defmodule AzarApp.SorteoServer do
                 "propietario_doc" => cliente_doc
               }]
 
-              disponible = length(nuevas_fracciones) < max_fracciones
-
               nuevo_billete = billete
-                |> Map.put("disponible", disponible)
+                |> Map.put("disponible", length(nuevas_fracciones) < sorteo.cantidad_fracciones)
                 |> Map.put("tipo", "fraccion")
                 |> Map.put("fracciones_tomadas", nuevas_fracciones)
 
-              nuevos_billetes = reemplazar_billete(billetes, nuevo_billete)
-              nuevo_sorteo    = Map.put(sorteo, "billetes", nuevos_billetes)
-
+              nuevo_sorteo = %{sorteo | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)}
               JsonStore.upsert(:sorteos, nuevo_sorteo)
               {:reply, {:ok, nuevo_billete}, nuevo_sorteo}
           end
@@ -150,12 +119,10 @@ defmodule AzarApp.SorteoServer do
 
   @impl true
   def handle_call({:devolver_compra, numero, cliente_doc}, _from, sorteo) do
-    if sorteo["realizado"] do
+    if sorteo.realizado do
       {:reply, {:error, "No se puede devolver: el sorteo ya fue realizado"}, sorteo}
     else
-      billetes = sorteo["billetes"]
-
-      case encontrar_billete(billetes, numero) do
+      case encontrar_billete(sorteo.billetes, numero) do
         nil ->
           {:reply, {:error, "Billete #{numero} no existe"}, sorteo}
 
@@ -169,9 +136,7 @@ defmodule AzarApp.SorteoServer do
             |> Map.delete("tipo")
             |> Map.delete("fracciones_tomadas")
 
-          nuevos_billetes = reemplazar_billete(billetes, nuevo_billete)
-          nuevo_sorteo    = Map.put(sorteo, "billetes", nuevos_billetes)
-
+          nuevo_sorteo = %{sorteo | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)}
           JsonStore.upsert(:sorteos, nuevo_sorteo)
           {:reply, :ok, nuevo_sorteo}
       end
@@ -180,30 +145,31 @@ defmodule AzarApp.SorteoServer do
 
   @impl true
   def handle_call(:ejecutar, _from, sorteo) do
-    if sorteo["realizado"] do
+    if sorteo.realizado do
       {:reply, {:error, "El sorteo ya fue realizado"}, sorteo}
     else
-      billetes_vendidos = Enum.filter(sorteo["billetes"], &(!&1["disponible"]))
-      numeros           = Enum.map(billetes_vendidos, & &1["numero"])
-      cantidad_premios  = length(sorteo["premios"])
+      billetes_vendidos = Enum.filter(sorteo.billetes, &(!&1["disponible"]))
 
-      ganadores =
-        numeros
-        |> Enum.shuffle()
-        |> Enum.take(cantidad_premios)
+      case billetes_vendidos do
+        [] ->
+          {:reply, {:error, "No hay billetes vendidos"}, sorteo}
 
-      nuevo_sorteo = sorteo
-        |> Map.put("realizado", true)
-        |> Map.put("numeros_ganadores", ganadores)
+        _ ->
+          ganador = billetes_vendidos |> Enum.random() |> Map.get("numero")
 
-      JsonStore.upsert(:sorteos, nuevo_sorteo)
-      {:reply, {:ok, ganadores}, nuevo_sorteo}
+          nuevo_sorteo = %{sorteo | realizado: true, numero_ganador: ganador}
+          JsonStore.upsert(:sorteos, nuevo_sorteo)
+
+          notificar_ganador(nuevo_sorteo, ganador)
+
+          {:reply, {:ok, ganador}, nuevo_sorteo}
+      end
     end
   end
 
   @impl true
   def handle_call(:billetes_disponibles, _from, sorteo) do
-    disponibles = Enum.filter(sorteo["billetes"], & &1["disponible"])
+    disponibles = Enum.filter(sorteo.billetes, & &1["disponible"])
     {:reply, {:ok, disponibles}, sorteo}
   end
 
@@ -219,5 +185,40 @@ defmodule AzarApp.SorteoServer do
     Enum.map(billetes, fn b ->
       if b["numero"] == billete_nuevo["numero"], do: billete_nuevo, else: b
     end)
+  end
+
+  defp notificar_ganador(sorteo, numero_ganador) do
+    billete = Enum.find(sorteo.billetes, &(&1["numero"] == numero_ganador))
+
+    if billete && sorteo.premio do
+      # Si fue billete completo, un solo ganador
+      # Si fue fraccion, notificar a cada fraccionario
+      case billete["tipo"] do
+        "completo" ->
+          acreditar_y_notificar(billete["propietario_doc"], sorteo, sorteo.premio.valor)
+
+        "fraccion" ->
+          valor_fraccion = div(sorteo.premio.valor, sorteo.cantidad_fracciones)
+          Enum.each(billete["fracciones_tomadas"], fn f ->
+            acreditar_y_notificar(f["propietario_doc"], sorteo, valor_fraccion)
+          end)
+      end
+    end
+  end
+
+  defp acreditar_y_notificar(cliente_doc, sorteo, valor) do
+    # Acreditar saldo al cliente
+    Clientes.acreditar_saldo(cliente_doc, valor)
+
+    # Notificar via PubSub
+    Phoenix.PubSub.broadcast(
+      AzarApp.PubSub,
+      "jugador:#{cliente_doc}",
+      {:premio_ganado, %{
+        sorteo:  sorteo.nombre,
+        premio:  sorteo.premio.nombre,
+        valor:   valor
+      }}
+    )
   end
 end

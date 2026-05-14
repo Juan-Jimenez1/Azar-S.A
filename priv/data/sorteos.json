@@ -3,7 +3,7 @@
     {
       "billetes": [
         {
-          "disponible": false,
+          "disponible": true,
           "fracciones_tomadas": [
             {
               "fraccion": 10,
@@ -46,7 +46,7 @@
       "id": "sorteo_001",
       "nombre": "Lotería de Navidad 2025",
       "numeros_ganadores": [
-        1003,
+        1005,
         1002
       ],
       "premios": [
@@ -115,7 +115,7 @@
         {
           "disponible": false,
           "numero": 3042,
-          "propietario_doc": "9988776655",
+          "propietario_doc": "1020304050",
           "tipo": "completo"
         }
       ],
@@ -125,7 +125,7 @@
       "id": "sorteo_003",
       "nombre": "Chance Reyes 2025",
       "numeros_ganadores": [
-        3042
+        3001
       ],
       "premios": [
         {
@@ -137,6 +137,68 @@
       ],
       "realizado": true,
       "valor_billete": 5000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 9,
+              "propietario_doc": "1020304050"
+            }
+          ],
+          "numero": 1001,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        },
+        {
+          "disponible": true,
+          "numero": 1003
+        },
+        {
+          "disponible": true,
+          "numero": 1004
+        },
+        {
+          "disponible": false,
+          "numero": 1005,
+          "propietario_doc": "1020304050",
+          "tipo": "completo"
+        },
+        {
+          "disponible": true,
+          "numero": 1006
+        },
+        {
+          "disponible": true,
+          "numero": 1007
+        },
+        {
+          "disponible": true,
+          "numero": 1008
+        },
+        {
+          "disponible": true,
+          "numero": 1009
+        },
+        {
+          "disponible": true,
+          "numero": 1010
+        }
+      ],
+      "cantidad_billetes": 10,
+      "cantidad_fracciones": 10,
+      "fecha": "232332-03-22",
+      "id": "sorteo_1778698871926819",
+      "nombre": "algo",
+      "numeros_ganadores": [],
+      "premios": [],
+      "realizado": false,
+      "valor_billete": 5100000000000
     }
   ]
 }
