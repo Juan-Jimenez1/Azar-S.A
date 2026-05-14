@@ -2,7 +2,7 @@ defmodule AzarApp.JsonStore do
 
   alias AzarApp.Model.Structure.{Sorteo, Cliente, Admin}
 
-  @data_dir Application.app_dir(:azar_app, "priv/data")
+  @data_dir "priv/data"
 
   @entidades %{
     sorteos: %{
@@ -59,7 +59,7 @@ defmodule AzarApp.JsonStore do
 
   def upsert(entidad, registro) do
     registros = all(entidad)
-
+    IO.inspect(registro, label: ">>> UPSERT")  # temporal
     nuevos =
       case Enum.find_index(registros, &(&1.id == registro.id)) do
         nil ->
@@ -73,7 +73,6 @@ defmodule AzarApp.JsonStore do
       Enum.map(nuevos, fn r ->
         apply(r.__struct__, :to_map, [r])
       end)
-
     save(entidad, maps)
   end
 
@@ -109,7 +108,8 @@ defmodule AzarApp.JsonStore do
 
     path     = Path.join(@data_dir, archivo)
     tmp_path = path <> ".tmp"
-
+    IO.inspect(path, label: ">>> GUARDANDO EN")  # temporal
+    IO.inspect(File.exists?(path), label: ">>> ARCHIVO EXISTE")  # temporal
     File.mkdir_p!(@data_dir)
 
     File.write!(

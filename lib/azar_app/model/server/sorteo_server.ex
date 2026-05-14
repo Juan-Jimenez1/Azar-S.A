@@ -44,12 +44,12 @@ defmodule AzarApp.SorteoServer do
     {:reply, {:ok, sorteo}, sorteo}
   end
 
-  @impl true
-  def handle_call({:update, campos}, _from, sorteo) do
-    nuevo = Map.merge(sorteo, campos)
-    JsonStore.upsert(:sorteos, nuevo)
-    {:reply, {:ok, nuevo}, nuevo}
-  end
+ @impl true
+def handle_call({:update, campos}, _from, sorteo) do
+  nuevo = struct(sorteo, campos)
+  JsonStore.upsert(:sorteos, nuevo)
+  {:reply, {:ok, nuevo}, nuevo}
+end
 
   @impl true
   def handle_call({:comprar_billete, numero, cliente_doc}, _from, sorteo) do

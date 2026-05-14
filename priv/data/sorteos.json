@@ -6,19 +6,16 @@
           "disponible": true,
           "fracciones_tomadas": [
             {
-              "fraccion": 10,
+              "fraccion": 9,
               "propietario_doc": "1020304050"
             }
           ],
           "numero": 1001,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
+          "tipo": "fraccion"
         },
         {
           "disponible": false,
-          "numero": 1002,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
+          "numero": 1002
         },
         {
           "disponible": false,
@@ -31,137 +28,6 @@
           "numero": 1004,
           "propietario_doc": "1020304050",
           "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "fraccion": 3,
-          "numero": 1005,
-          "propietario_doc": "9988776655",
-          "tipo": "fraccion"
-        }
-      ],
-      "cantidad_billetes": 100,
-      "cantidad_fracciones": 10,
-      "fecha": "2025-12-22",
-      "id": "sorteo_001",
-      "nombre": "Lotería de Navidad 2025",
-      "numeros_ganadores": [
-        1005,
-        1002
-      ],
-      "premios": [
-        {
-          "id": "premio_001",
-          "nombre": "Primer Premio",
-          "valor": 500000000
-        },
-        {
-          "id": "premio_002",
-          "nombre": "Segundo Premio",
-          "valor": 100000000
-        }
-      ],
-      "realizado": true,
-      "valor_billete": 50000
-    },
-    {
-      "billetes": [
-        {
-          "disponible": false,
-          "numero": 2001,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 2002,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "fraccion": 1,
-          "numero": 2004,
-          "propietario_doc": "1020304050",
-          "tipo": "fraccion"
-        }
-      ],
-      "cantidad_billetes": 200,
-      "cantidad_fracciones": 5,
-      "fecha": "2026-01-01",
-      "id": "sorteo_002",
-      "nombre": "Baloto Especial Año Nuevo",
-      "numeros_ganadores": [
-        2001
-      ],
-      "premios": [
-        {
-          "id": "premio_004",
-          "nombre": "Premio Mayor",
-          "valor": 1000000000
-        }
-      ],
-      "realizado": true,
-      "valor_billete": 10000
-    },
-    {
-      "billetes": [
-        {
-          "disponible": false,
-          "numero": 3001,
-          "propietario_doc": "1234567890",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 3042,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        }
-      ],
-      "cantidad_billetes": 50,
-      "cantidad_fracciones": 4,
-      "fecha": "2025-01-06",
-      "id": "sorteo_003",
-      "nombre": "Chance Reyes 2025",
-      "numeros_ganadores": [
-        3001
-      ],
-      "premios": [
-        {
-          "ganador_doc": "9988776655",
-          "id": "premio_005",
-          "nombre": "Premio Único",
-          "valor": 20000000
-        }
-      ],
-      "realizado": true,
-      "valor_billete": 5000
-    },
-    {
-      "billetes": [
-        {
-          "disponible": true,
-          "fracciones_tomadas": [
-            {
-              "fraccion": 9,
-              "propietario_doc": "1020304050"
-            }
-          ],
-          "numero": 1001,
-          "tipo": "fraccion"
-        },
-        {
-          "disponible": true,
-          "numero": 1002
-        },
-        {
-          "disponible": true,
-          "numero": 1003
-        },
-        {
-          "disponible": true,
-          "numero": 1004
         },
         {
           "disponible": false,
@@ -178,8 +44,10 @@
           "numero": 1007
         },
         {
-          "disponible": true,
-          "numero": 1008
+          "disponible": false,
+          "numero": 1008,
+          "propietario_doc": "1020304050",
+          "tipo": "completo"
         },
         {
           "disponible": true,
@@ -192,13 +60,60 @@
       ],
       "cantidad_billetes": 10,
       "cantidad_fracciones": 10,
-      "fecha": "232332-03-22",
+      "fecha": "2026-03-22",
       "id": "sorteo_1778698871926819",
       "nombre": "algo",
-      "numeros_ganadores": [],
-      "premios": [],
-      "realizado": false,
+      "numero_ganador": 1008,
+      "premio": {
+        "id": "premio_1778790347191827",
+        "nombre": "Carlotos",
+        "valor": 10000000
+      },
+      "realizado": true,
       "valor_billete": 5100000000000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": false,
+          "numero": 1001,
+          "propietario_doc": "1020304050",
+          "tipo": "completo"
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        },
+        {
+          "disponible": true,
+          "numero": 1003
+        },
+        {
+          "disponible": true,
+          "numero": 1004
+        },
+        {
+          "disponible": true,
+          "numero": 1005
+        },
+        {
+          "disponible": true,
+          "numero": 1006
+        }
+      ],
+      "cantidad_billetes": 6,
+      "cantidad_fracciones": 2,
+      "fecha": "2026-03-12",
+      "id": "sorteo_1778790707647492",
+      "nombre": "Something",
+      "numero_ganador": null,
+      "premio": {
+        "id": "premio_1778790723868574",
+        "nombre": "Dinero",
+        "valor": 200000
+      },
+      "realizado": false,
+      "valor_billete": 10000
     }
   ]
 }

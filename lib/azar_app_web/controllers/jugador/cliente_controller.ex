@@ -51,5 +51,12 @@ defmodule AzarAppWeb.Jugador.ClienteController do
         |> put_flash(:error, motivo)
         |> redirect(to: ~p"/perfil")
     end
-  end
+
+    end
+  
+  def perfil(conn, _params) do
+      cliente_doc = get_session(conn, :cliente_doc)
+      {:ok, cliente} = Clientes.get_cliente(cliente_doc)
+      render(conn, :perfil, cliente: cliente)
+    end
 end

@@ -1,74 +1,45 @@
-<% url_sorteo = "/admin/sorteos/" <> @sorteo["id"] %>
-<% url_post   = "/admin/sorteos/" <> @sorteo["id"] <> "/premios" %>
+<% url_sorteo = "/admin/sorteos/" <> @sorteo.id %>
+<% url_post   = "/admin/sorteos/" <> @sorteo.id <> "/premios" %>
 
 <div class="max-w-2xl mx-auto px-4 py-8">
-
   <div class="mb-6">
     <a href={url_sorteo} class="text-blue-600 hover:underline text-sm">
-      ← Volver a <%= @sorteo["nombre"] %>
+      ← Volver a <%= @sorteo.nombre %>
     </a>
     <h1 class="text-2xl font-bold text-gray-800 mt-1">Agregar premio</h1>
   </div>
 
   <%= if @flash["error"] do %>
-    <div class="mb-4 p-3 bg-red-100 text-red-800 rounded">
-      <%= @flash["error"] %>
-    </div>
+    <div class="mb-4 p-3 bg-red-100 text-red-800 rounded"><%= @flash["error"] %></div>
   <% end %>
 
   <div class="bg-white border rounded-lg shadow-sm p-6">
     <form action={url_post} method="post">
       <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
 
-      <!-- Nombre del premio -->
       <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-          Nombre del premio
-        </label>
-        <input
-          type="text"
-          name="premio[nombre]"
-          placeholder="Ej: Primer Premio"
-          required
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <label class="block text-sm font-medium text-gray-700 mb-1">Nombre del premio</label>
+        <input type="text" name="premio[nombre]" placeholder="Ej: Premio Único" required
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
       </div>
 
-      <!-- Valor del premio -->
       <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-          Valor del premio (COP)
-        </label>
-        <input
-          type="number"
-          name="premio[valor]"
-          placeholder="Ej: 500000000"
-          min="1"
-          required
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <label class="block text-sm font-medium text-gray-700 mb-1">Valor del premio (COP)</label>
+        <input type="number" name="premio[valor]" placeholder="Ej: 500000000" min="1" required
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
         <p class="text-xs text-gray-400 mt-1">
-          Si el sorteo tiene fracciones, el valor se divide entre la cantidad de fracciones por billete.
+          Si el billete ganador fue comprado por fracciones, el valor se divide entre la cantidad de fracciones.
         </p>
       </div>
 
       <div class="flex gap-3">
-        <button
-          type="submit"
-          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-medium text-sm"
-        >
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-medium text-sm">
           Agregar premio
         </button>
-        
-        <a
-          href={url_sorteo}
-          class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded font-medium text-sm"
-        >
+        <a href={url_sorteo} class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded font-medium text-sm">
           Cancelar
         </a>
       </div>
-
     </form>
   </div>
-
 </div>

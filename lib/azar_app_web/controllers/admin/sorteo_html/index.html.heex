@@ -1,5 +1,4 @@
 <div class="max-w-5xl mx-auto px-4 py-8">
-
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold text-gray-800">Sorteos</h1>
     <div class="flex gap-3">
@@ -16,15 +15,11 @@
   </div>
 
   <%= if @flash["info"] do %>
-    <div class="mb-4 p-3 bg-green-100 text-green-800 rounded">
-      <%= @flash["info"] %>
-    </div>
+    <div class="mb-4 p-3 bg-green-100 text-green-800 rounded"><%= @flash["info"] %></div>
   <% end %>
 
   <%= if @flash["error"] do %>
-    <div class="mb-4 p-3 bg-red-100 text-red-800 rounded">
-      <%= @flash["error"] %>
-    </div>
+    <div class="mb-4 p-3 bg-red-100 text-red-800 rounded"><%= @flash["error"] %></div>
   <% end %>
 
   <%= if @sorteos == [] do %>
@@ -38,53 +33,37 @@
             <th class="px-4 py-3">Fecha</th>
             <th class="px-4 py-3">Valor billete</th>
             <th class="px-4 py-3">Billetes</th>
-            <th class="px-4 py-3">Premios</th>
+            <th class="px-4 py-3">Premio</th>
             <th class="px-4 py-3">Estado</th>
             <th class="px-4 py-3">Acciones</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
           <%= for sorteo <- @sorteos do %>
-            <% url_show   = "/admin/sorteos/" <> sorteo["id"] %>
-            <% url_delete = "/admin/sorteos/" <> sorteo["id"] %>
+            <% url_show   = "/admin/sorteos/" <> sorteo.id %>
+            <% url_delete = "/admin/sorteos/" <> sorteo.id %>
             <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 font-medium text-gray-800">
-                <%= sorteo["nombre"] %>
-              </td>
+              <td class="px-4 py-3 font-medium text-gray-800"><%= sorteo.nombre %></td>
+              <td class="px-4 py-3 text-gray-600"><%= sorteo.fecha %></td>
+              <td class="px-4 py-3 text-gray-600">$<%= sorteo.valor_billete %></td>
+              <td class="px-4 py-3 text-gray-600"><%= sorteo.cantidad_billetes %></td>
               <td class="px-4 py-3 text-gray-600">
-                <%= sorteo["fecha"] %>
-              </td>
-              <td class="px-4 py-3 text-gray-600">
-                $<%= sorteo["valor_billete"] %>
-              </td>
-              <td class="px-4 py-3 text-gray-600">
-                <%= sorteo["cantidad_billetes"] %>
-              </td>
-              <td class="px-4 py-3 text-gray-600">
-                <%= length(sorteo["premios"]) %>
+                <%= if sorteo.premio, do: sorteo.premio.nombre, else: "-" %>
               </td>
               <td class="px-4 py-3">
-                <%= if sorteo["realizado"] do %>
-                  <span class="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs font-medium">
-                    Realizado
-                  </span>
+                <%= if sorteo.realizado do %>
+                  <span class="px-2 py-1 bg-gray-200 text-gray-700 rounded-full text-xs font-medium">Realizado</span>
                 <% else %>
-                  <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
-                    Pendiente
-                  </span>
+                  <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Pendiente</span>
                 <% end %>
               </td>
               <td class="px-4 py-3 flex gap-3">
-                <a href={url_show} class="text-blue-600 hover:underline">
-                  Ver
-                </a>
-                <%= if sorteo["premios"] == [] do %>
+                <a href={url_show} class="text-blue-600 hover:underline">Ver</a>
+                <%= if sorteo.premio == nil do %>
                   <form action={url_delete} method="post" onsubmit="return confirm('¿Eliminar este sorteo?')">
                     <input type="hidden" name="_method" value="delete" />
                     <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
-                    <button type="submit" class="text-red-500 hover:underline">
-                      Eliminar
-                    </button>
+                    <button type="submit" class="text-red-500 hover:underline">Eliminar</button>
                   </form>
                 <% end %>
               </td>
@@ -94,5 +73,4 @@
       </table>
     </div>
   <% end %>
-
 </div>
