@@ -21,6 +21,12 @@ defmodule AzarAppWeb.Jugador.ClienteController do
     end
   end
 
+  # GET /login - muestra el formulario
+  def login(conn, _params) do
+    render(conn, :login)
+  end
+
+  # POST /login - procesa el formulario
   def login(conn, %{"cliente" => params}) do
     case Clientes.login(params["documento"], params["password"]) do
       {:ok, cliente} ->
@@ -53,7 +59,7 @@ defmodule AzarAppWeb.Jugador.ClienteController do
     end
 
     end
-  
+
   def perfil(conn, _params) do
       cliente_doc = get_session(conn, :cliente_doc)
       {:ok, cliente} = Clientes.get_cliente(cliente_doc)

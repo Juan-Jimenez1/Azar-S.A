@@ -116,16 +116,14 @@ defmodule AzarApp.Sorteos do
   def clientes_por_sorteo(sorteo_id) do
     case get_sorteo(sorteo_id) do
       {:ok, sorteo} ->
-        billetes_vendidos = Enum.reject(sorteo.billetes, & &1["disponible"])
-
         completos =
-          billetes_vendidos
+          sorteo.billetes
           |> Enum.filter(&(&1["tipo"] == "completo"))
           |> Enum.map(fn b -> %{doc: b["propietario_doc"], billete: b["numero"]} end)
           |> Enum.sort_by(& &1.doc)
 
         fracciones =
-          billetes_vendidos
+          sorteo.billetes
           |> Enum.filter(&(&1["tipo"] == "fraccion"))
           |> Enum.flat_map(fn b ->
             Enum.map(b["fracciones_tomadas"], fn f ->

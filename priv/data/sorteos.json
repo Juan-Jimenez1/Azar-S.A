@@ -113,14 +113,135 @@
       "fecha": "2026-03-12",
       "id": "sorteo_1778790707647492",
       "nombre": "Something",
-      "numero_ganador": null,
+      "numero_ganador": 1001,
       "premio": {
         "id": "premio_1778790723868574",
         "nombre": "Dinero",
         "valor": 200000
       },
-      "realizado": false,
+      "realizado": true,
       "valor_billete": 10000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": false,
+          "numero": 1001,
+          "propietario_doc": "1020304050",
+          "tipo": "completo"
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 1,
+              "propietario_doc": "1020304050"
+            }
+          ],
+          "numero": 1002,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 2,
+              "propietario_doc": "1020304050"
+            }
+          ],
+          "numero": 1003,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": false,
+          "numero": 1004,
+          "propietario_doc": "1020304050",
+          "tipo": "completo"
+        }
+      ],
+      "cantidad_billetes": 4,
+      "cantidad_fracciones": 3,
+      "fecha": "1112-02-21",
+      "id": "sorteo_1778808449857268",
+      "nombre": "Super Wow",
+      "numero_ganador": 1004,
+      "premio": {
+        "id": "premio_1778808840484187",
+        "nombre": "Ancheta",
+        "valor": 400000
+      },
+      "realizado": true,
+      "valor_billete": 30000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 4,
+              "propietario_doc": "1020304050"
+            }
+          ],
+          "numero": 1001,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 1,
+              "propietario_doc": "1020304050"
+            }
+          ],
+          "numero": 1002,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": false,
+          "numero": 1003,
+          "propietario_doc": "1020304050",
+          "tipo": "completo"
+        }
+      ],
+      "cantidad_billetes": 3,
+      "cantidad_fracciones": 4,
+      "fecha": "2009-02-21",
+      "id": "sorteo_1778813421021438",
+      "nombre": "Espectacular",
+      "numero_ganador": 1003,
+      "premio": {
+        "id": "premio_1778813463856382",
+        "nombre": "Caja Sorpresa",
+        "valor": 900000
+      },
+      "realizado": true,
+      "valor_billete": 600000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": false,
+          "numero": 1001,
+          "propietario_doc": "1020304050",
+          "tipo": "completo"
+        },
+        {
+          "disponible": false,
+          "numero": 1002,
+          "propietario_doc": "1020304050",
+          "tipo": "completo"
+        }
+      ],
+      "cantidad_billetes": 2,
+      "cantidad_fracciones": 3,
+      "fecha": "2009-10-21",
+      "id": "sorteo_1778814475802068",
+      "nombre": "Suuuuper",
+      "numero_ganador": 1001,
+      "premio": null,
+      "realizado": true,
+      "valor_billete": 5000
     }
   ]
 }

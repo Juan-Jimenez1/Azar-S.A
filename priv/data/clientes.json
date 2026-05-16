@@ -1,0 +1,18 @@
+{
+  "clientes": [
+    {
+      "documento": "11267809",
+      "id": "cliente_1778814429536315",
+      "nombre": "Pablito",
+      "password_hash": "594ebf8373a864de5204b43ef4f10360390b3fc006f920332676a7e182971b31",
+      "saldo": 60000
+    },
+    {
+      "documento": "8388883",
+      "id": "cliente_1778819321369478",
+      "nombre": "PABLITO",
+      "password_hash": "198676f9e8a91c1e6b81e7b37cd688b737902360fa1355b8de0515dd1f0a4b54",
+      "saldo": 0
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+<div class="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4 font-sans">
+  <div class="max-w-md w-full bg-[#121214] rounded-2xl p-8 border border-gray-800 shadow-2xl">
+    
+    <div class="flex flex-col items-center mb-8">
+      <div class="w-16 h-16 bg-[#2a2a2d] rounded-2xl flex items-center justify-center mb-4 border border-[#c49b35]/30">
+        <span class="text-[#c49b35] text-3xl">✨</span>
+      </div>
+      <h1 class="text-3xl font-bold text-white tracking-tight">Azar S.A</h1>
+      <p class="text-gray-500 text-sm mt-1">Ingresa tus datos para acceder</p>
+    </div>
+
+    <form action="/registro" method="post" class="space-y-5">
+      <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+
+      <div>
+        <label class="block text-sm font-medium text-white mb-2">Nombre completo</label>
+        <div class="relative group">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#ffbf00]">
+            <svg xmlns="http://www.w3.org/2000/center" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <input type="text" name="cliente[nombre]" placeholder="Juan Pérez"
+            class="w-full bg-[#1a1a1c] border-2 border-transparent focus:border-[#ffbf00] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 outline-none transition-all" required />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-white mb-2">Número de documento</label>
+        <div class="relative group">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#ffbf00]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <input type="text" name="cliente[documento]" placeholder="1234567890"
+            class="w-full bg-[#1a1a1c] border-2 border-transparent focus:border-[#ffbf00] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 outline-none transition-all" required />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-white mb-2">Contraseña</label>
+        <div class="relative group">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#ffbf00]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <input type="password" name="cliente[password]" placeholder="••••••••"
+            class="w-full bg-[#1a1a1c] border-2 border-transparent focus:border-[#ffbf00] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 outline-none transition-all" required />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-white mb-2">Tarjeta de crédito</label>
+        <div class="relative group">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#ffbf00]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+            </svg>
+          </div>
+          <input 
+            type="text" 
+            id="cc_input"
+            maxlength="19"
+            placeholder="1234 5678 9012 3456"
+            class="w-full bg-[#1a1a1c] border-2 border-transparent focus:border-[#ffbf00] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 outline-none transition-all" />
+        </div>
+        <p class="text-[10px] text-gray-500 mt-2">Tu información está protegida con encriptación SSL</p>
+      </div>
+
+      <button type="submit"
+        class="w-full bg-[#8c6d1f] hover:bg-[#ffbf00] text-black py-3 rounded-xl font-bold text-lg transition-colors duration-200">
+        Ingresar
+      </button>
+    </form>
+
+    <p class="mt-6 text-sm text-gray-400 text-center">
+      ¿No tienes cuenta? <a href="/registro" class="text-[#c49b35] font-semibold hover:underline">Regístrate ahora</a>
+    </p>
+    
+    <div class="flex justify-center space-x-6 mt-10 text-gray-700 text-xl">
+      <span class="hover:text-gray-500 transition-colors cursor-default">♠</span>
+      <span class="hover:text-gray-500 transition-colors cursor-default">♥</span>
+      <span class="hover:text-gray-500 transition-colors cursor-default">♦</span>
+      <span class="hover:text-gray-500 transition-colors cursor-default">♣</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Formateo automático de tarjeta de crédito
+  const ccInput = document.getElementById('cc_input');
+  ccInput.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    let formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+    e.target.value = formattedValue;
+  });
+</script>
