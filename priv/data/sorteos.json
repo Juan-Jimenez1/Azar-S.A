@@ -94,7 +94,14 @@
         },
         {
           "disponible": true,
-          "numero": 1005
+          "fracciones_tomadas": [
+            {
+              "fraccion": 2,
+              "propietario_doc": "1020304050"
+            }
+          ],
+          "numero": 1005,
+          "tipo": "fraccion"
         },
         {
           "disponible": true,
