@@ -61,6 +61,21 @@ defmodule AzarApp.Clientes do
   def recargar_saldo(_documento, _valor) do
     {:error, "El valor debe ser mayor a 0"}
   end
+  def descontar_saldo(documento, valor) do
+    case get_cliente(documento) do
+      {:ok, cliente} ->
+        if cliente.saldo >= valor do
+          actualizado = %{cliente | saldo: cliente.saldo - valor}
+          JsonStore.upsert(:clientes, actualizado)
+          {:ok, actualizado}
+        else
+          {:error, "Saldo insuficiente"}
+        end
+
+      :error ->
+        {:error, "Cliente no encontrado"}
+    end
+  end
 
   # ── Privado ────────────────────────────────────────────────────────────────
 

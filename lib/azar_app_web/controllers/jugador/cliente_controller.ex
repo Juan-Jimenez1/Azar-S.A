@@ -2,6 +2,7 @@ defmodule AzarAppWeb.Jugador.ClienteController do
   use AzarAppWeb, :controller
   alias AzarApp.Clientes
 
+
   def new(conn, _params) do
     render(conn, :new)
   end
@@ -21,7 +22,11 @@ defmodule AzarAppWeb.Jugador.ClienteController do
     end
   end
 
-
+  def logout(conn, _params) do
+    conn
+    |> clear_session()
+    |> redirect(to: ~p"/")
+  end
 
   # POST /login - procesa el formulario
   def login(conn, %{"cliente" => params}) do
@@ -30,7 +35,7 @@ defmodule AzarAppWeb.Jugador.ClienteController do
         conn
         |> put_session(:cliente_doc, cliente.documento)
         |> put_flash(:info, "Bienvenido de nuevo #{cliente.nombre}!")
-        |> redirect(to: ~p"/")
+        |> redirect(to: ~p"/perfil")
 
       {:error, motivo} ->
         conn

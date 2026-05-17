@@ -43,6 +43,7 @@ defmodule AzarAppWeb.Router do
     post "/registro", ClienteController, :create
     get "/login", ClienteController, :login
     post "/login", ClienteController, :login
+    delete "/logout", ClienteController, :logout
     get "/perfil", ClienteController, :perfil
     post "/perfil/recargar", ClienteController, :recargar
 

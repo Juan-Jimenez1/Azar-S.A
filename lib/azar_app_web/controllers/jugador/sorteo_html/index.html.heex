@@ -12,25 +12,54 @@
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12141a] border border-[#23262f] text-[#d4a017] text-xs font-semibold mb-4">
           🎟️ Sorteos activos
         </div>
-
         <h1 class="text-4xl font-black tracking-tight text-white">
           Sorteos disponibles
         </h1>
-
         <p class="text-gray-400 mt-3 text-sm max-w-2xl leading-relaxed">
           Participa en sorteos activos, compra billetes completos o por fracciones
           y juega por premios millonarios en segundos.
         </p>
       </div>
 
-      <div class="bg-[#12141a] border border-[#23262f] rounded-2xl px-5 py-4 shadow-xl">
-        <p class="text-xs uppercase tracking-[0.2em] text-gray-500">
-          Sorteos activos
-        </p>
+      <div class="flex flex-col items-end gap-4">
 
-        <p class="text-3xl font-black text-[#d4a017] mt-1">
-          <%= length(@sorteos) %>
-        </p>
+        <!-- Botones auth -->
+        <div class="flex items-center gap-3">
+          <%= if @cliente do %>
+            <a href="/perfil"
+              class="px-5 py-2 rounded-xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] text-sm font-black text-black hover:scale-105 transition-all">
+              👤 <%= @cliente.nombre %>
+            </a>
+            <form action="/logout" method="post">
+              <input type="hidden" name="_method" value="delete" />
+              <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+              <button type="submit"
+                class="px-5 py-2 rounded-xl border border-red-500/30 text-sm font-semibold text-red-400 hover:border-red-400 hover:text-red-300 transition">
+                Salir
+              </button>
+            </form>
+          <% else %>
+            <a href="/login"
+              class="px-5 py-2 rounded-xl border border-[#23262f] text-sm font-semibold text-gray-300 hover:border-[#d4a017]/50 hover:text-[#d4a017] transition">
+              Iniciar sesión
+            </a>
+            <a href="/registro"
+              class="px-5 py-2 rounded-xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] text-sm font-black text-black hover:scale-105 hover:shadow-[0_0_20px_rgba(212,160,23,0.4)] transition-all">
+              Registrarse
+            </a>
+          <% end %>
+        </div>
+
+        <!-- Contador -->
+        <div class="bg-[#12141a] border border-[#23262f] rounded-2xl px-5 py-4 shadow-xl">
+          <p class="text-xs uppercase tracking-[0.2em] text-gray-500">
+            Sorteos activos
+          </p>
+          <p class="text-3xl font-black text-[#d4a017] mt-1">
+            <%= length(@sorteos) %>
+          </p>
+        </div>
+
       </div>
 
     </div>

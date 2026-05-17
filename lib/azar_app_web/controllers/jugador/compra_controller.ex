@@ -2,15 +2,17 @@ defmodule AzarAppWeb.Jugador.CompraController do
   use AzarAppWeb, :controller
   alias AzarApp.Sorteos
 
-  def comprar_billete(conn, %{"id" => sorteo_id, "numero" => numero, "cliente_doc" => doc}) do
+  def comprar_billete(conn, %{"id" => sorteo_id, "numero" => numero}) do
+    cliente_doc = get_session(conn, :cliente_doc)
     numero = String.to_integer(numero)
 
-    case Sorteos.comprar_billete(sorteo_id, numero, doc) do
-      {:ok, _billete} ->
-        conn
-        |> put_flash(:info, "Billete #{numero} comprado exitosamente.")
-        |> redirect(to: ~p"/sorteos/#{sorteo_id}")
-
+    with {:ok, sorteo}  <- AzarApp.Sorteos.get_sorteo(sorteo_id),
+        {:ok, _cliente} <- AzarApp.Clientes.descontar_saldo(cliente_doc, sorteo.valor_billete),
+        {:ok, _billete} <- AzarApp.Sorteos.comprar_billete(sorteo_id, numero, cliente_doc) do
+      conn
+      |> put_flash(:info, "Billete #{numero} comprado exitosamente.")
+      |> redirect(to: ~p"/sorteos/#{sorteo_id}")
+    else
       {:error, motivo} ->
         conn
         |> put_flash(:error, motivo)
@@ -18,16 +20,19 @@ defmodule AzarAppWeb.Jugador.CompraController do
     end
   end
 
-  def comprar_fraccion(conn, %{"id" => sorteo_id, "numero" => numero, "fraccion" => fraccion, "cliente_doc" => doc}) do
+  def comprar_fraccion(conn, %{"id" => sorteo_id, "numero" => numero, "fraccion" => fraccion}) do
+    cliente_doc = get_session(conn, :cliente_doc)
     numero   = String.to_integer(numero)
     fraccion = String.to_integer(fraccion)
 
-    case Sorteos.comprar_fraccion(sorteo_id, numero, fraccion, doc) do
-      {:ok, _billete} ->
-        conn
-        |> put_flash(:info, "Fracción #{fraccion} del billete #{numero} comprada exitosamente.")
-        |> redirect(to: ~p"/sorteos/#{sorteo_id}")
-
+    with {:ok, sorteo}  <- AzarApp.Sorteos.get_sorteo(sorteo_id),
+        valor_fraccion  = div(sorteo.valor_billete, sorteo.cantidad_fracciones),
+        {:ok, _cliente} <- AzarApp.Clientes.descontar_saldo(cliente_doc, valor_fraccion),
+        {:ok, _billete} <- AzarApp.Sorteos.comprar_fraccion(sorteo_id, numero, fraccion, cliente_doc) do
+      conn
+      |> put_flash(:info, "Fracción #{fraccion} del billete #{numero} comprada exitosamente.")
+      |> redirect(to: ~p"/sorteos/#{sorteo_id}")
+    else
       {:error, motivo} ->
         conn
         |> put_flash(:error, motivo)
