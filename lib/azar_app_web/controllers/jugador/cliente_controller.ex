@@ -21,10 +21,7 @@ defmodule AzarAppWeb.Jugador.ClienteController do
     end
   end
 
-  # GET /login - muestra el formulario
-  def login(conn, _params) do
-    render(conn, :login)
-  end
+
 
   # POST /login - procesa el formulario
   def login(conn, %{"cliente" => params}) do
@@ -40,6 +37,11 @@ defmodule AzarAppWeb.Jugador.ClienteController do
         |> put_flash(:error, motivo)
         |> redirect(to: ~p"/login")
     end
+  end
+
+  # GET /login - muestra el formulario
+  def login(conn, _params) do
+    render(conn, :login)
   end
 
   def recargar(conn, %{"valor" => valor}) do

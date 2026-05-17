@@ -13,6 +13,20 @@
       "nombre": "PABLITO",
       "password_hash": "198676f9e8a91c1e6b81e7b37cd688b737902360fa1355b8de0515dd1f0a4b54",
       "saldo": 0
+    },
+    {
+      "documento": "1234",
+      "id": "cliente_1778979047448390",
+      "nombre": "Carlitos",
+      "password_hash": "fa3cfb3f1bb823aa9501f88f1f95f732ee6fef2c3a48be7f1d38037b216a549f",
+      "saldo": 0
+    },
+    {
+      "documento": "123",
+      "id": "cliente_1778979182605843",
+      "nombre": "Juan",
+      "password_hash": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+      "saldo": 1000000
     }
   ]
 }

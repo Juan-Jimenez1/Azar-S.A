@@ -1,72 +1,224 @@
-<div class="max-w-5xl mx-auto px-4 py-8">
+<div class="min-h-screen bg-[#06070a] px-4 py-10 text-white">
 
-  <div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-800">Sorteos disponibles</h1>
-    <p class="text-gray-500 mt-1">Estos son los sorteos en los que puedes participar.</p>
-  </div>
+  <!-- Glow -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#d4a017]/10 blur-3xl rounded-full pointer-events-none"></div>
 
-  <%= if @flash["info"] do %>
-    <div class="mb-4 p-3 bg-green-100 text-green-800 rounded"><%= @flash["info"] %></div>
-  <% end %>
+  <div class="max-w-7xl mx-auto relative z-10">
 
-  <%= if @flash["error"] do %>
-    <div class="mb-4 p-3 bg-red-100 text-red-800 rounded"><%= @flash["error"] %></div>
-  <% end %>
+    <!-- Header -->
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
 
-  <%= if @sorteos == [] do %>
-    <div class="text-center py-16 text-gray-400">
-      <p class="text-xl">No hay sorteos disponibles por ahora.</p>
-      <p class="text-sm mt-2">Vuelve pronto.</p>
-    </div>
-  <% else %>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <%= for sorteo <- @sorteos do %>
-        <% url = "/sorteos/" <> sorteo.id %>
-        <% billetes_disponibles = Enum.count(sorteo.billetes, & &1["disponible"]) %>
-        <% porcentaje = if sorteo.cantidad_billetes > 0, do: round((sorteo.cantidad_billetes - billetes_disponibles) / sorteo.cantidad_billetes * 100), else: 0 %>
-
-        <div class="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition p-5">
-          <div class="flex items-start justify-between mb-3">
-            <h2 class="font-bold text-gray-800 text-lg leading-tight"><%= sorteo.nombre %></h2>
-            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium ml-2">Activo</span>
-          </div>
-
-          <div class="space-y-2 mb-4">
-            <div class="flex justify-between text-sm">
-              <span class="text-gray-500">Fecha</span>
-              <span class="font-medium text-gray-700"><%= sorteo.fecha %></span>
-            </div>
-            <div class="flex justify-between text-sm">
-              <span class="text-gray-500">Valor billete</span>
-              <span class="font-medium text-gray-700">$<%= sorteo.valor_billete %></span>
-            </div>
-            <div class="flex justify-between text-sm">
-              <span class="text-gray-500">Fracciones</span>
-              <span class="font-medium text-gray-700"><%= sorteo.cantidad_fracciones %></span>
-            </div>
-            <div class="flex justify-between text-sm">
-              <span class="text-gray-500">Premio</span>
-              <span class="font-medium text-gray-700">
-                <%= if sorteo.premio, do: "$#{sorteo.premio.valor}", else: "Sin premio" %>
-              </span>
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <div class="flex justify-between text-xs text-gray-400 mb-1">
-              <span><%= billetes_disponibles %> disponibles</span>
-              <span><%= porcentaje %>% vendido</span>
-            </div>
-            <div class="w-full bg-gray-100 rounded-full h-2">
-              <div class="bg-blue-500 h-2 rounded-full" style={"width: #{porcentaje}%"}></div>
-            </div>
-          </div>
-
-          <a href={url} class="block text-center w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-medium">
-            Ver billetes
-          </a>
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12141a] border border-[#23262f] text-[#d4a017] text-xs font-semibold mb-4">
+          🎟️ Sorteos activos
         </div>
-      <% end %>
+
+        <h1 class="text-4xl font-black tracking-tight text-white">
+          Sorteos disponibles
+        </h1>
+
+        <p class="text-gray-400 mt-3 text-sm max-w-2xl leading-relaxed">
+          Participa en sorteos activos, compra billetes completos o por fracciones
+          y juega por premios millonarios en segundos.
+        </p>
+      </div>
+
+      <div class="bg-[#12141a] border border-[#23262f] rounded-2xl px-5 py-4 shadow-xl">
+        <p class="text-xs uppercase tracking-[0.2em] text-gray-500">
+          Sorteos activos
+        </p>
+
+        <p class="text-3xl font-black text-[#d4a017] mt-1">
+          <%= length(@sorteos) %>
+        </p>
+      </div>
+
     </div>
-  <% end %>
+
+    <!-- Flash -->
+    <%= if @flash["info"] do %>
+      <div class="mb-6 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-5 py-4 text-sm text-emerald-300 backdrop-blur-xl animate-fade-in">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
+            ✅
+          </div>
+
+          <span><%= @flash["info"] %></span>
+        </div>
+      </div>
+    <% end %>
+
+    <%= if @flash["error"] do %>
+      <div class="mb-6 rounded-2xl border border-red-500/20 bg-red-500/10 px-5 py-4 text-sm text-red-300 backdrop-blur-xl animate-fade-in">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
+            ⚠️
+          </div>
+
+          <span><%= @flash["error"] %></span>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Empty -->
+    <%= if @sorteos == [] do %>
+
+      <div class="rounded-[28px] border border-dashed border-[#2a2d36] bg-[#111318]/80 backdrop-blur-xl py-24 text-center shadow-2xl">
+
+        <div class="w-24 h-24 rounded-full bg-[#181b22] border border-[#2b2f39] flex items-center justify-center mx-auto mb-6 text-5xl">
+          🎰
+        </div>
+
+        <h2 class="text-2xl font-bold text-white">
+          No hay sorteos disponibles
+        </h2>
+
+        <p class="text-gray-500 mt-3 text-sm">
+          Vuelve pronto para participar en nuevos sorteos.
+        </p>
+
+      </div>
+
+    <% else %>
+
+      <!-- Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
+
+        <%= for sorteo <- @sorteos do %>
+
+          <% url = "/sorteos/" <> sorteo.id %>
+
+          <% billetes_disponibles = Enum.count(sorteo.billetes, & &1["disponible"]) %>
+
+          <% porcentaje =
+            if sorteo.cantidad_billetes > 0,
+              do:
+                round(
+                  (sorteo.cantidad_billetes - billetes_disponibles) /
+                    sorteo.cantidad_billetes * 100
+                ),
+              else: 0 %>
+
+          <div class="group relative overflow-hidden rounded-[30px] border border-[#23262f] bg-[#101217]/90 backdrop-blur-xl p-6 shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-[#d4a017]/40 hover:shadow-[0_0_40px_rgba(212,160,23,0.15)]">
+
+            <!-- Glow -->
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(circle_at_top,rgba(212,160,23,0.12),transparent_60%)]"></div>
+
+            <!-- Top -->
+            <div class="relative z-10 flex items-start justify-between gap-4 mb-6">
+
+              <div>
+                <div class="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold text-emerald-300 mb-4">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  ACTIVO
+                </div>
+
+                <h2 class="text-2xl font-black leading-tight text-white group-hover:text-[#f6d06b] transition">
+                  <%= sorteo.nombre %>
+                </h2>
+              </div>
+
+              <div class="w-14 h-14 rounded-2xl bg-[#181b22] border border-[#2a2d36] flex items-center justify-center text-2xl shadow-inner">
+                🎟️
+              </div>
+
+            </div>
+
+            <!-- Prize -->
+            <div class="relative z-10 rounded-2xl border border-[#272b35] bg-[#14171d] px-5 py-4 mb-5">
+
+              <p class="text-xs uppercase tracking-[0.2em] text-gray-500">
+                Premio
+              </p>
+
+              <div class="mt-2 flex items-end justify-between gap-4">
+
+                <div>
+                  <p class="text-3xl font-black text-[#d4a017] leading-none">
+                    <%= if sorteo.premio, do: "$#{sorteo.premio.valor}", else: "—" %>
+                  </p>
+
+                  <p class="text-xs text-gray-500 mt-2">
+                    <%= if sorteo.premio, do: sorteo.premio.nombre, else: "Sin premio asignado" %>
+                  </p>
+                </div>
+
+                <div class="text-4xl opacity-70">
+                  💰
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Info -->
+            <div class="relative z-10 space-y-4 mb-6">
+
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-gray-500">Fecha</span>
+
+                <span class="font-semibold text-gray-200">
+                  <%= sorteo.fecha %>
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-gray-500">Billete completo</span>
+
+                <span class="font-semibold text-white">
+                  $<%= sorteo.valor_billete %>
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-gray-500">Fracciones</span>
+
+                <span class="font-semibold text-white">
+                  <%= sorteo.cantidad_fracciones %>
+                </span>
+              </div>
+
+            </div>
+
+            <!-- Progress -->
+            <div class="relative z-10 mb-7">
+
+              <div class="flex justify-between text-xs text-gray-500 mb-2">
+                <span><%= billetes_disponibles %> disponibles</span>
+
+                <span><%= porcentaje %>% vendido</span>
+              </div>
+
+              <div class="h-3 rounded-full bg-[#1a1d24] overflow-hidden border border-[#272b35]">
+
+                <div
+                  class="h-full rounded-full bg-gradient-to-r from-[#a87800] via-[#d4a017] to-[#ffdc73] shadow-[0_0_20px_rgba(212,160,23,0.6)] transition-all duration-700"
+                  style={"width: #{porcentaje}%"}
+                >
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- CTA -->
+            <a
+              href={url}
+              class="relative z-10 flex items-center justify-center gap-3 w-full rounded-2xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] px-5 py-4 text-sm font-black text-black transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,160,23,0.4)]"
+            >
+              Ver billetes
+              <span class="transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
+            </a>
+
+          </div>
+
+        <% end %>
+
+      </div>
+
+    <% end %>
+
+  </div>
 </div>

@@ -1,99 +1,297 @@
-<div class="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4 font-sans">
-  <div class="max-w-md w-full bg-[#121214] rounded-2xl p-8 border border-gray-800 shadow-2xl">
-    
-    <div class="flex flex-col items-center mb-8">
-      <div class="w-16 h-16 bg-[#2a2a2d] rounded-2xl flex items-center justify-center mb-4 border border-[#c49b35]/30">
-        <span class="text-[#c49b35] text-3xl">✨</span>
-      </div>
-      <h1 class="text-3xl font-bold text-white tracking-tight">Azar S.A</h1>
-      <p class="text-gray-500 text-sm mt-1">Ingresa tus datos para acceder</p>
-    </div>
+<div class="min-h-screen bg-[#070707] relative overflow-hidden">
 
-    <form action="/registro" method="post" class="space-y-5">
-      <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+  <!-- Glow Background -->
+  <div class="absolute inset-0">
+    <div class="absolute top-[-120px] left-[-120px] w-[320px] h-[320px] bg-amber-500/10 blur-3xl rounded-full animate-pulse"></div>
+    <div class="absolute bottom-[-140px] right-[-100px] w-[300px] h-[300px] bg-yellow-400/10 blur-3xl rounded-full animate-pulse"></div>
+  </div>
 
-      <div>
-        <label class="block text-sm font-medium text-white mb-2">Nombre completo</label>
-        <div class="relative group">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#ffbf00]">
-            <svg xmlns="http://www.w3.org/2000/center" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
+  <!-- Grid -->
+  <div class="absolute inset-0 opacity-[0.03]"
+       style="background-image: linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px); background-size: 40px 40px;">
+  </div>
+
+  <div class="relative z-10 min-h-screen flex items-center justify-center px-4 py-10">
+
+    <div class="w-full max-w-lg">
+
+      <!-- Logo -->
+      <div class="text-center mb-8">
+
+        <div class="relative inline-flex mb-5">
+          <div class="absolute inset-0 bg-amber-400/30 blur-2xl rounded-full"></div>
+
+          <div class="relative w-20 h-20 rounded-3xl bg-gradient-to-br from-[#2a2112] to-[#151515]
+                      border border-amber-400/20 flex items-center justify-center
+                      shadow-[0_0_40px_rgba(255,191,0,0.15)]">
+
+            <span class="text-4xl">🎰</span>
           </div>
-          <input type="text" name="cliente[nombre]" placeholder="Juan Pérez"
-            class="w-full bg-[#1a1a1c] border-2 border-transparent focus:border-[#ffbf00] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 outline-none transition-all" required />
         </div>
+
+        <h1 class="text-4xl font-black tracking-tight text-white">
+          Azar S.A
+        </h1>
+
+        <p class="text-gray-500 mt-3 text-sm leading-relaxed max-w-sm mx-auto">
+          Regístrate y participa en sorteos digitales con resultados automáticos,
+          premios y compra de fracciones en tiempo real.
+        </p>
+
       </div>
 
-      <div>
-        <label class="block text-sm font-medium text-white mb-2">Número de documento</label>
-        <div class="relative group">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#ffbf00]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
+      <!-- Card -->
+      <div class="relative bg-[#101012]/90 backdrop-blur-xl border border-white/5
+                  rounded-[32px] p-8 shadow-2xl overflow-hidden">
+
+        <!-- Shine -->
+        <div class="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-transparent pointer-events-none"></div>
+
+        <!-- Flash -->
+        <%= if @flash["error"] do %>
+          <div class="mb-6 rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+            <div class="flex items-center gap-2">
+              <span>⚠️</span>
+              <span><%= @flash["error"] %></span>
+            </div>
           </div>
-          <input type="text" name="cliente[documento]" placeholder="1234567890"
-            class="w-full bg-[#1a1a1c] border-2 border-transparent focus:border-[#ffbf00] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 outline-none transition-all" required />
-        </div>
-      </div>
+        <% end %>
 
-      <div>
-        <label class="block text-sm font-medium text-white mb-2">Contraseña</label>
-        <div class="relative group">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#ffbf00]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
+        <form action="/registro" method="post" class="space-y-5 relative z-10">
+
+          <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+
+          <!-- Nombre -->
+          <div>
+
+            <label class="block text-sm font-semibold text-gray-300 mb-2">
+              Nombre completo
+            </label>
+
+            <div class="relative group">
+
+              <div class="absolute left-0 top-0 h-full w-12 flex items-center justify-center text-gray-500 group-focus-within:text-amber-300 transition">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-5 h-5"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+
+                  <path stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+              </div>
+
+              <input
+                type="text"
+                name="cliente[nombre]"
+                placeholder="Juan Pérez"
+                required
+                class="w-full h-14 rounded-2xl bg-[#17171a]
+                       border border-[#2a2a2f]
+                       focus:border-amber-400/50
+                       focus:ring-4 focus:ring-amber-400/10
+                       pl-12 pr-4 text-white placeholder-gray-600
+                       outline-none transition-all duration-300"
+              />
+
+            </div>
+
           </div>
-          <input type="password" name="cliente[password]" placeholder="••••••••"
-            class="w-full bg-[#1a1a1c] border-2 border-transparent focus:border-[#ffbf00] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 outline-none transition-all" required />
-        </div>
-      </div>
 
-      <div>
-        <label class="block text-sm font-medium text-white mb-2">Tarjeta de crédito</label>
-        <div class="relative group">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-[#ffbf00]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-            </svg>
+          <!-- Documento -->
+          <div>
+
+            <label class="block text-sm font-semibold text-gray-300 mb-2">
+              Documento
+            </label>
+
+            <div class="relative group">
+
+              <div class="absolute left-0 top-0 h-full w-12 flex items-center justify-center text-gray-500 group-focus-within:text-amber-300 transition">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-5 h-5"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+
+                  <path stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+              </div>
+
+              <input
+                type="text"
+                name="cliente[documento]"
+                placeholder="123456789"
+                required
+                class="w-full h-14 rounded-2xl bg-[#17171a]
+                       border border-[#2a2a2f]
+                       focus:border-amber-400/50
+                       focus:ring-4 focus:ring-amber-400/10
+                       pl-12 pr-4 text-white placeholder-gray-600
+                       outline-none transition-all duration-300"
+              />
+
+            </div>
+
           </div>
-          <input 
-            type="text" 
-            id="cc_input"
-            maxlength="19"
-            placeholder="1234 5678 9012 3456"
-            class="w-full bg-[#1a1a1c] border-2 border-transparent focus:border-[#ffbf00] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 outline-none transition-all" />
+
+          <!-- Password -->
+          <div>
+
+            <label class="block text-sm font-semibold text-gray-300 mb-2">
+              Contraseña
+            </label>
+
+            <div class="relative group">
+
+              <div class="absolute left-0 top-0 h-full w-12 flex items-center justify-center text-gray-500 group-focus-within:text-amber-300 transition">
+                🔒
+              </div>
+
+              <input
+                type="password"
+                name="cliente[password]"
+                placeholder="••••••••"
+                required
+                class="w-full h-14 rounded-2xl bg-[#17171a]
+                       border border-[#2a2a2f]
+                       focus:border-amber-400/50
+                       focus:ring-4 focus:ring-amber-400/10
+                       pl-12 pr-4 text-white placeholder-gray-600
+                       outline-none transition-all duration-300"
+              />
+
+            </div>
+
+          </div>
+
+          <!-- Tarjeta -->
+          <div>
+
+            <label class="block text-sm font-semibold text-gray-300 mb-2">
+              Tarjeta
+            </label>
+
+            <div class="relative group">
+
+              <div class="absolute left-0 top-0 h-full w-12 flex items-center justify-center text-gray-500 group-focus-within:text-amber-300 transition">
+                💳
+              </div>
+
+              <input
+                type="text"
+                id="cc_input"
+                maxlength="19"
+                placeholder="1234 5678 9012 3456"
+                class="w-full h-14 rounded-2xl bg-[#17171a]
+                       border border-[#2a2a2f]
+                       focus:border-amber-400/50
+                       focus:ring-4 focus:ring-amber-400/10
+                       pl-12 pr-4 text-white placeholder-gray-600
+                       outline-none transition-all duration-300"
+              />
+
+            </div>
+
+            <div class="flex items-center justify-between mt-3">
+              <p class="text-[11px] text-gray-500">
+                Pago protegido y cifrado.
+              </p>
+
+              <div class="flex gap-2 text-gray-600 text-xs">
+                <span>VISA</span>
+                <span>•</span>
+                <span>MC</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Button -->
+          <button
+            type="submit"
+            class="group relative w-full overflow-hidden rounded-2xl
+                   bg-gradient-to-r from-[#a97a1f] via-[#ffbf00] to-[#d99b00]
+                   py-4 text-black font-black tracking-wide text-lg
+                   transition-all duration-300
+                   hover:scale-[1.02]
+                   hover:shadow-[0_0_30px_rgba(255,191,0,0.35)]"
+          >
+
+            <span class="relative z-10 flex items-center justify-center gap-2">
+              Crear cuenta
+              <span class="transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
+            </span>
+
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-white/10"></div>
+
+          </button>
+
+        </form>
+
+        <!-- Footer -->
+        <div class="mt-8">
+
+          <div class="flex items-center gap-3 mb-6">
+            <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
+            <span class="text-xs uppercase tracking-[0.25em] text-gray-600">
+              acceso
+            </span>
+            <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
+          </div>
+
+          <p class="text-center text-sm text-gray-500">
+            ¿Ya tienes una cuenta?
+            <a
+              href="/login"
+              class="text-amber-300 hover:text-amber-200 font-semibold transition"
+            >
+              Inicia sesión
+            </a>
+          </p>
+
         </div>
-        <p class="text-[10px] text-gray-500 mt-2">Tu información está protegida con encriptación SSL</p>
+
       </div>
 
-      <button type="submit"
-        class="w-full bg-[#8c6d1f] hover:bg-[#ffbf00] text-black py-3 rounded-xl font-bold text-lg transition-colors duration-200">
-        Ingresar
-      </button>
-    </form>
+      <!-- Bottom -->
+      <div class="flex justify-center gap-6 mt-8 text-gray-700 text-xl">
 
-    <p class="mt-6 text-sm text-gray-400 text-center">
-      ¿No tienes cuenta? <a href="/registro" class="text-[#c49b35] font-semibold hover:underline">Regístrate ahora</a>
-    </p>
-    
-    <div class="flex justify-center space-x-6 mt-10 text-gray-700 text-xl">
-      <span class="hover:text-gray-500 transition-colors cursor-default">♠</span>
-      <span class="hover:text-gray-500 transition-colors cursor-default">♥</span>
-      <span class="hover:text-gray-500 transition-colors cursor-default">♦</span>
-      <span class="hover:text-gray-500 transition-colors cursor-default">♣</span>
+        <span class="hover:text-amber-300 hover:-translate-y-1 transition-all duration-300 cursor-default">
+          ♠
+        </span>
+
+        <span class="hover:text-red-400 hover:-translate-y-1 transition-all duration-300 cursor-default">
+          ♥
+        </span>
+
+        <span class="hover:text-blue-400 hover:-translate-y-1 transition-all duration-300 cursor-default">
+          ♦
+        </span>
+
+        <span class="hover:text-green-400 hover:-translate-y-1 transition-all duration-300 cursor-default">
+          ♣
+        </span>
+
+      </div>
+
     </div>
   </div>
 </div>
 
 <script>
-  // Formateo automático de tarjeta de crédito
   const ccInput = document.getElementById('cc_input');
+
   ccInput.addEventListener('input', (e) => {
     let value = e.target.value.replace(/\D/g, '');
-    let formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
-    e.target.value = formattedValue;
+    e.target.value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
   });
 </script>

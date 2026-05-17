@@ -1,0 +1,285 @@
+<div class="min-h-screen bg-[#f5f6f8] flex flex-col">
+
+  <!-- Header PSE oficial -->
+  <div class="bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <!-- Logo PSE -->
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-10 rounded-lg bg-[#00529b] flex items-center justify-center">
+            <span class="text-white font-black text-sm">PSE</span>
+          </div>
+          <div>
+            <p class="text-[#00529b] font-black text-lg leading-none">PSE</p>
+            <p class="text-gray-400 text-[10px] leading-none">Pagos Seguros en Línea</p>
+          </div>
+        </div>
+        <div class="h-8 w-px bg-gray-200"></div>
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded bg-[#d4a017]/10 flex items-center justify-center">
+            <span class="text-[#d4a017] text-sm">🎰</span>
+          </div>
+          <div>
+            <p class="text-gray-700 font-semibold text-sm leading-none">Azar S.A</p>
+            <p class="text-gray-400 text-[10px] leading-none">Recarga de saldo</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 text-xs text-gray-500">
+        <span class="text-green-500">🔒</span>
+        <span>Conexión segura SSL</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra de progreso -->
+  <div class="bg-white border-b border-gray-100">
+    <div class="max-w-4xl mx-auto px-6 py-3">
+      <div class="flex items-center gap-2 text-xs">
+        <div class="flex items-center gap-1.5">
+          <div class="w-6 h-6 rounded-full bg-[#00529b] text-white flex items-center justify-center font-bold text-[10px]">1</div>
+          <span class="text-[#00529b] font-semibold">Datos del pago</span>
+        </div>
+        <div class="flex-1 h-px bg-gray-200"></div>
+        <div class="flex items-center gap-1.5">
+          <div class="w-6 h-6 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center font-bold text-[10px]">2</div>
+          <span class="text-gray-400">Autenticación</span>
+        </div>
+        <div class="flex-1 h-px bg-gray-200"></div>
+        <div class="flex items-center gap-1.5">
+          <div class="w-6 h-6 rounded-full bg-gray-200 text-gray-400 flex items-center justify-center font-bold text-[10px]">3</div>
+          <span class="text-gray-400">Confirmación</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido -->
+  <div class="flex-1 max-w-4xl mx-auto w-full px-6 py-8 grid lg:grid-cols-3 gap-8">
+
+    <!-- Formulario -->
+    <div class="lg:col-span-2">
+
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-7">
+
+        <h2 class="text-xl font-bold text-gray-800 mb-1">Información de pago</h2>
+        <p class="text-sm text-gray-500 mb-7">Selecciona tu banco y completa los datos para continuar.</p>
+
+        <form action="/pse/procesar" method="post" class="space-y-6">
+          <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+          <input type="hidden" name="valor" value={@valor} />
+
+          <!-- Banco -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Entidad financiera <span class="text-red-500">*</span>
+            </label>
+            <select
+              name="banco"
+              required
+              class="w-full h-12 rounded-xl border border-gray-200 bg-gray-50 px-4 text-gray-800 text-sm outline-none focus:border-[#00529b] focus:ring-2 focus:ring-[#00529b]/10 transition"
+            >
+              <option value="" disabled selected>— Selecciona tu banco —</option>
+              <%= for banco <- @bancos do %>
+                <option value={banco}><%= banco %></option>
+              <% end %>
+            </select>
+          </div>
+
+          <!-- Tipo de persona -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Tipo de persona <span class="text-red-500">*</span>
+            </label>
+            <div class="flex gap-3">
+              <label class="flex-1 flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 cursor-pointer has-[:checked]:border-[#00529b] has-[:checked]:bg-[#00529b]/5 transition">
+                <input type="radio" name="tipo_persona" value="natural" checked class="accent-[#00529b]" />
+                <span class="text-sm text-gray-700 font-medium">Natural</span>
+              </label>
+              <label class="flex-1 flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 cursor-pointer has-[:checked]:border-[#00529b] has-[:checked]:bg-[#00529b]/5 transition">
+                <input type="radio" name="tipo_persona" value="juridica" class="accent-[#00529b]" />
+                <span class="text-sm text-gray-700 font-medium">Jurídica</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Tipo documento -->
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                Tipo de documento <span class="text-red-500">*</span>
+              </label>
+              <select
+                name="tipo_doc"
+                required
+                class="w-full h-12 rounded-xl border border-gray-200 bg-gray-50 px-4 text-gray-800 text-sm outline-none focus:border-[#00529b] focus:ring-2 focus:ring-[#00529b]/10 transition"
+              >
+                <option value="CC">Cédula de ciudadanía</option>
+                <option value="CE">Cédula de extranjería</option>
+                <option value="TI">Tarjeta de identidad</option>
+                <option value="NIT">NIT</option>
+                <option value="PP">Pasaporte</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                Número de documento <span class="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="cuenta"
+                placeholder="Ej: 1023456789"
+                required
+                class="w-full h-12 rounded-xl border border-gray-200 bg-gray-50 px-4 text-gray-800 text-sm outline-none focus:border-[#00529b] focus:ring-2 focus:ring-[#00529b]/10 transition"
+              />
+            </div>
+          </div>
+
+          <!-- Tipo de cuenta -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Tipo de cuenta <span class="text-red-500">*</span>
+            </label>
+            <div class="flex gap-3">
+              <label class="flex-1 flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 cursor-pointer has-[:checked]:border-[#00529b] has-[:checked]:bg-[#00529b]/5 transition">
+                <input type="radio" name="tipo_cuenta" value="ahorros" checked class="accent-[#00529b]" />
+                <span class="text-sm text-gray-700 font-medium">Ahorros</span>
+              </label>
+              <label class="flex-1 flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 cursor-pointer has-[:checked]:border-[#00529b] has-[:checked]:bg-[#00529b]/5 transition">
+                <input type="radio" name="tipo_cuenta" value="corriente" class="accent-[#00529b]" />
+                <span class="text-sm text-gray-700 font-medium">Corriente</span>
+              </label>
+              <label class="flex-1 flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 cursor-pointer has-[:checked]:border-[#00529b] has-[:checked]:bg-[#00529b]/5 transition">
+                <input type="radio" name="tipo_cuenta" value="electronico" class="accent-[#00529b]" />
+                <span class="text-sm text-gray-700 font-medium">Depósito</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Correo electrónico <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="correo@ejemplo.com"
+              required
+              class="w-full h-12 rounded-xl border border-gray-200 bg-gray-50 px-4 text-gray-800 text-sm outline-none focus:border-[#00529b] focus:ring-2 focus:ring-[#00529b]/10 transition"
+            />
+            <p class="text-xs text-gray-400 mt-1.5">
+              Recibirás la confirmación de tu transacción en este correo.
+            </p>
+          </div>
+
+          <!-- Botón -->
+          <button
+            type="submit"
+            class="w-full h-13 rounded-xl bg-[#00529b] hover:bg-[#003f7a] text-white font-bold text-base transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2 py-4"
+          >
+            <span>🔒</span>
+            Continuar con el pago
+          </button>
+
+        </form>
+
+      </div>
+
+      <!-- Nota -->
+      <div class="mt-4 flex items-start gap-3 bg-blue-50 border border-blue-100 rounded-xl px-5 py-4">
+        <span class="text-blue-400 mt-0.5">ℹ️</span>
+        <p class="text-xs text-blue-600 leading-relaxed">
+          Serás redirigido al portal de tu banco para autorizar el pago. PSE no almacena datos de tus cuentas ni credenciales bancarias. La transacción es procesada directamente por tu entidad financiera.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Resumen -->
+    <div class="space-y-4">
+
+      <!-- Detalle del pago -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h3 class="text-sm font-bold text-gray-700 mb-4 uppercase tracking-wide">Resumen del pago</h3>
+
+        <div class="space-y-3">
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-500">Comercio</span>
+            <span class="text-gray-800 font-semibold">Azar S.A</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-500">Concepto</span>
+            <span class="text-gray-800 font-semibold">Recarga saldo</span>
+          </div>
+          <div class="border-t border-gray-100 pt-3 flex justify-between">
+            <span class="text-gray-700 font-semibold">Total</span>
+            <span class="text-[#00529b] font-black text-xl">$<%= @valor %></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seguridad -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h3 class="text-sm font-bold text-gray-700 mb-4 uppercase tracking-wide">Seguridad</h3>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3 text-sm text-gray-600">
+            <span class="text-green-500">✓</span>
+            <span>Cifrado SSL 256-bit</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-600">
+            <span class="text-green-500">✓</span>
+            <span>Red ACH Colombia</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-600">
+            <span class="text-green-500">✓</span>
+            <span>Autenticación bancaria</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-600">
+            <span class="text-green-500">✓</span>
+            <span>Sin almacenamiento de datos</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bancos -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h3 class="text-sm font-bold text-gray-700 mb-4 uppercase tracking-wide">Bancos afiliados</h3>
+        <div class="flex flex-wrap gap-2">
+          <%= for banco <- @bancos do %>
+            <span class="px-2 py-1 rounded-lg bg-gray-50 border border-gray-100 text-xs text-gray-600">
+              <%= banco %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+
+      <a href="/perfil" class="block text-center text-sm text-gray-400 hover:text-gray-600 transition">
+        ← Cancelar y volver
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- Footer PSE -->
+  <div class="bg-white border-t border-gray-200 mt-auto">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3 text-xs text-gray-400">
+        <span class="font-bold text-[#00529b]">PSE</span>
+        <span>·</span>
+        <span>ACH Colombia S.A</span>
+        <span>·</span>
+        <span>NIT 830.053.940-4</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs text-gray-400">
+        <span>🔒 Sitio seguro</span>
+        <span>·</span>
+        <span>Soporte 24/7</span>
+        <span>·</span>
+        <span>Habeas Data</span>
+      </div>
+    </div>
+  </div>
+
+</div>

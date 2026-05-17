@@ -43,7 +43,7 @@ defmodule AzarApp.Sorteos do
     case get_sorteo(id) do
       {:ok, sorteo} ->
         if sorteo.premio != nil do
-          {:error, "No se puede eliminar: el sorteo tiene un premio asociado"}
+          {:error, "No se puede eliminar el sorteo tiene un premio asociado"}
         else
           JsonStore.delete(:sorteos, id)
         end
@@ -194,6 +194,10 @@ defmodule AzarApp.Sorteos do
       {:ok, balance} = balance_sorteo(s.id)
       Map.put(balance, :sorteo, s.nombre)
     end)
+  end
+
+  def ejecutar_sorteo(sorteo_id) do
+  SorteoServer.ejecutar(sorteo_id)
   end
 
   # ── Privado ────────────────────────────────────────────────────────────────

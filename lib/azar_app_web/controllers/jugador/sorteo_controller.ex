@@ -7,16 +7,18 @@ defmodule AzarAppWeb.Jugador.SorteoController do
     render(conn, :index, sorteos: sorteos)
   end
 
+  
   def show(conn, %{"id" => id}) do
-    case Sorteos.get_sorteo(id) do
-      {:ok, sorteo} ->
-        {:ok, billetes} = Sorteos.billetes_disponibles(id)
-        render(conn, :show, sorteo: sorteo, billetes: billetes)
+  case Sorteos.get_sorteo(id) do
+    {:ok, sorteo} ->
+      {:ok, billetes} = Sorteos.billetes_disponibles(id)
+      cliente_doc = get_session(conn, :cliente_doc)
+      render(conn, :show, sorteo: sorteo, billetes: billetes, cliente_doc: cliente_doc)
 
-      :error ->
-        conn
-        |> put_flash(:error, "Sorteo no encontrado.")
-        |> redirect(to: ~p"/")
-    end
+    :error ->
+      conn
+      |> put_flash(:error, "Sorteo no encontrado.")
+      |> redirect(to: ~p"/")
   end
+end
 end
