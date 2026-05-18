@@ -2,7 +2,6 @@ defmodule AzarAppWeb.Jugador.ClienteController do
   use AzarAppWeb, :controller
   alias AzarApp.Clientes
 
-
   def new(conn, _params) do
     render(conn, :new)
   end
@@ -51,7 +50,7 @@ defmodule AzarAppWeb.Jugador.ClienteController do
 
   def recargar(conn, %{"valor" => valor}) do
     cliente_doc = get_session(conn, :cliente_doc)
-    valor       = String.to_integer(valor)
+    valor = String.to_integer(valor)
 
     case Clientes.recargar_saldo(cliente_doc, valor) do
       {:ok, cliente} ->
@@ -64,12 +63,31 @@ defmodule AzarAppWeb.Jugador.ClienteController do
         |> put_flash(:error, motivo)
         |> redirect(to: ~p"/perfil")
     end
-
-    end
+  end
 
   def perfil(conn, _params) do
-      cliente_doc = get_session(conn, :cliente_doc)
-      {:ok, cliente} = Clientes.get_cliente(cliente_doc)
-      render(conn, :perfil, cliente: cliente)
-    end
+    cliente_doc = get_session(conn, :cliente_doc)
+    {:ok, cliente} = Clientes.get_cliente(cliente_doc)
+    render(conn, :perfil, cliente: cliente)
+  end
+
+  def notificaciones(conn, _params) do
+    cliente_doc = get_session(conn, :cliente_doc)
+    {:ok, _cliente} = Clientes.get_cliente(cliente_doc)
+    Clientes.marcar_notificaciones_leidas(cliente_doc)
+    {:ok, cliente_actualizado} = Clientes.get_cliente(cliente_doc)
+    render(conn, :notificaciones, notificaciones: cliente_actualizado.notificaciones)
+  end
+
+  def marcar_leidas(conn, _params) do
+    cliente_doc = get_session(conn, :cliente_doc)
+    Clientes.marcar_notificaciones_leidas(cliente_doc)
+    conn |> redirect(to: ~p"/notificaciones")
+  end
+
+  def eliminar_notificacion(conn, %{"id" => notif_id}) do
+    cliente_doc = get_session(conn, :cliente_doc)
+    Clientes.eliminar_notificacion(cliente_doc, notif_id)
+    redirect(conn, to: ~p"/notificaciones")
+  end
 end

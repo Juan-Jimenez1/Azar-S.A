@@ -794,8 +794,10 @@
     {
       "billetes": [
         {
-          "disponible": true,
-          "numero": 1001
+          "disponible": false,
+          "numero": 1001,
+          "propietario_doc": "1",
+          "tipo": "completo"
         }
       ],
       "cantidad_billetes": 1,
@@ -803,13 +805,13 @@
       "fecha": "2026-05-17",
       "id": "sorteo_1779071116582025",
       "nombre": "q",
-      "numero_ganador": null,
+      "numero_ganador": 1001,
       "premio": {
         "id": "premio_1779071131596413",
         "nombre": "Dinero",
         "valor": 100000
       },
-      "realizado": false,
+      "realizado": true,
       "valor_billete": 1000
     },
     {
@@ -882,12 +884,16 @@
           "tipo": "fraccion"
         },
         {
-          "disponible": true,
-          "numero": 1002
+          "disponible": false,
+          "numero": 1002,
+          "propietario_doc": "123",
+          "tipo": "completo"
         },
         {
-          "disponible": true,
-          "numero": 1003
+          "disponible": false,
+          "numero": 1003,
+          "propietario_doc": "123",
+          "tipo": "completo"
         },
         {
           "disponible": true,
@@ -923,14 +929,116 @@
       "fecha": "2026-05-17",
       "id": "sorteo_1779071530396683",
       "nombre": "s",
-      "numero_ganador": null,
+      "numero_ganador": 1001,
       "premio": {
         "id": "premio_1779071543680000",
         "nombre": "Dinero",
         "valor": 99998
       },
-      "realizado": false,
+      "realizado": true,
       "valor_billete": 10000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 6,
+              "propietario_doc": "1"
+            }
+          ],
+          "numero": 1001,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        },
+        {
+          "disponible": true,
+          "numero": 1003
+        },
+        {
+          "disponible": true,
+          "numero": 1004
+        },
+        {
+          "disponible": true,
+          "numero": 1005
+        },
+        {
+          "disponible": true,
+          "numero": 1006
+        },
+        {
+          "disponible": false,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 5,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 1,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 2,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 3,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 4,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 6,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 7,
+              "propietario_doc": "1"
+            }
+          ],
+          "numero": 1007,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 6,
+              "propietario_doc": "1"
+            }
+          ],
+          "numero": 1008,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "numero": 1009
+        },
+        {
+          "disponible": true,
+          "numero": 1010
+        }
+      ],
+      "cantidad_billetes": 10,
+      "cantidad_fracciones": 7,
+      "fecha": "2026-05-18",
+      "id": "sorteo_1779084502971184",
+      "nombre": "hola",
+      "numero_ganador": 1007,
+      "premio": {
+        "id": "premio_1779084515905737",
+        "nombre": "dinero",
+        "valor": 1312312
+      },
+      "realizado": true,
+      "valor_billete": 1000
     }
   ]
 }

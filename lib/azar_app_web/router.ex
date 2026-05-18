@@ -38,7 +38,11 @@ defmodule AzarAppWeb.Router do
     post "/sorteos/:id/comprar-billete", CompraController, :comprar_billete
     post "/sorteos/:id/comprar-fraccion", CompraController, :comprar_fraccion
     delete "/sorteos/:sorteo_id/devolver/:numero", CompraController, :devolver
-    post "/sorteos/:id/comprar-fracciones-restantes", CompraController, :comprar_fracciones_restantes
+
+    post "/sorteos/:id/comprar-fracciones-restantes",
+         CompraController,
+         :comprar_fracciones_restantes
+
     get "/registro", ClienteController, :new
     post "/registro", ClienteController, :create
     get "/", ClienteController, :login
@@ -56,5 +60,9 @@ defmodule AzarAppWeb.Router do
     post "/tarjeta/procesar", TarjetaController, :procesar
     get "/tarjeta/cargando", TarjetaController, :cargando
     get "/tarjeta/exito", TarjetaController, :exito
+
+    get "/notificaciones", ClienteController, :notificaciones
+    post "/notificaciones/leer", ClienteController, :marcar_leidas
+    delete "/notificaciones/:id", ClienteController, :eliminar_notificacion
   end
 end

@@ -4,6 +4,7 @@
       "documento": "11267809",
       "id": "cliente_1778814429536315",
       "nombre": "Pablito",
+      "notificaciones": [],
       "password_hash": "594ebf8373a864de5204b43ef4f10360390b3fc006f920332676a7e182971b31",
       "saldo": 60000
     },
@@ -11,6 +12,7 @@
       "documento": "8388883",
       "id": "cliente_1778819321369478",
       "nombre": "PABLITO",
+      "notificaciones": [],
       "password_hash": "198676f9e8a91c1e6b81e7b37cd688b737902360fa1355b8de0515dd1f0a4b54",
       "saldo": 0
     },
@@ -18,6 +20,7 @@
       "documento": "1234",
       "id": "cliente_1778979047448390",
       "nombre": "Carlitos",
+      "notificaciones": [],
       "password_hash": "fa3cfb3f1bb823aa9501f88f1f95f732ee6fef2c3a48be7f1d38037b216a549f",
       "saldo": 0
     },
@@ -25,13 +28,24 @@
       "documento": "123",
       "id": "cliente_1778979182605843",
       "nombre": "Juan",
+      "notificaciones": [
+        {
+          "cuerpo": "El número ganador fue el billete #1001. ¡Revisa si ganaste!",
+          "fecha": "2026-05-18 05:55:27.291000Z",
+          "id": "notif_1779083727289775",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "🎰 Sorteo realizado: s"
+        }
+      ],
       "password_hash": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
-      "saldo": 1061668
+      "saldo": 1041668
     },
     {
       "documento": "10359027",
       "id": "cliente_1778991953443836",
       "nombre": "Pablito",
+      "notificaciones": [],
       "password_hash": "594ebf8373a864de5204b43ef4f10360390b3fc006f920332676a7e182971b31",
       "saldo": 0
     },
@@ -39,6 +53,7 @@
       "documento": "1126905118",
       "id": "cliente_1778992165719139",
       "nombre": "Maleja",
+      "notificaciones": [],
       "password_hash": "056b69ad25c1f1b95ed1508529252797b4f379da690c2b628eeac2f05198492e",
       "saldo": 2925334
     },
@@ -46,6 +61,7 @@
       "documento": "25081555",
       "id": "cliente_1779035426290028",
       "nombre": "Deina",
+      "notificaciones": [],
       "password_hash": "2acb99a26fb3d8e390f96c8935c43f6646cb517ba3b2e70409dd1b432de65661",
       "saldo": 100005000
     },
@@ -53,6 +69,7 @@
       "documento": "200016666",
       "id": "cliente_1779038178321601",
       "nombre": "Sergio",
+      "notificaciones": [],
       "password_hash": "9bcbdfa04fb53ac0e8baa9938cbfaa27e716db65a0d8bbd68cab18a26050117d",
       "saldo": 6009000
     },
@@ -60,8 +77,74 @@
       "documento": "1",
       "id": "cliente_1779068061052676",
       "nombre": "juan",
+      "notificaciones": [
+        {
+          "cuerpo": "🎟️ Billete #1007 · Fracción 7 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
+          "fecha": "2026-05-18 06:20:12.404000Z",
+          "id": "notif_1779085212403500",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "🏆 ¡Ganaste $187473 en hola!"
+        },
+        {
+          "cuerpo": "🎟️ Billete #1007 · Fracción 6 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
+          "fecha": "2026-05-18 06:20:12.352000Z",
+          "id": "notif_1779085212351072",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "🏆 ¡Ganaste $187473 en hola!"
+        },
+        {
+          "cuerpo": "🎟️ Billete #1007 · Fracción 4 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
+          "fecha": "2026-05-18 06:20:12.286000Z",
+          "id": "notif_1779085212284921",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "🏆 ¡Ganaste $187473 en hola!"
+        },
+        {
+          "cuerpo": "🎟️ Billete #1007 · Fracción 3 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
+          "fecha": "2026-05-18 06:20:12.241000Z",
+          "id": "notif_1779085212240275",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "🏆 ¡Ganaste $187473 en hola!"
+        },
+        {
+          "cuerpo": "🎟️ Billete #1007 · Fracción 2 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
+          "fecha": "2026-05-18 06:20:12.196000Z",
+          "id": "notif_1779085212195014",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "🏆 ¡Ganaste $187473 en hola!"
+        },
+        {
+          "cuerpo": "🎟️ Billete #1007 · Fracción 1 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
+          "fecha": "2026-05-18 06:20:12.140000Z",
+          "id": "notif_1779085212139616",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "🏆 ¡Ganaste $187473 en hola!"
+        },
+        {
+          "cuerpo": "🎟️ Billete #1007 · Fracción 5 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
+          "fecha": "2026-05-18 06:20:12.086000Z",
+          "id": "notif_1779085212085958",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "🏆 ¡Ganaste $187473 en hola!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1007. Premio: dinero ($1312312). Entra a ver tus resultados.",
+          "fecha": "2026-05-18 06:20:12.023000Z",
+          "id": "notif_1779085212022368",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "🎰 Sorteo \"hola\" finalizado"
+        }
+      ],
       "password_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
-      "saldo": 1027408
+      "saldo": 2537437
     }
   ]
 }
