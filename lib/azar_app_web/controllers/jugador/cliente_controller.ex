@@ -13,7 +13,7 @@ defmodule AzarAppWeb.Jugador.ClienteController do
         conn
         |> put_session(:cliente_doc, cliente.documento)
         |> put_flash(:info, "Bienvenido #{cliente.nombre}!")
-        |> redirect(to: ~p"/")
+        |> redirect(to: ~p"/index")
 
       {:error, motivo} ->
         conn
@@ -35,12 +35,12 @@ defmodule AzarAppWeb.Jugador.ClienteController do
         conn
         |> put_session(:cliente_doc, cliente.documento)
         |> put_flash(:info, "Bienvenido de nuevo #{cliente.nombre}!")
-        |> redirect(to: ~p"/perfil")
+        |> redirect(to: ~p"/index")
 
       {:error, motivo} ->
         conn
         |> put_flash(:error, motivo)
-        |> redirect(to: ~p"/login")
+        |> redirect(to: ~p"/")
     end
   end
 

@@ -32,17 +32,17 @@ defmodule AzarAppWeb.Router do
   scope "/", AzarAppWeb.Jugador, as: :jugador do
     pipe_through :browser
 
-    get "/", SorteoController, :index
+    get "/index", SorteoController, :index
     get "/sorteos/:id", SorteoController, :show
 
     post "/sorteos/:id/comprar-billete", CompraController, :comprar_billete
     post "/sorteos/:id/comprar-fraccion", CompraController, :comprar_fraccion
     delete "/sorteos/:sorteo_id/devolver/:numero", CompraController, :devolver
-
+    post "/sorteos/:id/comprar-fracciones-restantes", CompraController, :comprar_fracciones_restantes
     get "/registro", ClienteController, :new
     post "/registro", ClienteController, :create
-    get "/login", ClienteController, :login
-    post "/login", ClienteController, :login
+    get "/", ClienteController, :login
+    post "/", ClienteController, :login
     delete "/logout", ClienteController, :logout
     get "/perfil", ClienteController, :perfil
     post "/perfil/recargar", ClienteController, :recargar

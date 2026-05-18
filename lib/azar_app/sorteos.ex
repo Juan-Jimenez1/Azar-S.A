@@ -200,6 +200,10 @@ defmodule AzarApp.Sorteos do
   SorteoServer.ejecutar(sorteo_id)
   end
 
+  def comprar_fracciones_restantes(sorteo_id, numero, cliente_doc) do
+   SorteoServer.comprar_fracciones_restantes(sorteo_id, numero, cliente_doc)
+  end
+
   # ── Privado ────────────────────────────────────────────────────────────────
 
   defp generar_billetes(cantidad) do

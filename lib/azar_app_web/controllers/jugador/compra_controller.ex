@@ -20,6 +20,30 @@ defmodule AzarAppWeb.Jugador.CompraController do
     end
   end
 
+  def comprar_fracciones_restantes(conn, %{"id" => sorteo_id, "numero" => numero}) do
+    cliente_doc = get_session(conn, :cliente_doc)
+    numero      = String.to_integer(numero)
+
+    with {:ok, sorteo}      <- AzarApp.Sorteos.get_sorteo(sorteo_id),
+         billete            =  Enum.find(sorteo.billetes, &(&1["numero"] == numero)),
+         fracciones_tomadas =  Map.get(billete, "fracciones_tomadas", []),
+         nums_tomados       =  Enum.map(fracciones_tomadas, & &1["fraccion"]),
+         fracciones_libres  =  Enum.reject(1..sorteo.cantidad_fracciones |> Enum.to_list(), &(&1 in nums_tomados)),
+         valor_fraccion     =  div(sorteo.valor_billete, sorteo.cantidad_fracciones),
+         valor_total        =  length(fracciones_libres) * valor_fraccion,
+         {:ok, _cliente}    <- AzarApp.Clientes.descontar_saldo(cliente_doc, valor_total),
+         {:ok, _, cantidad} <- AzarApp.Sorteos.comprar_fracciones_restantes(sorteo_id, numero, cliente_doc) do
+      conn
+      |> put_flash(:info, "Compraste #{cantidad} fracciones restantes del billete #{numero}.")
+      |> redirect(to: ~p"/sorteos/#{sorteo_id}")
+    else
+      {:error, motivo} ->
+        conn
+        |> put_flash(:error, motivo)
+        |> redirect(to: ~p"/sorteos/#{sorteo_id}")
+    end
+  end
+
   def comprar_fraccion(conn, %{"id" => sorteo_id, "numero" => numero, "fraccion" => fraccion}) do
     cliente_doc = get_session(conn, :cliente_doc)
     numero   = String.to_integer(numero)

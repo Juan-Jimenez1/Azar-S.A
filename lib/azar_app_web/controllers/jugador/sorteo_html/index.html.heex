@@ -117,16 +117,22 @@
 
           <% url = "/sorteos/" <> sorteo.id %>
 
-          <% billetes_disponibles = Enum.count(sorteo.billetes, & &1["disponible"]) %>
+          <% billetes_disponibles = Enum.count(sorteo.billetes, fn b ->
+            case b["tipo"] do
+              "completo" -> false
+              _ ->
+                fracs = Map.get(b, "fracciones_tomadas", [])
+                length(fracs) < sorteo.cantidad_fracciones
+            end
+          end) %>
 
-          <% porcentaje =
-            if sorteo.cantidad_billetes > 0,
-              do:
-                round(
-                  (sorteo.cantidad_billetes - billetes_disponibles) /
-                    sorteo.cantidad_billetes * 100
-                ),
-              else: 0 %>
+          <% fracciones_totales = sorteo.cantidad_billetes * sorteo.cantidad_fracciones %>
+
+          <% fracciones_vendidas = Enum.reduce(sorteo.billetes, 0, fn b, acc ->
+            acc + length(Map.get(b, "fracciones_tomadas", []))
+          end) %>
+
+          <% porcentaje = if fracciones_totales > 0, do: round(fracciones_vendidas / fracciones_totales * 100), else: 0 %>
 
           <div class="group relative overflow-hidden rounded-[30px] border border-[#23262f] bg-[#101217]/90 backdrop-blur-xl p-6 shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-[#d4a017]/40 hover:shadow-[0_0_40px_rgba(212,160,23,0.15)]">
 
@@ -184,7 +190,7 @@
             <div class="relative z-10 space-y-4 mb-6">
 
               <div class="flex items-center justify-between text-sm">
-                <span class="text-gray-500">Fecha</span>
+                <span class="text-gray-500">Fecha sorteo</span>
 
                 <span class="font-semibold text-gray-200">
                   <%= sorteo.fecha %>
@@ -192,7 +198,7 @@
               </div>
 
               <div class="flex items-center justify-between text-sm">
-                <span class="text-gray-500">Billete completo</span>
+                <span class="text-gray-500">Valor billete completo</span>
 
                 <span class="font-semibold text-white">
                   $<%= sorteo.valor_billete %>
@@ -200,7 +206,7 @@
               </div>
 
               <div class="flex items-center justify-between text-sm">
-                <span class="text-gray-500">Fracciones</span>
+                <span class="text-gray-500">Fracciones por billete</span>
 
                 <span class="font-semibold text-white">
                   <%= sorteo.cantidad_fracciones %>
@@ -213,7 +219,7 @@
             <div class="relative z-10 mb-7">
 
               <div class="flex justify-between text-xs text-gray-500 mb-2">
-                <span><%= billetes_disponibles %> disponibles</span>
+                <span><%= billetes_disponibles %> billetes disponibles</span>
 
                 <span><%= porcentaje %>% vendido</span>
               </div>
