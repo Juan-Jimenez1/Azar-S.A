@@ -1039,6 +1039,72 @@
       },
       "realizado": true,
       "valor_billete": 1000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": false,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 1,
+              "propietario_doc": "1126905118"
+            },
+            {
+              "fraccion": 2,
+              "propietario_doc": "1126905118"
+            },
+            {
+              "fraccion": 3,
+              "propietario_doc": "1126905118"
+            },
+            {
+              "fraccion": 4,
+              "propietario_doc": "1126905118"
+            },
+            {
+              "fraccion": 5,
+              "propietario_doc": "1126905118"
+            }
+          ],
+          "numero": 1001,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 5,
+              "propietario_doc": "1126905118"
+            }
+          ],
+          "numero": 1002,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 3,
+              "propietario_doc": "1126905118"
+            }
+          ],
+          "numero": 1003,
+          "tipo": "fraccion"
+        }
+      ],
+      "cantidad_billetes": 3,
+      "cantidad_fracciones": 5,
+      "fecha": "2112-02-22",
+      "id": "sorteo_1779129728889523",
+      "nombre": "K",
+      "numero_ganador": 1001,
+      "premio": {
+        "id": "premio_1779129765175987",
+        "nombre": "K",
+        "valor": 60000
+      },
+      "realizado": true,
+      "valor_billete": 5000
     }
   ]
 }

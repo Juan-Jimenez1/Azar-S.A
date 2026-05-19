@@ -53,9 +53,58 @@
       "documento": "1126905118",
       "id": "cliente_1778992165719139",
       "nombre": "Maleja",
-      "notificaciones": [],
+      "notificaciones": [
+        {
+          "cuerpo": "🎟️ Billete #1001 · Fracción 5 — Ganaste $12000 en el sorteo\"K\". El premio \"K\" fue tuyo. 💸",
+          "fecha": "2026-05-18 18:44:47.551000Z",
+          "id": "notif_1779129887551872",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "🏆 ¡Ganaste $12000 en K!"
+        },
+        {
+          "cuerpo": "🎟️ Billete #1001 · Fracción 4 — Ganaste $12000 en el sorteo\"K\". El premio \"K\" fue tuyo. 💸",
+          "fecha": "2026-05-18 18:44:47.488000Z",
+          "id": "notif_1779129887488793",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "🏆 ¡Ganaste $12000 en K!"
+        },
+        {
+          "cuerpo": "🎟️ Billete #1001 · Fracción 3 — Ganaste $12000 en el sorteo\"K\". El premio \"K\" fue tuyo. 💸",
+          "fecha": "2026-05-18 18:44:47.427000Z",
+          "id": "notif_1779129887426944",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "🏆 ¡Ganaste $12000 en K!"
+        },
+        {
+          "cuerpo": "🎟️ Billete #1001 · Fracción 2 — Ganaste $12000 en el sorteo\"K\". El premio \"K\" fue tuyo. 💸",
+          "fecha": "2026-05-18 18:44:47.355000Z",
+          "id": "notif_1779129887355264",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "🏆 ¡Ganaste $12000 en K!"
+        },
+        {
+          "cuerpo": "🎟️ Billete #1001 · Fracción 1 — Ganaste $12000 en el sorteo\"K\". El premio \"K\" fue tuyo. 💸",
+          "fecha": "2026-05-18 18:44:47.287000Z",
+          "id": "notif_1779129887288089",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "🏆 ¡Ganaste $12000 en K!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1001. Premio: K ($60000). Entra a ver tus resultados.",
+          "fecha": "2026-05-18 18:44:47.221000Z",
+          "id": "notif_1779129887221939",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "🎰 Sorteo \"K\" finalizado"
+        }
+      ],
       "password_hash": "056b69ad25c1f1b95ed1508529252797b4f379da690c2b628eeac2f05198492e",
-      "saldo": 2925334
+      "saldo": 2978334
     },
     {
       "documento": "25081555",
