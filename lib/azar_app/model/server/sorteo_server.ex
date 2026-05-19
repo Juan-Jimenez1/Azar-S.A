@@ -54,7 +54,7 @@ defmodule AzarApp.SorteoServer do
     JsonStore.upsert(:sorteos, nuevo)
     {:reply, {:ok, nuevo}, nuevo}
   end
-
+  #Hola
   @impl true
   def handle_call({:comprar_billete, numero, cliente_doc}, _from, sorteo) do
     if sorteo.realizado do
