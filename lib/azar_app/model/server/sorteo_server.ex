@@ -16,8 +16,7 @@ defmodule AzarApp.SorteoServer do
     do: GenServer.call(via(sorteo_id), {:comprar_billete, numero_billete, cliente_doc})
 
   def comprar_fracciones_restantes(sorteo_id, numero_billete, cliente_doc),
-    do:
-      GenServer.call(via(sorteo_id), {:comprar_fracciones_restantes, numero_billete, cliente_doc})
+    do: GenServer.call(via(sorteo_id), {:comprar_fracciones_restantes, numero_billete, cliente_doc})
 
   def comprar_fraccion(sorteo_id, numero_billete, fraccion, cliente_doc),
     do: GenServer.call(via(sorteo_id), {:comprar_fraccion, numero_billete, fraccion, cliente_doc})
@@ -37,7 +36,7 @@ defmodule AzarApp.SorteoServer do
   def init(sorteo_id) do
     case JsonStore.get(:sorteos, sorteo_id) do
       {:ok, sorteo} -> {:ok, sorteo}
-      :error -> {:stop, {:sorteo_no_encontrado, sorteo_id}}
+      :error        -> {:stop, {:sorteo_no_encontrado, sorteo_id}}
     end
   end
 
@@ -54,7 +53,7 @@ defmodule AzarApp.SorteoServer do
     JsonStore.upsert(:sorteos, nuevo)
     {:reply, {:ok, nuevo}, nuevo}
   end
-  #Hola
+
   @impl true
   def handle_call({:comprar_billete, numero, cliente_doc}, _from, sorteo) do
     if sorteo.realizado do
@@ -72,8 +71,7 @@ defmodule AzarApp.SorteoServer do
 
           if fracciones_tomadas != [] do
             {:reply,
-             {:error,
-              "Billete #{numero} tiene fracciones vendidas. Usa 'comprar fracciones restantes'."},
+             {:error, "Billete #{numero} tiene fracciones vendidas. Usa 'comprar fracciones restantes'."},
              sorteo}
           else
             nuevo_billete =
@@ -82,11 +80,7 @@ defmodule AzarApp.SorteoServer do
               |> Map.put("propietario_doc", cliente_doc)
               |> Map.put("tipo", "completo")
 
-            nuevo_sorteo = %{
-              sorteo
-              | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)
-            }
-
+            nuevo_sorteo = %{sorteo | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)}
             JsonStore.upsert(:sorteos, nuevo_sorteo)
             {:reply, {:ok, nuevo_billete}, nuevo_sorteo}
           end
@@ -108,17 +102,16 @@ defmodule AzarApp.SorteoServer do
 
         billete ->
           fracciones_tomadas = Map.get(billete, "fracciones_tomadas", [])
-          nums_tomados = Enum.map(fracciones_tomadas, & &1["fraccion"])
-          todas = Enum.to_list(1..sorteo.cantidad_fracciones)
-          fracciones_libres = Enum.reject(todas, &(&1 in nums_tomados))
+          nums_tomados       = Enum.map(fracciones_tomadas, & &1["fraccion"])
+          todas              = Enum.to_list(1..sorteo.cantidad_fracciones)
+          fracciones_libres  = Enum.reject(todas, &(&1 in nums_tomados))
 
           if fracciones_libres == [] do
             {:reply, {:error, "No hay fracciones disponibles en el billete #{numero}"}, sorteo}
           else
-            nuevas =
-              Enum.map(fracciones_libres, fn f ->
-                %{"fraccion" => f, "propietario_doc" => cliente_doc}
-              end)
+            nuevas = Enum.map(fracciones_libres, fn f ->
+              %{"fraccion" => f, "propietario_doc" => cliente_doc}
+            end)
 
             todas_fracciones = fracciones_tomadas ++ nuevas
 
@@ -128,12 +121,9 @@ defmodule AzarApp.SorteoServer do
               |> Map.put("tipo", "fraccion")
               |> Map.put("fracciones_tomadas", todas_fracciones)
 
-            nuevo_sorteo = %{
-              sorteo
-              | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)
-            }
-
+            nuevo_sorteo = %{sorteo | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)}
             JsonStore.upsert(:sorteos, nuevo_sorteo)
+            # Retorna {billete, cantidad} para que el controlador pueda mostrar cuántas se compraron
             {:reply, {:ok, nuevo_billete, length(fracciones_libres)}, nuevo_sorteo}
           end
       end
@@ -154,7 +144,7 @@ defmodule AzarApp.SorteoServer do
 
         billete ->
           fracciones_tomadas = Map.get(billete, "fracciones_tomadas", [])
-          nums_tomados = Enum.map(fracciones_tomadas, & &1["fraccion"])
+          nums_tomados       = Enum.map(fracciones_tomadas, & &1["fraccion"])
 
           cond do
             fraccion < 1 or fraccion > sorteo.cantidad_fracciones ->
@@ -167,13 +157,7 @@ defmodule AzarApp.SorteoServer do
 
             true ->
               nuevas_fracciones =
-                fracciones_tomadas ++
-                  [
-                    %{
-                      "fraccion" => fraccion,
-                      "propietario_doc" => cliente_doc
-                    }
-                  ]
+                fracciones_tomadas ++ [%{"fraccion" => fraccion, "propietario_doc" => cliente_doc}]
 
               todas_tomadas = length(nuevas_fracciones) == sorteo.cantidad_fracciones
 
@@ -183,11 +167,7 @@ defmodule AzarApp.SorteoServer do
                 |> Map.put("tipo", "fraccion")
                 |> Map.put("fracciones_tomadas", nuevas_fracciones)
 
-              nuevo_sorteo = %{
-                sorteo
-                | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)
-              }
-
+              nuevo_sorteo = %{sorteo | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)}
               JsonStore.upsert(:sorteos, nuevo_sorteo)
               {:reply, {:ok, nuevo_billete}, nuevo_sorteo}
           end
@@ -206,11 +186,10 @@ defmodule AzarApp.SorteoServer do
 
         billete ->
           fracciones_tomadas = Map.get(billete, "fracciones_tomadas", [])
-          es_propietario = billete["propietario_doc"] == cliente_doc
-          tiene_fraccion = Enum.any?(fracciones_tomadas, &(&1["propietario_doc"] == cliente_doc))
+          es_propietario     = billete["propietario_doc"] == cliente_doc
+          tiene_fraccion     = Enum.any?(fracciones_tomadas, &(&1["propietario_doc"] == cliente_doc))
 
           cond do
-            # Billete completo
             billete["tipo"] == "completo" and es_propietario ->
               nuevo_billete =
                 billete
@@ -219,15 +198,10 @@ defmodule AzarApp.SorteoServer do
                 |> Map.delete("tipo")
                 |> Map.delete("fracciones_tomadas")
 
-              nuevo_sorteo = %{
-                sorteo
-                | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)
-              }
-
+              nuevo_sorteo = %{sorteo | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)}
               JsonStore.upsert(:sorteos, nuevo_sorteo)
               {:reply, :ok, nuevo_sorteo}
 
-            # Fracción del cliente
             billete["tipo"] == "fraccion" and tiene_fraccion ->
               nuevas_fracciones =
                 Enum.reject(fracciones_tomadas, &(&1["propietario_doc"] == cliente_doc))
@@ -245,11 +219,7 @@ defmodule AzarApp.SorteoServer do
                   |> Map.put("fracciones_tomadas", nuevas_fracciones)
                 end
 
-              nuevo_sorteo = %{
-                sorteo
-                | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)
-              }
-
+              nuevo_sorteo = %{sorteo | billetes: reemplazar_billete(sorteo.billetes, nuevo_billete)}
               JsonStore.upsert(:sorteos, nuevo_sorteo)
               {:reply, :ok, nuevo_sorteo}
 
@@ -272,8 +242,7 @@ defmodule AzarApp.SorteoServer do
           {:reply, {:error, "No hay billetes vendidos"}, sorteo}
 
         _ ->
-          ganador = billetes_vendidos |> Enum.random() |> Map.get("numero")
-
+          ganador      = billetes_vendidos |> Enum.random() |> Map.get("numero")
           nuevo_sorteo = %{sorteo | realizado: true, numero_ganador: ganador}
           JsonStore.upsert(:sorteos, nuevo_sorteo)
 
@@ -287,7 +256,6 @@ defmodule AzarApp.SorteoServer do
 
   @impl true
   def handle_call(:billetes_disponibles, _from, sorteo) do
-    # Disponible = no vendido completo Y tiene al menos una fracción libre
     disponibles =
       Enum.filter(sorteo.billetes, fn billete ->
         case billete["tipo"] do
@@ -318,66 +286,74 @@ defmodule AzarApp.SorteoServer do
   end
 
   defp notificar_a_participantes(sorteo, numero_ganador) do
-  docs =
-    sorteo.billetes
-    |> Enum.flat_map(fn b ->
-      case b["tipo"] do
-        "completo" -> [b["propietario_doc"]]
-        "fraccion"  -> Enum.map(b["fracciones_tomadas"] || [], & &1["propietario_doc"])
-        _           -> []
-      end
-    end)
-    |> Enum.uniq()
-    |> Enum.reject(&is_nil/1)
+    docs =
+      sorteo.billetes
+      |> Enum.flat_map(fn b ->
+        case b["tipo"] do
+          "completo" -> [b["propietario_doc"]]
+          "fraccion" -> Enum.map(b["fracciones_tomadas"] || [], & &1["propietario_doc"])
+          _          -> []
+        end
+      end)
+      |> Enum.uniq()
+      |> Enum.reject(&is_nil/1)
 
-  Enum.each(docs, fn doc ->
-    Clientes.agregar_notificacion(doc, %{
-      tipo:   "sorteo_realizado",
-      titulo: "🎰 Sorteo \"#{sorteo.nombre}\" finalizado",
-      cuerpo: "El billete ganador fue el ##{numero_ganador}. #{if sorteo.premio, do: "Premio: #{sorteo.premio.nombre} ($#{sorteo.premio.valor})", else: ""}. Entra a ver tus resultados."
-    })
-  end)
-end
+    premio_txt =
+      if sorteo.premio,
+        do: "Premio: #{sorteo.premio.nombre} ($#{sorteo.premio.valor}).",
+        else: ""
+
+    Enum.each(docs, fn doc ->
+      Clientes.agregar_notificacion(doc, %{
+        tipo:   "sorteo_realizado",
+        titulo: "Sorteo \"#{sorteo.nombre}\" finalizado",
+        cuerpo: "El billete ganador fue el ##{numero_ganador}. #{premio_txt} Entra a ver tus resultados."
+      })
+    end)
+  end
 
   defp notificar_ganador(sorteo, numero_ganador) do
-  billete = Enum.find(sorteo.billetes, &(&1["numero"] == numero_ganador))
+    billete = Enum.find(sorteo.billetes, &(&1["numero"] == numero_ganador))
 
-  if billete && sorteo.premio do
-    case billete["tipo"] do
-      "completo" ->
-        acreditar_y_notificar(billete["propietario_doc"], sorteo, sorteo.premio.valor, numero_ganador)
+    if billete && sorteo.premio do
+      case billete["tipo"] do
+        "completo" ->
+          acreditar_y_notificar(
+            billete["propietario_doc"], sorteo, sorteo.premio.valor, numero_ganador
+          )
 
-      "fraccion" ->
-        valor_fraccion = div(sorteo.premio.valor, sorteo.cantidad_fracciones)
-        Enum.each(billete["fracciones_tomadas"], fn f ->
-          acreditar_y_notificar(f["propietario_doc"], sorteo, valor_fraccion, numero_ganador, f["fraccion"])
-        end)
+        "fraccion" ->
+          valor_fraccion = div(sorteo.premio.valor, sorteo.cantidad_fracciones)
+
+          Enum.each(billete["fracciones_tomadas"], fn f ->
+            acreditar_y_notificar(
+              f["propietario_doc"], sorteo, valor_fraccion, numero_ganador, f["fraccion"]
+            )
+          end)
+      end
     end
   end
-end
 
   defp acreditar_y_notificar(cliente_doc, sorteo, valor, numero_billete, fraccion \\ nil) do
-  Clientes.acreditar_saldo(cliente_doc, valor)
+    Clientes.acreditar_saldo(cliente_doc, valor)
 
-  cuerpo =
-    if fraccion do
-      "🎟️ Billete ##{numero_billete} · Fracción #{fraccion} — Ganaste $#{valor} en el sorteo\"#{sorteo.nombre}\". El premio \"#{sorteo.premio.nombre}\" fue tuyo. 💸"
-    else
-      "🎟️ Billete ##{numero_billete} completo — Ganaste $#{valor} en el sorteo \"#{sorteo.nombre}\". El premio \"#{sorteo.premio.nombre}\" fue todo tuyo. 💸"
-    end
+    cuerpo =
+      if fraccion do
+        "Billete ##{numero_billete} - Fraccion #{fraccion}: Ganaste $#{valor} en \"#{sorteo.nombre}\". Premio: #{sorteo.premio.nombre}."
+      else
+        "Billete ##{numero_billete} completo: Ganaste $#{valor} en \"#{sorteo.nombre}\". Premio: #{sorteo.premio.nombre}."
+      end
 
-  Clientes.agregar_notificacion(cliente_doc, %{
-    tipo:   "premio",
-    titulo: "🏆 ¡Ganaste $#{valor} en #{sorteo.nombre}!",
-    cuerpo: cuerpo
-  })
+    Clientes.agregar_notificacion(cliente_doc, %{
+      tipo:   "premio",
+      titulo: "Ganaste $#{valor} en #{sorteo.nombre}!",
+      cuerpo: cuerpo
+    })
 
-  Phoenix.PubSub.broadcast(
-    AzarApp.PubSub,
-    "jugador:#{cliente_doc}",
-    {:premio_ganado, %{sorteo: sorteo.nombre, premio: sorteo.premio.nombre, valor: valor}}
-  )
+    Phoenix.PubSub.broadcast(
+      AzarApp.PubSub,
+      "jugador:#{cliente_doc}",
+      {:premio_ganado, %{sorteo: sorteo.nombre, premio: sorteo.premio.nombre, valor: valor}}
+    )
   end
-
-
 end

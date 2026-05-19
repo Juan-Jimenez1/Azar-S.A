@@ -20,7 +20,8 @@ defmodule AzarApp.Clientes do
           nombre:        params["nombre"],
           documento:     params["documento"],
           password_hash: hashear(params["password"]),
-          saldo:         0
+          saldo:         0,
+          notificaciones: []
         }
 
         JsonStore.upsert(:clientes, cliente)
@@ -61,6 +62,7 @@ defmodule AzarApp.Clientes do
   def recargar_saldo(_documento, _valor) do
     {:error, "El valor debe ser mayor a 0"}
   end
+
   def descontar_saldo(documento, valor) do
     case get_cliente(documento) do
       {:ok, cliente} ->
@@ -79,63 +81,63 @@ defmodule AzarApp.Clientes do
 
   # ── Notificaciones ─────────────────────────────────────────────────────────
 
-def agregar_notificacion(documento, attrs) do
-  case get_cliente(documento) do
-    {:ok, cliente} ->
-      notif = %{
-        "id"     => JsonStore.generar_id("notif"),
-        "tipo"   => attrs.tipo,
-        "titulo" => attrs.titulo,
-        "cuerpo" => attrs.cuerpo,
-        "fecha"  => DateTime.utc_now() |> DateTime.to_string(),
-        "leida"  => false
-      }
+  def agregar_notificacion(documento, attrs) do
+    case get_cliente(documento) do
+      {:ok, cliente} ->
+        notif = %{
+          "id"     => JsonStore.generar_id("notif"),
+          "tipo"   => attrs.tipo,
+          "titulo" => attrs.titulo,
+          "cuerpo" => attrs.cuerpo,
+          "fecha"  => DateTime.utc_now() |> DateTime.to_string(),
+          "leida"  => false
+        }
 
-      actualizado = %{cliente | notificaciones: [notif | cliente.notificaciones]}
-      JsonStore.upsert(:clientes, actualizado)
-      {:ok, notif}
+        actualizado = %{cliente | notificaciones: [notif | cliente.notificaciones]}
+        JsonStore.upsert(:clientes, actualizado)
+        {:ok, notif}
 
-    :error ->
-      {:error, "Cliente no encontrado"}
+      :error ->
+        {:error, "Cliente no encontrado"}
+    end
   end
-end
 
-def marcar_notificaciones_leidas(documento) do
-  case get_cliente(documento) do
-    {:ok, cliente} ->
-      nuevas = Enum.map(cliente.notificaciones, &Map.put(&1, "leida", true))
-      actualizado = %{cliente | notificaciones: nuevas}
-      JsonStore.upsert(:clientes, actualizado)
-      {:ok, actualizado}
+  def marcar_notificaciones_leidas(documento) do
+    case get_cliente(documento) do
+      {:ok, cliente} ->
+        nuevas      = Enum.map(cliente.notificaciones, &Map.put(&1, "leida", true))
+        actualizado = %{cliente | notificaciones: nuevas}
+        JsonStore.upsert(:clientes, actualizado)
+        {:ok, actualizado}
 
-    :error ->
-      {:error, "Cliente no encontrado"}
+      :error ->
+        {:error, "Cliente no encontrado"}
+    end
   end
-end
 
-def notificaciones_no_leidas(documento) do
-  case get_cliente(documento) do
-    {:ok, cliente} ->
-      count = Enum.count(cliente.notificaciones, &(!&1["leida"]))
-      {:ok, count}
+  def notificaciones_no_leidas(documento) do
+    case get_cliente(documento) do
+      {:ok, cliente} ->
+        count = Enum.count(cliente.notificaciones, &(!&1["leida"]))
+        {:ok, count}
 
-    :error ->
-      {:error, "Cliente no encontrado"}
+      :error ->
+        {:error, "Cliente no encontrado"}
+    end
   end
-end
 
-def eliminar_notificacion(documento, notif_id) do
-  case get_cliente(documento) do
-    {:ok, cliente} ->
-      nuevas = Enum.reject(cliente.notificaciones, &(&1["id"] == notif_id))
-      actualizado = %{cliente | notificaciones: nuevas}
-      JsonStore.upsert(:clientes, actualizado)
-      {:ok, actualizado}
+  def eliminar_notificacion(documento, notif_id) do
+    case get_cliente(documento) do
+      {:ok, cliente} ->
+        nuevas      = Enum.reject(cliente.notificaciones, &(&1["id"] == notif_id))
+        actualizado = %{cliente | notificaciones: nuevas}
+        JsonStore.upsert(:clientes, actualizado)
+        {:ok, actualizado}
 
-    :error ->
-      {:error, "Cliente no encontrado"}
+      :error ->
+        {:error, "Cliente no encontrado"}
+    end
   end
-end
 
   # ── Privado ────────────────────────────────────────────────────────────────
 
