@@ -64,5 +64,10 @@ defmodule AzarAppWeb.Router do
     get "/notificaciones", ClienteController, :notificaciones
     post "/notificaciones/leer", ClienteController, :marcar_leidas
     delete "/notificaciones/:id", ClienteController, :eliminar_notificacion
+
+    get "/cuenta/historial", CuentaController, :historial
+    get "/cuenta/premios", CuentaController, :premios
+    get "/cuenta/balance", CuentaController, :balance
+    post "/cuenta/devolver/:sorteo_id/:numero", CuentaController, :devolver
   end
 end

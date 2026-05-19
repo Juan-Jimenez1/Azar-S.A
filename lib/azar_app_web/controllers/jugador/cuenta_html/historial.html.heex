@@ -1,0 +1,71 @@
+<div class="min-h-screen bg-[#06070a] px-4 py-10 text-white">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="mb-8">
+      <a href="/perfil" class="text-sm text-[#d4a017] hover:text-[#f6d06b] transition">← Volver al perfil</a>
+      <h1 class="text-4xl font-black mt-4">Historial de compras</h1>
+      <p class="text-gray-500 mt-2 text-sm">Todas tus participaciones en sorteos.</p>
+    </div>
+
+    <!-- Total gastado -->
+    <div class="rounded-2xl bg-[#101217] border border-[#23262f] p-6 mb-8">
+      <p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Total gastado</p>
+      <p class="text-4xl font-black text-red-400">$<%= @total_gastado %></p>
+    </div>
+
+    <%= if @compras == [] do %>
+      <div class="text-center py-20 text-gray-500">
+        <div class="text-6xl mb-4">🎟️</div>
+        <p class="text-xl font-bold text-white">Sin compras aún</p>
+        <p class="text-sm mt-2">Participa en un sorteo para ver tu historial aquí.</p>
+        <a href="/" class="inline-block mt-6 px-6 py-3 rounded-xl bg-[#d4a017] text-black font-bold text-sm">
+          Ver sorteos
+        </a>
+      </div>
+    <% else %>
+      <div class="space-y-4">
+        <%= for compra <- @compras do %>
+          <div class="rounded-2xl bg-[#101217] border border-[#23262f] p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-[#181b22] border border-[#2a2d36] flex items-center justify-center text-xl">
+                🎟️
+              </div>
+              <div>
+                <p class="font-bold text-white"><%= compra.sorteo_nombre %></p>
+                <p class="text-sm text-gray-400 mt-0.5">
+                  Billete #<%= compra.numero %>
+                  <%= if compra.tipo == :fraccion do %>
+                    · Fracción <%= compra.fraccion %>
+                  <% end %>
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div class="text-right">
+                <p class="text-lg font-black text-white">$<%= compra.valor %></p>
+                <p class={"text-xs font-semibold mt-0.5 " <> if compra.realizado, do: "text-gray-500", else: "text-emerald-400"}>
+                  <%= if compra.realizado, do: "Sorteo realizado", else: "Pendiente" %>
+                </p>
+              </div>
+
+              <%= if !compra.realizado do %>
+                <% url_devolver = "/cuenta/devolver/#{compra.sorteo_id}/#{compra.numero}" %>
+                <form action={url_devolver} method="post" onsubmit="return confirm('¿Devolver esta compra?')">
+                  <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+                  <button type="submit"
+                    class="px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold hover:bg-red-500/20 transition">
+                    Devolver
+                  </button>
+                </form>
+              <% end %>
+            </div>
+
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

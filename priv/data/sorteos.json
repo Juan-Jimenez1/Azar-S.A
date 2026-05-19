@@ -4,252 +4,6 @@
       "billetes": [
         {
           "disponible": false,
-          "fracciones_tomadas": [
-            {
-              "fraccion": 9,
-              "propietario_doc": "1020304050"
-            }
-          ],
-          "numero": 1001,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1002
-        },
-        {
-          "disponible": false,
-          "numero": 1003,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1004,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1005,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1006,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1007,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1008,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1009,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1010,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        }
-      ],
-      "cantidad_billetes": 10,
-      "cantidad_fracciones": 10,
-      "fecha": "2026-03-22",
-      "id": "sorteo_1778698871926819",
-      "nombre": "algo",
-      "numero_ganador": 1009,
-      "premio": {
-        "id": "premio_1778790347191827",
-        "nombre": "Carlotos",
-        "valor": 10000000
-      },
-      "realizado": true,
-      "valor_billete": 5100000000000
-    },
-    {
-      "billetes": [
-        {
-          "disponible": false,
-          "numero": 1001,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1002,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1003,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1004,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "fracciones_tomadas": [
-            {
-              "fraccion": 2,
-              "propietario_doc": "1020304050"
-            }
-          ],
-          "numero": 1005,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1006,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        }
-      ],
-      "cantidad_billetes": 6,
-      "cantidad_fracciones": 2,
-      "fecha": "2026-03-12",
-      "id": "sorteo_1778790707647492",
-      "nombre": "Something",
-      "numero_ganador": 1004,
-      "premio": {
-        "id": "premio_1778790723868574",
-        "nombre": "Dinero",
-        "valor": 200000
-      },
-      "realizado": true,
-      "valor_billete": 10000
-    },
-    {
-      "billetes": [
-        {
-          "disponible": false,
-          "numero": 1001,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": true,
-          "fracciones_tomadas": [
-            {
-              "fraccion": 1,
-              "propietario_doc": "1020304050"
-            }
-          ],
-          "numero": 1002,
-          "tipo": "fraccion"
-        },
-        {
-          "disponible": true,
-          "fracciones_tomadas": [
-            {
-              "fraccion": 2,
-              "propietario_doc": "1020304050"
-            }
-          ],
-          "numero": 1003,
-          "tipo": "fraccion"
-        },
-        {
-          "disponible": false,
-          "numero": 1004,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        }
-      ],
-      "cantidad_billetes": 4,
-      "cantidad_fracciones": 3,
-      "fecha": "1112-02-21",
-      "id": "sorteo_1778808449857268",
-      "nombre": "Super Wow",
-      "numero_ganador": 1001,
-      "premio": {
-        "id": "premio_1778808840484187",
-        "nombre": "Ancheta",
-        "valor": 400000
-      },
-      "realizado": true,
-      "valor_billete": 30000
-    },
-    {
-      "billetes": [
-        {
-          "disponible": false,
-          "fracciones_tomadas": [
-            {
-              "fraccion": 4,
-              "propietario_doc": "1020304050"
-            },
-            {
-              "fraccion": 2,
-              "propietario_doc": "1020304050"
-            }
-          ],
-          "numero": 1001,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "fracciones_tomadas": [
-            {
-              "fraccion": 1,
-              "propietario_doc": "1020304050"
-            },
-            {
-              "fraccion": 3,
-              "propietario_doc": "1020304050"
-            }
-          ],
-          "numero": 1002,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        },
-        {
-          "disponible": false,
-          "numero": 1003,
-          "propietario_doc": "1020304050",
-          "tipo": "completo"
-        }
-      ],
-      "cantidad_billetes": 3,
-      "cantidad_fracciones": 4,
-      "fecha": "2009-02-21",
-      "id": "sorteo_1778813421021438",
-      "nombre": "Espectacular",
-      "numero_ganador": 1001,
-      "premio": {
-        "id": "premio_1778813463856382",
-        "nombre": "Caja Sorpresa",
-        "valor": 900000
-      },
-      "realizado": true,
-      "valor_billete": 600000
-    },
-    {
-      "billetes": [
-        {
-          "disponible": false,
           "numero": 1001,
           "propietario_doc": "1020304050",
           "tipo": "completo"
@@ -1039,6 +793,166 @@
       },
       "realizado": true,
       "valor_billete": 1000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 2,
+              "propietario_doc": "1"
+            }
+          ],
+          "numero": 1001,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": false,
+          "numero": 1002,
+          "propietario_doc": "1",
+          "tipo": "completo"
+        },
+        {
+          "disponible": true,
+          "numero": 1003
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 2,
+              "propietario_doc": "1"
+            }
+          ],
+          "numero": 1004,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "numero": 1005
+        },
+        {
+          "disponible": true,
+          "numero": 1006
+        },
+        {
+          "disponible": true,
+          "numero": 1007
+        },
+        {
+          "disponible": true,
+          "numero": 1008
+        },
+        {
+          "disponible": true,
+          "numero": 1009
+        },
+        {
+          "disponible": true,
+          "numero": 1010
+        }
+      ],
+      "cantidad_billetes": 10,
+      "cantidad_fracciones": 3,
+      "fecha": "2026-05-19",
+      "id": "sorteo_1",
+      "nombre": "1",
+      "numero_ganador": 1002,
+      "premio": {
+        "id": "premio_2",
+        "nombre": "Dinero",
+        "valor": 1000000
+      },
+      "realizado": true,
+      "valor_billete": 10000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 3,
+              "propietario_doc": "1"
+            }
+          ],
+          "numero": 1001,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 3,
+              "propietario_doc": "1"
+            }
+          ],
+          "numero": 1002,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 2,
+              "propietario_doc": "1"
+            }
+          ],
+          "numero": 1003,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 2,
+              "propietario_doc": "1"
+            }
+          ],
+          "numero": 1004,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "numero": 1005
+        },
+        {
+          "disponible": true,
+          "numero": 1006
+        },
+        {
+          "disponible": true,
+          "numero": 1007
+        },
+        {
+          "disponible": true,
+          "numero": 1008
+        },
+        {
+          "disponible": true,
+          "numero": 1009
+        },
+        {
+          "disponible": false,
+          "numero": 1010,
+          "propietario_doc": "1",
+          "tipo": "completo"
+        }
+      ],
+      "cantidad_billetes": 10,
+      "cantidad_fracciones": 3,
+      "fecha": "2026-05-19",
+      "id": "sorteo_6",
+      "nombre": "2",
+      "numero_ganador": 1010,
+      "premio": {
+        "id": "premio_7",
+        "nombre": "Dinero",
+        "valor": 1000000
+      },
+      "realizado": true,
+      "valor_billete": 50000
     }
   ]
 }
