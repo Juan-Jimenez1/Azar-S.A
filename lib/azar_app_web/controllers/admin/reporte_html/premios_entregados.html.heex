@@ -1,0 +1,99 @@
+<div class="min-h-screen bg-[#07090d] px-4 py-10 text-white font-[Outfit]">
+
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-yellow-400/[0.04] blur-3xl rounded-full pointer-events-none"></div>
+
+  <div class="max-w-5xl mx-auto relative z-10">
+
+    <!-- Encabezado -->
+    <div class="mb-10">
+      <a href="/admin/sorteos" class="inline-flex items-center gap-2 text-sm font-medium text-yellow-400 hover:text-yellow-300 transition mb-4">
+        ← Volver a sorteos
+      </a>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12141a] border border-yellow-500/20 text-yellow-400 text-xs font-semibold mb-4 ml-3">
+        🏆 Premios entregados
+      </div>
+      <h1 class="text-4xl font-black tracking-tight text-white">Premios entregados</h1>
+      <p class="text-gray-400 mt-2 text-sm">Historial de premios de todos los sorteos realizados.</p>
+    </div>
+
+    <%= if @datos == [] do %>
+      <div class="rounded-[28px] border border-dashed border-white/10 bg-[#101216]/80 py-20 text-center">
+        <p class="text-5xl mb-4">🎰</p>
+        <p class="text-gray-500">Aún no se han realizado sorteos.</p>
+      </div>
+    <% else %>
+      <div class="space-y-6">
+        <%= for dato <- @datos do %>
+          <div class="rounded-[28px] border border-white/10 bg-[#101216]/90 overflow-hidden">
+
+            <!-- Header del sorteo -->
+            <div class="px-8 py-5 border-b border-white/5 flex items-center justify-between">
+              <div>
+                <h2 class="text-lg font-bold text-white"><%= dato.sorteo.nombre %></h2>
+                <p class="text-xs text-gray-500 mt-1">Fecha: <%= dato.sorteo.fecha %></p>
+              </div>
+              <span class={"inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold " <>
+                if dato.resultado == "ganancia",
+                  do: "bg-emerald-500/10 border border-emerald-500/20 text-emerald-300",
+                  else: "bg-red-500/10 border border-red-500/20 text-red-300"}>
+                <%= String.capitalize(dato.resultado) %>
+              </span>
+            </div>
+
+            <!-- Cuerpo -->
+            <div class="px-8 py-6 grid grid-cols-1 sm:grid-cols-3 gap-5 border-b border-white/5">
+
+              <!-- Premio -->
+              <div>
+                <p class="text-xs uppercase tracking-[0.2em] text-yellow-400">Premio</p>
+                <p class="mt-1 text-xl font-black text-yellow-300">$<%= dato.premio.valor %></p>
+                <p class="text-xs text-gray-500 mt-0.5"><%= dato.premio.nombre %></p>
+              </div>
+
+              <!-- Ingresos -->
+              <div>
+                <p class="text-xs uppercase tracking-[0.2em] text-emerald-400">Ingresos</p>
+                <p class="mt-1 text-xl font-black text-emerald-300">$<%= dato.ingresos %></p>
+                <p class="text-xs text-gray-500 mt-0.5">Total recaudado en ventas</p>
+              </div>
+
+              <!-- Balance -->
+              <div>
+                <p class={"text-xs uppercase tracking-[0.2em] " <> if dato.resultado == "ganancia", do: "text-emerald-400", else: "text-red-400"}>
+                  Balance neto
+                </p>
+                <p class={"mt-1 text-xl font-black " <> if dato.resultado == "ganancia", do: "text-emerald-300", else: "text-red-300"}>
+                  $<%= dato.balance %>
+                </p>
+                <p class="text-xs text-gray-500 mt-0.5">Ingresos − Premio</p>
+              </div>
+
+            </div>
+
+            <!-- Ganadores -->
+            <div class="px-8 py-5">
+              <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-4">Ganador(es)</p>
+              <%= if dato.ganadores == [] do %>
+                <p class="text-sm text-gray-600">No se encontró propietario del billete ganador.</p>
+              <% else %>
+                <div class="space-y-2">
+                  <%= for g <- dato.ganadores do %>
+                    <div class="flex items-center gap-3 rounded-2xl bg-yellow-500/[0.04] border border-yellow-500/10 px-5 py-3">
+                      <div class="w-9 h-9 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-400">🏆</div>
+                      <div>
+                        <p class="font-semibold text-white"><%= g.nombre %></p>
+                        <p class="text-xs text-gray-500">Billete #<%= dato.sorteo.numero_ganador %><%= if g[:fraccion], do: " · Fracción #{g.fraccion}" %></p>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

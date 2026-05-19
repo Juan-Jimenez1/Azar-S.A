@@ -1,36 +1,42 @@
 defmodule AzarApp.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
   @moduledoc false
-
   use Application
 
   @impl true
   def start(_type, _args) do
     children = [
+      # 1. Telemetría (métricas y LiveDashboard)
       AzarAppWeb.Telemetry,
+
+      # 2. Bitácora: se inicia primero para que esté disponible tan pronto
+      #    como sea posible y loguear el arranque del resto de componentes.
+      AzarApp.Bitacora,
+
+      # 3. Cluster DNS (útil en deploy distribuido; :ignore en desarrollo)
       {DNSCluster, query: Application.get_env(:azar_app, :dns_cluster_query) || :ignore},
+
+      # 4. PubSub para notificaciones en tiempo real (LiveView y SorteoServer)
       {Phoenix.PubSub, name: AzarApp.PubSub},
-      {Registry, keys: :unique, name: AzarApp.Registry},
-      # Start a worker by calling: AzarApp.Worker.start_link(arg)
-      # {AzarApp.Worker, arg},
-      # Start to serve requests, typically the last entry
-      AzarAppWeb.Endpoint,
-       {Registry, keys: :unique, name: AzarApp.SorteoRegistry},
-    AzarApp.SorteoSupervisor
+
+      # 5. Registry de sorteos: debe iniciar ANTES que el supervisor de sorteos
+      {Registry, keys: :unique, name: AzarApp.SorteoRegistry},
+
+      # 6. Supervisor dinámico de sorteos: cada sorteo tiene su propio GenServer
+      AzarApp.SorteoSupervisor,
+
+      # 7. Endpoint HTTP de Phoenix (última en arrancar, cuando todo está listo)
+      AzarAppWeb.Endpoint
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: AzarApp.Supervisor]
+
     with {:ok, pid} <- Supervisor.start_link(children, opts) do
-    AzarApp.SorteoSupervisor.cargar_sorteos()
-    {:ok, pid}
-  end
+      # Carga todos los sorteos existentes en JSON como procesos GenServer
+      AzarApp.SorteoSupervisor.cargar_sorteos()
+      {:ok, pid}
+    end
   end
 
-  # Tell Phoenix to update the endpoint configuration
-  # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
     AzarAppWeb.Endpoint.config_change(changed, removed)

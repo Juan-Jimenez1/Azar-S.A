@@ -1,6 +1,6 @@
 defmodule AzarAppWeb.Jugador.ClienteController do
   use AzarAppWeb, :controller
-  alias AzarApp.Clientes
+  alias AzarApp.{Clientes, Sorteos}
 
   def new(conn, _params) do
     render(conn, :new)
@@ -89,5 +89,42 @@ defmodule AzarAppWeb.Jugador.ClienteController do
     cliente_doc = get_session(conn, :cliente_doc)
     Clientes.eliminar_notificacion(cliente_doc, notif_id)
     redirect(conn, to: ~p"/notificaciones")
+  end
+
+  @doc """
+  Historial de todas las compras realizadas por el jugador en todos los sorteos.
+  Permite devolver compras de sorteos que aún no se han realizado.
+  """
+  def historial(conn, _params) do
+    cliente_doc = get_session(conn, :cliente_doc)
+    compras = Sorteos.compras_por_cliente(cliente_doc)
+    total_gastado = Enum.sum(Enum.map(compras, & &1.valor))
+    render(conn, :historial, compras: compras, total_gastado: total_gastado)
+  end
+
+  @doc """
+  Balance personal: diferencia entre premios ganados y dinero gastado en sorteos.
+  """
+  def balance_personal(conn, _params) do
+    cliente_doc = get_session(conn, :cliente_doc)
+    {:ok, cliente} = Clientes.get_cliente(cliente_doc)
+
+    compras = Sorteos.compras_por_cliente(cliente_doc)
+    total_gastado = Enum.sum(Enum.map(compras, & &1.valor))
+
+    premios = Sorteos.premios_por_cliente(cliente_doc)
+    total_premios = Enum.sum(Enum.map(premios, & &1.valor))
+
+    balance = total_premios - total_gastado
+    resultado = if balance >= 0, do: "ganancia", else: "pérdida"
+
+    render(conn, :balance_personal,
+      cliente: cliente,
+      total_gastado: total_gastado,
+      total_premios: total_premios,
+      balance: balance,
+      resultado: resultado,
+      premios: premios
+    )
   end
 end

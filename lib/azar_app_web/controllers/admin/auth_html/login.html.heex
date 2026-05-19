@@ -1,0 +1,79 @@
+<div class="min-h-screen bg-[#07090d] flex items-center justify-center px-4 font-[Outfit]">
+
+  <!-- Glow fondo -->
+  <div class="absolute top-[-150px] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-yellow-400/[0.05] blur-3xl rounded-full pointer-events-none"></div>
+
+  <div class="relative w-full max-w-md">
+
+    <!-- Logo -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-[28px] bg-[#101216] border border-yellow-500/20 text-yellow-400 text-4xl shadow-2xl mb-4">
+        ✦
+      </div>
+      <h1 class="text-3xl font-black text-white tracking-tight">Panel Admin</h1>
+      <p class="text-gray-500 mt-1 text-sm">Azar S.A. · Administración</p>
+    </div>
+
+    <!-- Flash error -->
+    <%= if @flash["error"] do %>
+      <div class="mb-4 rounded-2xl border border-red-500/20 bg-red-500/[0.06] px-5 py-4 text-sm text-red-300">
+        <%= @flash["error"] %>
+      </div>
+    <% end %>
+
+    <!-- Formulario -->
+    <div class="rounded-[32px] border border-white/10 bg-[#101216]/90 backdrop-blur-2xl p-8 shadow-[0_20px_80px_rgba(0,0,0,.7)]">
+
+      <form action="/admin/login" method="post">
+        <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+
+        <!-- Documento -->
+        <div class="mb-5">
+          <label class="block text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">
+            Documento / Usuario
+          </label>
+          <input
+            type="text"
+            name="admin[documento]"
+            required
+            autofocus
+            class="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-yellow-500/50 focus:bg-white/[0.06] transition"
+            placeholder="admin"
+          />
+        </div>
+
+        <!-- Contraseña -->
+        <div class="mb-7">
+          <label class="block text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">
+            Contraseña
+          </label>
+          <input
+            type="password"
+            name="admin[password]"
+            required
+            class="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-yellow-500/50 focus:bg-white/[0.06] transition"
+            placeholder="••••••••"
+          />
+        </div>
+
+        <!-- Botón -->
+        <button
+          type="submit"
+          class="group relative w-full overflow-hidden rounded-2xl bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 py-4 font-black text-black text-sm transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_10px_40px_rgba(250,204,21,0.25)]"
+        >
+          <div class="absolute inset-0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"></div>
+          <span class="relative">Iniciar sesión</span>
+        </button>
+
+      </form>
+
+    </div>
+
+    <!-- Credenciales de prueba -->
+    <p class="text-center text-xs text-gray-600 mt-6">
+      Credenciales de prueba: <span class="text-gray-500">admin / admin123</span>
+    </p>
+
+  </div>
+
+</div>

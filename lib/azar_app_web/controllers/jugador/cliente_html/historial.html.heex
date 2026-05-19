@@ -1,0 +1,129 @@
+<div class="min-h-screen bg-[#06070a] px-4 py-10 text-white font-[Outfit]">
+
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#d4a017]/10 blur-3xl rounded-full pointer-events-none"></div>
+
+  <div class="max-w-5xl mx-auto relative z-10">
+
+    <!-- Encabezado -->
+    <div class="mb-10">
+      <a href="/index" class="inline-flex items-center gap-2 text-sm font-medium text-[#d4a017] hover:text-[#f6d06b] transition">
+        ← Volver a sorteos
+      </a>
+      <div class="mt-5 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12141a] border border-[#23262f] text-[#d4a017] text-xs font-semibold mb-4">
+            📋 Mi historial
+          </div>
+          <h1 class="text-4xl font-black tracking-tight text-white">Historial de compras</h1>
+          <p class="text-gray-400 mt-2 text-sm">Todos tus billetes y fracciones adquiridos.</p>
+        </div>
+        <div class="rounded-2xl border border-[#d4a017]/20 bg-[#1a1407] px-6 py-4">
+          <p class="text-xs uppercase tracking-[0.2em] text-yellow-500">Total gastado</p>
+          <p class="text-3xl font-black text-[#d4a017] mt-1">$<%= @total_gastado %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flash -->
+    <%= if @flash["info"] do %>
+      <div class="mb-6 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-5 py-4 text-sm text-emerald-300">
+        <div class="flex items-center gap-3"><span>✅</span><span><%= @flash["info"] %></span></div>
+      </div>
+    <% end %>
+
+    <%= if @flash["error"] do %>
+      <div class="mb-6 rounded-2xl border border-red-500/20 bg-red-500/10 px-5 py-4 text-sm text-red-300">
+        <div class="flex items-center gap-3"><span>⚠️</span><span><%= @flash["error"] %></span></div>
+      </div>
+    <% end %>
+
+    <!-- Sin compras -->
+    <%= if @compras == [] do %>
+      <div class="rounded-[28px] border border-dashed border-[#2a2d36] bg-[#111318]/80 py-20 text-center">
+        <div class="text-6xl mb-5">🎟️</div>
+        <h3 class="text-2xl font-bold text-white">Sin compras registradas</h3>
+        <p class="text-gray-500 mt-3 text-sm">Aún no has comprado ningún billete.</p>
+        <a href="/index" class="inline-flex items-center mt-6 rounded-2xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] px-6 py-3 text-sm font-black text-black transition hover:scale-[1.02]">
+          Ver sorteos disponibles
+        </a>
+      </div>
+    <% else %>
+
+      <div class="overflow-hidden rounded-[28px] border border-[#23262f] bg-[#101217]/90 backdrop-blur-xl shadow-2xl">
+        <div class="px-8 py-5 border-b border-white/5 bg-white/[0.02]">
+          <h2 class="text-lg font-bold text-white">Mis compras</h2>
+          <p class="text-xs text-gray-500 mt-1"><%= length(@compras) %> compra(s) registrada(s)</p>
+        </div>
+
+        <div class="divide-y divide-white/5">
+          <%= for compra <- @compras do %>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-8 py-5 hover:bg-white/[0.02] transition">
+
+              <!-- Info de la compra -->
+              <div class="flex items-center gap-4">
+                <div class={"w-12 h-12 rounded-2xl flex items-center justify-center text-xl " <> if compra.tipo == "completo", do: "bg-[#d4a017]/10 border border-[#d4a017]/20", else: "bg-purple-500/10 border border-purple-500/20"}>
+                  <%= if compra.tipo == "completo", do: "🎟️", else: "✂️" %>
+                </div>
+                <div>
+                  <p class="font-bold text-white">
+                    <%= compra.sorteo_nombre %>
+                    <span class="text-gray-400 font-normal text-sm ml-2">(<%= compra.sorteo_fecha %>)</span>
+                  </p>
+                  <p class="text-sm text-gray-400 mt-0.5">
+                    Billete #<%= compra.billete %>
+                    <%= if compra.tipo == "fraccion" do %>
+                      · Fracción <span class="text-purple-300 font-semibold"><%= compra.fraccion %></span>
+                    <% else %>
+                      · <span class="text-[#d4a017] font-semibold">Completo</span>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Valor y estado -->
+              <div class="flex items-center gap-4 sm:gap-6">
+                <div class="text-right">
+                  <p class="text-xs text-gray-500">Valor pagado</p>
+                  <p class="font-black text-[#d4a017]">$<%= compra.valor %></p>
+                </div>
+
+                <!-- Estado del sorteo -->
+                <%= if compra.sorteo_realizado do %>
+                  <span class="inline-flex items-center gap-1 rounded-full border border-gray-700 bg-gray-800/50 px-3 py-1.5 text-xs font-semibold text-gray-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span>
+                    Realizado
+                  </span>
+                <% else %>
+                  <!-- Botón de devolución solo si el sorteo aún no se realizó -->
+                  <form action={"/sorteos/#{compra.sorteo_id}/devolver/#{compra.billete}"} method="post"
+                        onsubmit="return confirm('¿Seguro que quieres devolver esta compra?')">
+                    <input type="hidden" name="_method" value="delete" />
+                    <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+                    <button type="submit"
+                      class="inline-flex items-center gap-1 rounded-xl border border-red-500/20 bg-red-500/[0.06] px-4 py-2 text-xs font-semibold text-red-300 transition hover:bg-red-500/[0.12]">
+                      Devolver
+                    </button>
+                  </form>
+                <% end %>
+              </div>
+
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+
+      <!-- Links de navegación -->
+      <div class="mt-6 flex flex-wrap gap-4">
+        <a href="/balance" class="inline-flex items-center gap-2 rounded-2xl border border-[#23262f] bg-[#12141a] px-5 py-3 text-sm font-semibold text-gray-300 hover:text-white hover:border-[#d4a017]/30 transition">
+          📊 Ver mi balance personal
+        </a>
+        <a href="/perfil" class="inline-flex items-center gap-2 rounded-2xl border border-[#23262f] bg-[#12141a] px-5 py-3 text-sm font-semibold text-gray-300 hover:text-white hover:border-[#d4a017]/30 transition">
+          👤 Mi perfil
+        </a>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

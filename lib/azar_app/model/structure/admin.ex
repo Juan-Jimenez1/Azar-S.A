@@ -3,6 +3,7 @@ defmodule AzarApp.Model.Structure.Admin do
   defstruct [
     :id,
     :nombre,
+    :documento,
     :password_hash
   ]
 
@@ -10,11 +11,11 @@ defmodule AzarApp.Model.Structure.Admin do
     %__MODULE__{
       id: m["id"],
       nombre: m["nombre"],
+      documento: m["documento"],
       password_hash: m["password_hash"]
     }
   end
 
-  
   def to_struct_list(list) when is_list(list) do
     Enum.map(list, &to_struct/1)
   end
@@ -23,6 +24,7 @@ defmodule AzarApp.Model.Structure.Admin do
     %{
       "id" => a.id,
       "nombre" => a.nombre,
+      "documento" => a.documento,
       "password_hash" => a.password_hash
     }
   end

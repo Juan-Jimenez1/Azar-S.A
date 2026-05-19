@@ -1,0 +1,89 @@
+<div class="min-h-screen bg-[#07090d] px-4 py-10 text-white font-[Outfit]">
+
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-yellow-400/[0.04] blur-3xl rounded-full pointer-events-none"></div>
+
+  <div class="max-w-5xl mx-auto relative z-10">
+
+    <!-- Encabezado -->
+    <div class="mb-10 flex items-center justify-between">
+      <div>
+        <a href="/admin/sorteos" class="inline-flex items-center gap-2 text-sm font-medium text-yellow-400 hover:text-yellow-300 transition mb-4">
+          ← Volver a sorteos
+        </a>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12141a] border border-yellow-500/20 text-yellow-400 text-xs font-semibold mb-4 ml-3">
+          📊 Balance general
+        </div>
+        <h1 class="text-4xl font-black tracking-tight text-white">Balance de sorteos</h1>
+        <p class="text-gray-400 mt-2 text-sm">Resultado financiero de todos los sorteos realizados.</p>
+      </div>
+      <a href="/admin/premios-entregados"
+         class="rounded-2xl border border-yellow-500/20 bg-yellow-500/[0.05] px-5 py-3 text-sm font-semibold text-yellow-300 hover:bg-yellow-500/[0.1] transition">
+        Ver premios entregados →
+      </a>
+    </div>
+
+    <!-- Resumen total -->
+    <div class={"rounded-[28px] border p-6 mb-8 " <> if @resultado == "ganancia", do: "border-emerald-500/20 bg-emerald-500/[0.06]", else: "border-red-500/20 bg-red-500/[0.06]"}>
+      <p class={"text-xs uppercase tracking-[0.2em] " <> if @resultado == "ganancia", do: "text-emerald-400", else: "text-red-400"}>
+        Balance neto total
+      </p>
+      <p class={"mt-2 text-4xl font-black " <> if @resultado == "ganancia", do: "text-emerald-300", else: "text-red-300"}>
+        $<%= @total %>
+      </p>
+      <p class="text-xs text-gray-500 mt-1">
+        <%= if @resultado == "ganancia", do: "La empresa está en positivo", else: "La empresa ha entregado más en premios de lo recaudado" %>
+      </p>
+    </div>
+
+    <!-- Tabla -->
+    <%= if @balances == [] do %>
+      <div class="rounded-[28px] border border-dashed border-white/10 bg-[#101216]/80 py-20 text-center">
+        <p class="text-5xl mb-4">📋</p>
+        <p class="text-gray-500">Aún no hay sorteos realizados.</p>
+      </div>
+    <% else %>
+      <div class="rounded-[28px] border border-white/10 bg-[#101216]/90 overflow-hidden">
+        <div class="px-8 py-5 border-b border-white/5">
+          <h2 class="text-lg font-bold text-white">Detalle por sorteo</h2>
+          <p class="text-xs text-gray-500 mt-1"><%= length(@balances) %> sorteo(s) realizados</p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full">
+            <thead class="border-b border-white/5 bg-white/[0.02]">
+              <tr class="text-left text-xs uppercase tracking-[0.2em] text-gray-500">
+                <th class="px-8 py-4 font-semibold">Sorteo</th>
+                <th class="px-8 py-4 font-semibold">Fecha</th>
+                <th class="px-8 py-4 font-semibold">Ingresos</th>
+                <th class="px-8 py-4 font-semibold">Premio</th>
+                <th class="px-8 py-4 font-semibold">Balance</th>
+                <th class="px-8 py-4 font-semibold">Resultado</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+              <%= for b <- @balances do %>
+                <tr class="hover:bg-white/[0.02] transition">
+                  <td class="px-8 py-5 font-semibold text-white"><%= b.sorteo %></td>
+                  <td class="px-8 py-5 text-gray-400"><%= b.fecha %></td>
+                  <td class="px-8 py-5 text-emerald-300 font-bold">$<%= b.ingresos %></td>
+                  <td class="px-8 py-5 text-yellow-300 font-bold">$<%= b.valor_premio %></td>
+                  <td class={"px-8 py-5 font-black " <> if b.resultado == "ganancia", do: "text-emerald-300", else: "text-red-300"}>
+                    $<%= b.balance %>
+                  </td>
+                  <td class="px-8 py-5">
+                    <span class={"inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold " <>
+                      if b.resultado == "ganancia",
+                        do: "bg-emerald-500/10 border border-emerald-500/20 text-emerald-300",
+                        else: "bg-red-500/10 border border-red-500/20 text-red-300"}>
+                      <%= String.capitalize(b.resultado) %>
+                    </span>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</div>
