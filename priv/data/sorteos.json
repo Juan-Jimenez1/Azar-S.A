@@ -800,7 +800,7 @@
           "disponible": true,
           "fracciones_tomadas": [
             {
-              "fraccion": 2,
+              "fraccion": 1,
               "propietario_doc": "1"
             }
           ],
@@ -808,10 +808,8 @@
           "tipo": "fraccion"
         },
         {
-          "disponible": false,
-          "numero": 1002,
-          "propietario_doc": "1",
-          "tipo": "completo"
+          "disponible": true,
+          "numero": 1002
         },
         {
           "disponible": true,
@@ -819,14 +817,7 @@
         },
         {
           "disponible": true,
-          "fracciones_tomadas": [
-            {
-              "fraccion": 2,
-              "propietario_doc": "1"
-            }
-          ],
-          "numero": 1004,
-          "tipo": "fraccion"
+          "numero": 1004
         },
         {
           "disponible": true,
@@ -854,18 +845,18 @@
         }
       ],
       "cantidad_billetes": 10,
-      "cantidad_fracciones": 3,
-      "fecha": "2026-05-19",
+      "cantidad_fracciones": 2,
+      "fecha": "2026-05-20",
       "id": "sorteo_1",
-      "nombre": "1",
-      "numero_ganador": 1002,
+      "nombre": "Ancheta del dia del padre",
+      "numero_ganador": null,
       "premio": {
-        "id": "premio_2",
-        "nombre": "Dinero",
-        "valor": 99999
+        "id": "premio_1",
+        "nombre": "Hola",
+        "valor": 99998
       },
-      "realizado": true,
-      "valor_billete": 10000
+      "realizado": false,
+      "valor_billete": 4000
     },
     {
       "billetes": [
@@ -957,23 +948,16 @@
     {
       "billetes": [
         {
-          "disponible": true,
-          "numero": 1001
+          "disponible": false,
+          "fracciones_tomadas": [],
+          "numero": 1001,
+          "propietario_doc": "2",
+          "tipo": "completo"
         },
         {
           "disponible": true,
-          "fracciones_tomadas": [
-            {
-              "fraccion": 8,
-              "propietario_doc": "1"
-            },
-            {
-              "fraccion": 6,
-              "propietario_doc": "1"
-            }
-          ],
-          "numero": 1002,
-          "tipo": "fraccion"
+          "fracciones_tomadas": [],
+          "numero": 1002
         },
         {
           "disponible": true,
@@ -1005,13 +989,13 @@
       "fecha": "2026-05-19",
       "id": "sorteo_3",
       "nombre": "Hola",
-      "numero_ganador": null,
+      "numero_ganador": 1001,
       "premio": {
         "id": "premio_4",
         "nombre": "Dinero",
         "valor": 99778
       },
-      "realizado": false,
+      "realizado": true,
       "valor_billete": 69808
     }
   ]

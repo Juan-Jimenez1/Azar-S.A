@@ -88,6 +88,6 @@ defmodule AzarAppWeb.Router do
     get "/cuenta/historial", CuentaController, :historial
     get "/cuenta/premios", CuentaController, :premios
     get "/cuenta/balance", CuentaController, :balance
-    post "/cuenta/devolver/:sorteo_id/:numero", CuentaController, :devolver
+    post "/sorteos/:sorteo_id/devolver/:numero", CompraController, :devolver
   end
 end

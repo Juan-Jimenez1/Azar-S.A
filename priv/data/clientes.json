@@ -79,6 +79,22 @@
       "nombre": "juan",
       "notificaciones": [
         {
+          "cuerpo": "Se revirtió tu compra del billete #1001 del sorteo 'Ancheta del dia del padre'. Se acreditaron $2000 a tu saldo.",
+          "fecha": "2026-05-20 22:42:34.255000Z",
+          "id": "notif_4",
+          "leida": false,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        },
+        {
+          "cuerpo": "Compraste 2 fracción(es) del billete #1001 del sorteo 'Ancheta del dia del padre' por $4000.",
+          "fecha": "2026-05-20 22:42:16.338000Z",
+          "id": "notif_3",
+          "leida": false,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
           "cuerpo": "Se revirtió tu compra del billete #1002 del sorteo 'Hola'. Se acreditaron $69808 a tu saldo.",
           "fecha": "2026-05-20 04:38:50.460000Z",
           "id": "notif_6",
@@ -208,7 +224,40 @@
         }
       ],
       "password_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
-      "saldo": 4388595
+      "saldo": 4402107
+    },
+    {
+      "documento": "2",
+      "id": "cliente_1",
+      "nombre": "Aura",
+      "notificaciones": [
+        {
+          "cuerpo": "Billete #1001 completo: Ganaste $99778 en \"Hola\". Premio: Dinero.",
+          "fecha": "2026-05-20 22:03:46.808000Z",
+          "id": "notif_5",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $99778 en Hola!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1001. Premio: Dinero ($99778). Entra a ver tus resultados.",
+          "fecha": "2026-05-20 22:03:46.752000Z",
+          "id": "notif_4",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"Hola\" finalizado"
+        },
+        {
+          "cuerpo": "Se revirtió tu compra del billete #1001 del sorteo 'Hola'. Se acreditaron $7756 a tu saldo.",
+          "fecha": "2026-05-20 22:02:36.166000Z",
+          "id": "notif_2",
+          "leida": true,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        }
+      ],
+      "password_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "saldo": 129970
     }
   ]
 }

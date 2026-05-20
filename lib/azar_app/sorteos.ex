@@ -22,16 +22,16 @@ defmodule AzarApp.Sorteos do
     id = JsonStore.generar_id("sorteo")
 
     sorteo = %Sorteo{
-      id:                  id,
-      nombre:              params["nombre"],
-      fecha:               params["fecha"],
-      valor_billete:       params["valor_billete"],
+      id: id,
+      nombre: params["nombre"],
+      fecha: params["fecha"],
+      valor_billete: params["valor_billete"],
       cantidad_fracciones: params["cantidad_fracciones"],
-      cantidad_billetes:   params["cantidad_billetes"],
-      realizado:           false,
-      numero_ganador:      nil,
-      premio:              nil,
-      billetes:            generar_billetes(params["cantidad_billetes"])
+      cantidad_billetes: params["cantidad_billetes"],
+      realizado: false,
+      numero_ganador: nil,
+      premio: nil,
+      billetes: generar_billetes(params["cantidad_billetes"])
     }
 
     JsonStore.upsert(:sorteos, sorteo)
@@ -62,9 +62,9 @@ defmodule AzarApp.Sorteos do
           {:error, "El sorteo ya tiene un premio asignado"}
         else
           premio = %Premio{
-            id:     JsonStore.generar_id("premio"),
+            id: JsonStore.generar_id("premio"),
             nombre: params["nombre"],
-            valor:  params["valor"]
+            valor: params["valor"]
           }
 
           SorteoServer.update(sorteo_id, %{premio: premio})
@@ -105,8 +105,8 @@ defmodule AzarApp.Sorteos do
     SorteoServer.comprar_fracciones_restantes(sorteo_id, numero, cliente_doc)
   end
 
-  def devolver_compra(sorteo_id, numero, cliente_doc) do
-    SorteoServer.devolver_compra(sorteo_id, numero, cliente_doc)
+  def devolver_compra(sorteo_id, numero, cliente_doc, fracciones \\ :todas) do
+    SorteoServer.devolver_compra(sorteo_id, numero, cliente_doc, fracciones)
   end
 
   def billetes_disponibles(sorteo_id) do
@@ -157,7 +157,7 @@ defmodule AzarApp.Sorteos do
       # en lugar de crashear con un pattern-match fallido
       case SorteoServer.ejecutar(s.id) do
         {:ok, ganador} -> [{s.id, ganador}]
-        {:error, _}    -> []
+        {:error, _} -> []
       end
     end)
   end
@@ -207,14 +207,14 @@ defmodule AzarApp.Sorteos do
       {:ok, sorteo} ->
         {:ok, ingresos} = ingresos_por_sorteo(sorteo_id)
         valor_premio = if sorteo.premio, do: sorteo.premio.valor, else: 0
-        balance      = ingresos - valor_premio
+        balance = ingresos - valor_premio
 
         {:ok,
          %{
-           ingresos:     ingresos,
+           ingresos: ingresos,
            valor_premio: valor_premio,
-           balance:      balance,
-           resultado:    if(balance >= 0, do: "ganancia", else: "pérdida")
+           balance: balance,
+           resultado: if(balance >= 0, do: "ganancia", else: "pérdida")
          }}
 
       :error ->
@@ -230,8 +230,8 @@ defmodule AzarApp.Sorteos do
       {:ok, balance} = balance_sorteo(s.id)
 
       balance
-      |> Map.put(:sorteo,    s.nombre)
-      |> Map.put(:fecha,     s.fecha)
+      |> Map.put(:sorteo, s.nombre)
+      |> Map.put(:fecha, s.fecha)
       |> Map.put(:sorteo_id, s.id)
     end)
   end
@@ -252,14 +252,14 @@ defmodule AzarApp.Sorteos do
     |> Enum.map(fn sorteo ->
       {:ok, ingresos} = ingresos_por_sorteo(sorteo.id)
       ganadores = encontrar_ganadores(sorteo, clientes)
-      balance   = ingresos - sorteo.premio.valor
+      balance = ingresos - sorteo.premio.valor
 
       %{
-        sorteo:    sorteo,
-        premio:    sorteo.premio,
+        sorteo: sorteo,
+        premio: sorteo.premio,
         ganadores: ganadores,
-        ingresos:  ingresos,
-        balance:   balance,
+        ingresos: ingresos,
+        balance: balance,
         resultado: if(balance >= 0, do: "ganancia", else: "pérdida")
       }
     end)
@@ -283,14 +283,14 @@ defmodule AzarApp.Sorteos do
           billete["tipo"] == "completo" and billete["propietario_doc"] == cliente_doc ->
             [
               %{
-                sorteo_id:        sorteo.id,
-                sorteo_nombre:    sorteo.nombre,
-                sorteo_fecha:     sorteo.fecha,
+                sorteo_id: sorteo.id,
+                sorteo_nombre: sorteo.nombre,
+                sorteo_fecha: sorteo.fecha,
                 sorteo_realizado: sorteo.realizado,
-                billete:          billete["numero"],
-                tipo:             "completo",
-                fraccion:         nil,
-                valor:            sorteo.valor_billete
+                billete: billete["numero"],
+                tipo: "completo",
+                fraccion: nil,
+                valor: sorteo.valor_billete
               }
             ]
 
@@ -299,14 +299,14 @@ defmodule AzarApp.Sorteos do
             |> Enum.filter(&(&1["propietario_doc"] == cliente_doc))
             |> Enum.map(fn f ->
               %{
-                sorteo_id:        sorteo.id,
-                sorteo_nombre:    sorteo.nombre,
-                sorteo_fecha:     sorteo.fecha,
+                sorteo_id: sorteo.id,
+                sorteo_nombre: sorteo.nombre,
+                sorteo_fecha: sorteo.fecha,
                 sorteo_realizado: sorteo.realizado,
-                billete:          billete["numero"],
-                tipo:             "fraccion",
-                fraccion:         f["fraccion"],
-                valor:            valor_fraccion
+                billete: billete["numero"],
+                tipo: "fraccion",
+                fraccion: f["fraccion"],
+                valor: valor_fraccion
               }
             end)
 
@@ -336,9 +336,9 @@ defmodule AzarApp.Sorteos do
               [
                 %{
                   sorteo_nombre: sorteo.nombre,
-                  billete:       billete["numero"],
-                  fraccion:      nil,
-                  valor:         sorteo.premio.valor
+                  billete: billete["numero"],
+                  fraccion: nil,
+                  valor: sorteo.premio.valor
                 }
               ]
             else
@@ -351,9 +351,9 @@ defmodule AzarApp.Sorteos do
             |> Enum.map(fn f ->
               %{
                 sorteo_nombre: sorteo.nombre,
-                billete:       billete["numero"],
-                fraccion:      f["fraccion"],
-                valor:         valor_fraccion
+                billete: billete["numero"],
+                fraccion: f["fraccion"],
+                valor: valor_fraccion
               }
             end)
 
@@ -367,24 +367,28 @@ defmodule AzarApp.Sorteos do
   end
 
   def billetes_del_cliente(sorteo_id, cliente_doc) do
-  case get_sorteo(sorteo_id) do
-    {:ok, sorteo} ->
-      Enum.filter(sorteo.billetes, fn billete ->
-        case billete["tipo"] do
-          "completo" ->
-            billete["propietario_doc"] == cliente_doc
+    case get_sorteo(sorteo_id) do
+      {:ok, sorteo} ->
+        Enum.filter(sorteo.billetes, fn billete ->
+          case billete["tipo"] do
+            "completo" ->
+              billete["propietario_doc"] == cliente_doc
 
-          "fraccion" ->
-            Enum.any?(Map.get(billete, "fracciones_tomadas", []),
-              &(&1["propietario_doc"] == cliente_doc))
+            "fraccion" ->
+              Enum.any?(
+                Map.get(billete, "fracciones_tomadas", []),
+                &(&1["propietario_doc"] == cliente_doc)
+              )
 
-          _ -> false
-        end
-      end)
+            _ ->
+              false
+          end
+        end)
 
-    :error -> []
+      :error ->
+        []
+    end
   end
-end
 
   # ── Privado ────────────────────────────────────────────────────────────────
 
@@ -420,7 +424,7 @@ end
 
   defp buscar_nombre(doc, clientes) do
     case Enum.find(clientes, &(&1.documento == doc)) do
-      nil     -> "Desconocido (#{doc})"
+      nil -> "Desconocido (#{doc})"
       cliente -> cliente.nombre
     end
   end
