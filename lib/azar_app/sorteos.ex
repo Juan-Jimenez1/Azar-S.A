@@ -366,6 +366,26 @@ defmodule AzarApp.Sorteos do
     end)
   end
 
+  def billetes_del_cliente(sorteo_id, cliente_doc) do
+  case get_sorteo(sorteo_id) do
+    {:ok, sorteo} ->
+      Enum.filter(sorteo.billetes, fn billete ->
+        case billete["tipo"] do
+          "completo" ->
+            billete["propietario_doc"] == cliente_doc
+
+          "fraccion" ->
+            Enum.any?(Map.get(billete, "fracciones_tomadas", []),
+              &(&1["propietario_doc"] == cliente_doc))
+
+          _ -> false
+        end
+      end)
+
+    :error -> []
+  end
+end
+
   # ── Privado ────────────────────────────────────────────────────────────────
 
   defp generar_billetes(cantidad) do

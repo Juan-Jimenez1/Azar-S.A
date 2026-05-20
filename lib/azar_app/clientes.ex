@@ -187,8 +187,8 @@ defmodule AzarApp.Clientes do
       end)
 
     total_gastado = Enum.reduce(compras, 0, &(&1.valor + &2))
-
-    {:ok, %{compras: compras, total_gastado: total_gastado}}
+    compras_ordenadas = Enum.sort_by(compras, & &1.numero, :desc)
+    {:ok, %{compras: compras_ordenadas, total_gastado: total_gastado}}
   end
 
   def premios_obtenidos(documento) do
@@ -245,8 +245,8 @@ defmodule AzarApp.Clientes do
       end)
 
     total_ganado = Enum.reduce(premios, 0, &(&1.valor + &2))
-
-    {:ok, %{premios: premios, total_ganado: total_ganado}}
+    premios_ordenados = Enum.sort_by(premios, & &1.numero, :desc)
+    {:ok, %{premios: premios_ordenados, total_ganado: total_ganado}}
   end
 
   def balance_personal(documento) do

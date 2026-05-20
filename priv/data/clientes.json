@@ -79,6 +79,38 @@
       "nombre": "juan",
       "notificaciones": [
         {
+          "cuerpo": "Se revirtió tu compra del billete #1002 del sorteo 'Hola'. Se acreditaron $69808 a tu saldo.",
+          "fecha": "2026-05-20 04:38:50.460000Z",
+          "id": "notif_6",
+          "leida": true,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        },
+        {
+          "cuerpo": "Se revirtió tu compra del billete #1002 del sorteo 'Hola'. Se acreditaron $69808 a tu saldo.",
+          "fecha": "2026-05-20 04:38:36.672000Z",
+          "id": "notif_5",
+          "leida": true,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        },
+        {
+          "cuerpo": "Se revirtió tu compra del billete #1002 del sorteo 'Hola'. Se acreditaron $7756 a tu saldo.",
+          "fecha": "2026-05-20 04:38:27.493000Z",
+          "id": "notif_4",
+          "leida": true,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        },
+        {
+          "cuerpo": "Se revirtió tu compra del billete #1002 del sorteo 'Hola'. Se acreditaron $7756 a tu saldo.",
+          "fecha": "2026-05-20 04:37:31.300000Z",
+          "id": "notif_3",
+          "leida": true,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        },
+        {
           "cuerpo": "Billete #1010 completo: Ganaste $1000000 en \"2\". Premio: Dinero.",
           "fecha": "2026-05-19 20:35:48.856000Z",
           "id": "notif_9",
@@ -176,7 +208,7 @@
         }
       ],
       "password_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
-      "saldo": 4404107
+      "saldo": 4388595
     }
   ]
 }
