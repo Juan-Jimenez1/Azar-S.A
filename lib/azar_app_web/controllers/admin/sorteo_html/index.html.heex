@@ -58,6 +58,19 @@
 
       <!-- Actions -->
       <div class="flex flex-col sm:flex-row gap-4">
+        <a
+          href="/admin/logs"
+          class="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#171a21] border border-white/10 px-6 py-4 text-sm font-semibold text-gray-300 transition hover:border-yellow-500/20 hover:text-yellow-300"
+        >
+          📋 Bitácora
+        </a>
+
+        <a
+          href="/admin/admins"
+          class="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#171a21] border border-white/10 px-6 py-4 text-sm font-semibold text-gray-300 transition hover:border-yellow-500/20 hover:text-yellow-300"
+        >
+          ⚙️ Admins
+        </a>
 
         <!-- Ejecutar -->
         <form action="/admin/sistema/actualizar-fecha" method="post">
@@ -100,6 +113,17 @@
           </span>
 
         </a>
+
+        <form action="/admin/logout" method="post">
+          <input type="hidden" name="_method" value="delete" />
+          <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+          <button
+            type="submit"
+            class="inline-flex items-center justify-center gap-2 rounded-2xl border border-red-500/20 bg-red-500/[0.04] px-6 py-4 text-sm font-semibold text-red-400 transition hover:bg-red-500/[0.08]"
+          >
+            Salir
+          </button>
+        </form>
 
       </div>
 
