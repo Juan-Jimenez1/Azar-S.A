@@ -30,6 +30,22 @@
       "nombre": "Juan",
       "notificaciones": [
         {
+          "cuerpo": "El billete ganador fue el #1001. Premio: Hola ($99998). Entra a ver tus resultados.",
+          "fecha": "2026-05-21 03:41:09.081000Z",
+          "id": "notif_6",
+          "leida": false,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"Ancheta del dia del padre\" finalizado"
+        },
+        {
+          "cuerpo": "Compraste el billete #1004 del sorteo 'Ancheta del dia del padre' por $4000.",
+          "fecha": "2026-05-21 03:38:53.196000Z",
+          "id": "notif_1",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Billete comprado"
+        },
+        {
           "cuerpo": "El número ganador fue el billete #1001. ¡Revisa si ganaste!",
           "fecha": "2026-05-18 05:55:27.291000Z",
           "id": "notif_1779083727289775",
@@ -39,7 +55,7 @@
         }
       ],
       "password_hash": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
-      "saldo": 1041668
+      "saldo": 1037668
     },
     {
       "documento": "10359027",
@@ -79,152 +95,136 @@
       "nombre": "juan",
       "notificaciones": [
         {
-          "cuerpo": "Se revirtió tu compra del billete #1001 del sorteo 'Ancheta del dia del padre'. Se acreditaron $2000 a tu saldo.",
-          "fecha": "2026-05-20 22:42:34.255000Z",
-          "id": "notif_4",
-          "leida": false,
+          "cuerpo": "Billete #1001 completo: Ganaste $1000001 en \"x\". Premio: Dinero.",
+          "fecha": "2026-05-21 00:06:45.791000-05:00 -05 America/Bogota",
+          "id": "notif_20",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $1000001 en x!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1001. Premio: Dinero ($1000001). Entra a ver tus resultados.",
+          "fecha": "2026-05-21 00:06:45.722000-05:00 -05 America/Bogota",
+          "id": "notif_19",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"x\" finalizado"
+        },
+        {
+          "cuerpo": "Billete #1003 - Fraccion 8: Ganaste $100000 en \"l\". Premio: Dinero.",
+          "fecha": "2026-05-21 00:06:45.689000-05:00 -05 America/Bogota",
+          "id": "notif_18",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $100000 en l!"
+        },
+        {
+          "cuerpo": "Billete #1003 - Fraccion 6: Ganaste $100000 en \"l\". Premio: Dinero.",
+          "fecha": "2026-05-21 00:06:45.606000-05:00 -05 America/Bogota",
+          "id": "notif_17",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $100000 en l!"
+        },
+        {
+          "cuerpo": "Billete #1003 - Fraccion 5: Ganaste $100000 en \"l\". Premio: Dinero.",
+          "fecha": "2026-05-21 00:06:45.508000-05:00 -05 America/Bogota",
+          "id": "notif_16",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $100000 en l!"
+        },
+        {
+          "cuerpo": "Billete #1003 - Fraccion 4: Ganaste $100000 en \"l\". Premio: Dinero.",
+          "fecha": "2026-05-21 00:06:45.426000-05:00 -05 America/Bogota",
+          "id": "notif_15",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $100000 en l!"
+        },
+        {
+          "cuerpo": "Billete #1003 - Fraccion 3: Ganaste $100000 en \"l\". Premio: Dinero.",
+          "fecha": "2026-05-21 00:06:45.341000-05:00 -05 America/Bogota",
+          "id": "notif_14",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $100000 en l!"
+        },
+        {
+          "cuerpo": "Billete #1003 - Fraccion 2: Ganaste $100000 en \"l\". Premio: Dinero.",
+          "fecha": "2026-05-21 00:06:45.250000-05:00 -05 America/Bogota",
+          "id": "notif_13",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $100000 en l!"
+        },
+        {
+          "cuerpo": "Billete #1003 - Fraccion 1: Ganaste $100000 en \"l\". Premio: Dinero.",
+          "fecha": "2026-05-21 00:06:45.199000-05:00 -05 America/Bogota",
+          "id": "notif_12",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $100000 en l!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1003. Premio: Dinero ($1000000). Entra a ver tus resultados.",
+          "fecha": "2026-05-21 00:06:45.153000-05:00 -05 America/Bogota",
+          "id": "notif_11",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"l\" finalizado"
+        },
+        {
+          "cuerpo": "Se revirtió tu compra del billete #1003 del sorteo 'l'. Se acreditaron $15000 a tu saldo.",
+          "fecha": "2026-05-21 00:06:26.368000-05:00 -05 America/Bogota",
+          "id": "notif_10",
+          "leida": true,
           "tipo": "devolucion",
           "titulo": "Compra devuelta"
         },
         {
-          "cuerpo": "Compraste 2 fracción(es) del billete #1001 del sorteo 'Ancheta del dia del padre' por $4000.",
-          "fecha": "2026-05-20 22:42:16.338000Z",
-          "id": "notif_3",
-          "leida": false,
+          "cuerpo": "Compraste 5 fracciones del billete #1003 del sorteo 'l' por $25000.",
+          "fecha": "2026-05-20 23:36:48.768000-05:00 -05 America/Bogota",
+          "id": "notif_7",
+          "leida": true,
           "tipo": "compra",
           "titulo": "Fracciones compradas"
         },
         {
-          "cuerpo": "Se revirtió tu compra del billete #1002 del sorteo 'Hola'. Se acreditaron $69808 a tu saldo.",
-          "fecha": "2026-05-20 04:38:50.460000Z",
+          "cuerpo": "Compraste 5 fracción(es) del billete #1003 del sorteo 'l' por $25000.",
+          "fecha": "2026-05-20 23:36:43.555000-05:00 -05 America/Bogota",
           "id": "notif_6",
           "leida": true,
-          "tipo": "devolucion",
-          "titulo": "Compra devuelta"
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
         },
         {
-          "cuerpo": "Se revirtió tu compra del billete #1002 del sorteo 'Hola'. Se acreditaron $69808 a tu saldo.",
-          "fecha": "2026-05-20 04:38:36.672000Z",
+          "cuerpo": "Compraste el billete #1002 del sorteo 'l' por $50000.",
+          "fecha": "2026-05-20 23:36:14.819000-05:00 -05 America/Bogota",
           "id": "notif_5",
           "leida": true,
-          "tipo": "devolucion",
-          "titulo": "Compra devuelta"
+          "tipo": "compra",
+          "titulo": "Billete comprado"
         },
         {
-          "cuerpo": "Se revirtió tu compra del billete #1002 del sorteo 'Hola'. Se acreditaron $7756 a tu saldo.",
-          "fecha": "2026-05-20 04:38:27.493000Z",
-          "id": "notif_4",
+          "cuerpo": "Compraste 3 fracción(es) del billete #1001 del sorteo 'l' por $15000.",
+          "fecha": "2026-05-20 23:35:24.553000-05:00 -05 America/Bogota",
+          "id": "notif_2",
           "leida": true,
-          "tipo": "devolucion",
-          "titulo": "Compra devuelta"
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
         },
         {
-          "cuerpo": "Se revirtió tu compra del billete #1002 del sorteo 'Hola'. Se acreditaron $7756 a tu saldo.",
-          "fecha": "2026-05-20 04:37:31.300000Z",
-          "id": "notif_3",
+          "cuerpo": "Compraste 4 fracción(es) del billete #1001 del sorteo 'l' por $20000.",
+          "fecha": "2026-05-20 23:35:10.721000-05:00 -05 America/Bogota",
+          "id": "notif_1",
           "leida": true,
-          "tipo": "devolucion",
-          "titulo": "Compra devuelta"
-        },
-        {
-          "cuerpo": "Billete #1010 completo: Ganaste $1000000 en \"2\". Premio: Dinero.",
-          "fecha": "2026-05-19 20:35:48.856000Z",
-          "id": "notif_9",
-          "leida": true,
-          "tipo": "premio",
-          "titulo": "Ganaste $1000000 en 2!"
-        },
-        {
-          "cuerpo": "El billete ganador fue el #1010. Premio: Dinero ($1000000). Entra a ver tus resultados.",
-          "fecha": "2026-05-19 20:35:48.795000Z",
-          "id": "notif_8",
-          "leida": true,
-          "tipo": "sorteo_realizado",
-          "titulo": "Sorteo \"2\" finalizado"
-        },
-        {
-          "cuerpo": "Billete #1002 completo: Ganaste $1000000 en \"1\". Premio: Dinero.",
-          "fecha": "2026-05-19 20:34:05.992000Z",
-          "id": "notif_4",
-          "leida": true,
-          "tipo": "premio",
-          "titulo": "Ganaste $1000000 en 1!"
-        },
-        {
-          "cuerpo": "El billete ganador fue el #1002. Premio: Dinero ($1000000). Entra a ver tus resultados.",
-          "fecha": "2026-05-19 20:34:05.932000Z",
-          "id": "notif_3",
-          "leida": true,
-          "tipo": "sorteo_realizado",
-          "titulo": "Sorteo \"1\" finalizado"
-        },
-        {
-          "cuerpo": "🎟️ Billete #1007 · Fracción 7 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
-          "fecha": "2026-05-18 06:20:12.404000Z",
-          "id": "notif_1779085212403500",
-          "leida": true,
-          "tipo": "premio",
-          "titulo": "🏆 ¡Ganaste $187473 en hola!"
-        },
-        {
-          "cuerpo": "🎟️ Billete #1007 · Fracción 6 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
-          "fecha": "2026-05-18 06:20:12.352000Z",
-          "id": "notif_1779085212351072",
-          "leida": true,
-          "tipo": "premio",
-          "titulo": "🏆 ¡Ganaste $187473 en hola!"
-        },
-        {
-          "cuerpo": "🎟️ Billete #1007 · Fracción 4 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
-          "fecha": "2026-05-18 06:20:12.286000Z",
-          "id": "notif_1779085212284921",
-          "leida": true,
-          "tipo": "premio",
-          "titulo": "🏆 ¡Ganaste $187473 en hola!"
-        },
-        {
-          "cuerpo": "🎟️ Billete #1007 · Fracción 3 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
-          "fecha": "2026-05-18 06:20:12.241000Z",
-          "id": "notif_1779085212240275",
-          "leida": true,
-          "tipo": "premio",
-          "titulo": "🏆 ¡Ganaste $187473 en hola!"
-        },
-        {
-          "cuerpo": "🎟️ Billete #1007 · Fracción 2 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
-          "fecha": "2026-05-18 06:20:12.196000Z",
-          "id": "notif_1779085212195014",
-          "leida": true,
-          "tipo": "premio",
-          "titulo": "🏆 ¡Ganaste $187473 en hola!"
-        },
-        {
-          "cuerpo": "🎟️ Billete #1007 · Fracción 1 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
-          "fecha": "2026-05-18 06:20:12.140000Z",
-          "id": "notif_1779085212139616",
-          "leida": true,
-          "tipo": "premio",
-          "titulo": "🏆 ¡Ganaste $187473 en hola!"
-        },
-        {
-          "cuerpo": "🎟️ Billete #1007 · Fracción 5 — Ganaste $187473 en \"hola\". El premio \"dinero\" fue tuyo. 💸",
-          "fecha": "2026-05-18 06:20:12.086000Z",
-          "id": "notif_1779085212085958",
-          "leida": true,
-          "tipo": "premio",
-          "titulo": "🏆 ¡Ganaste $187473 en hola!"
-        },
-        {
-          "cuerpo": "El billete ganador fue el #1007. Premio: dinero ($1312312). Entra a ver tus resultados.",
-          "fecha": "2026-05-18 06:20:12.023000Z",
-          "id": "notif_1779085212022368",
-          "leida": true,
-          "tipo": "sorteo_realizado",
-          "titulo": "🎰 Sorteo \"hola\" finalizado"
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
         }
       ],
       "password_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
-      "saldo": 4402107
+      "saldo": 5965433
     },
     {
       "documento": "2",

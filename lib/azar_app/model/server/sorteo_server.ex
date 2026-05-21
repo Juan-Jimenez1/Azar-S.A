@@ -179,10 +179,18 @@ defmodule AzarApp.SorteoServer do
               todas_tomadas = length(nuevas_fracciones) == sorteo.cantidad_fracciones
 
               nuevo_billete =
-                billete
-                |> Map.put("disponible", !todas_tomadas)
-                |> Map.put("tipo", "fraccion")
-                |> Map.put("fracciones_tomadas", nuevas_fracciones)
+                if todas_tomadas do
+                  billete
+                  |> Map.put("disponible", false)
+                  |> Map.put("tipo", "completo")
+                  |> Map.put("propietario_doc", "multiple")
+                  |> Map.put("fracciones_tomadas", nuevas_fracciones)
+                else
+                  billete
+                  |> Map.put("disponible", true)
+                  |> Map.put("tipo", "fraccion")
+                  |> Map.put("fracciones_tomadas", nuevas_fracciones)
+                end
 
               nuevo_sorteo = %{
                 sorteo

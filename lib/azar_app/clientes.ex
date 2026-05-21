@@ -89,7 +89,7 @@ defmodule AzarApp.Clientes do
           "tipo" => attrs.tipo,
           "titulo" => attrs.titulo,
           "cuerpo" => attrs.cuerpo,
-          "fecha" => DateTime.utc_now() |> DateTime.to_string(),
+          "fecha" => DateTime.now!("America/Bogota") |> DateTime.to_string(),
           "leida" => false
         }
 

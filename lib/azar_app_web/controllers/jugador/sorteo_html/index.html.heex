@@ -1,16 +1,287 @@
-<div class="min-h-screen bg-[#06070a] px-4 py-10 text-white">
+<div class="min-h-screen bg-[#06070a] px-4 py-8 text-white overflow-hidden">
 
   <!-- Glow -->
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#d4a017]/10 blur-3xl rounded-full pointer-events-none"></div>
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[320px] bg-[#d4a017]/10 blur-3xl rounded-full pointer-events-none"></div>
 
   <div class="max-w-7xl mx-auto relative z-10">
 
     <% no_leidas = if @cliente, do: Enum.count(@cliente.notificaciones || [], &(!&1["leida"])), else: 0 %>
 
-    <!-- Header -->
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+    <!-- ───────────────── NAVBAR ───────────────── -->
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 mb-8">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-4">
+
+        <div class="relative">
+          <div class="absolute inset-0 bg-[#d4a017]/30 blur-2xl rounded-full"></div>
+
+          <div class="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-[#f6d06b] via-[#d4a017] to-[#8b6910] flex items-center justify-center text-black text-xl font-black shadow-[0_0_25px_rgba(212,160,23,0.35)]">
+            🎰
+          </div>
+        </div>
+
+        <div>
+          <h1 class="text-2xl font-black tracking-tight text-white">
+            Azar S.A
+          </h1>
+
+          <p class="text-xs text-gray-500 mt-0.5 tracking-wide">
+            Sorteos digitales premium
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-wrap items-center gap-3">
+
+        <!-- Saldo -->
+        <%= if @cliente do %>
+
+          <a
+            href="/perfil"
+            class="group flex items-center gap-3 rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 px-4 py-2.5 hover:border-emerald-400/30 hover:bg-emerald-500/15 transition-all duration-300"
+          >
+
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/20 flex items-center justify-center text-lg shadow-inner">
+              💸
+            </div>
+
+            <div class="leading-none">
+              <p class="text-[10px] uppercase tracking-[0.2em] text-emerald-400/70 mb-1">
+                Saldo
+              </p>
+
+              <p class="text-sm font-black text-emerald-400">
+                $<%= @cliente.saldo %>
+              </p>
+            </div>
+
+          </a>
+
+        <% end %>
+
+        <!-- Notificaciones -->
+        <a
+          href="/notificaciones"
+          class="relative w-11 h-11 rounded-2xl border border-[#23262f] bg-[#12141a] flex items-center justify-center text-xl text-gray-300 hover:border-[#d4a017]/40 hover:text-[#d4a017] transition-all duration-300"
+        >
+          🔔
+
+          <%= if no_leidas > 0 do %>
+            <span class="absolute -top-1 -right-1 flex items-center justify-center min-w-[20px] h-5 px-1 rounded-full bg-red-500 text-[10px] font-bold text-white shadow-lg">
+              <%= no_leidas %>
+            </span>
+          <% end %>
+        </a>
+
+        <!-- Usuario -->
+        <%= if @cliente do %>
+
+          <a
+            href="/perfil"
+            class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] text-sm font-black text-black hover:scale-105 transition-all duration-300 hover:shadow-[0_0_25px_rgba(212,160,23,0.35)]"
+          >
+            👤 <%= @cliente.nombre %>
+          </a>
+
+          <form action="/logout" method="post">
+            <input type="hidden" name="_method" value="delete" />
+            <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+
+            <button
+              type="submit"
+              class="px-5 py-2.5 rounded-2xl border border-red-500/20 bg-red-500/5 text-sm font-semibold text-red-400 hover:border-red-400 hover:bg-red-500/10 transition-all"
+            >
+              Salir
+            </button>
+          </form>
+
+        <% else %>
+
+          <a
+            href="/login"
+            class="px-5 py-2.5 rounded-2xl border border-[#23262f] bg-[#12141a] text-sm font-semibold text-gray-300 hover:border-[#d4a017]/40 hover:text-[#d4a017] transition-all"
+          >
+            Iniciar sesión
+          </a>
+
+          <a
+            href="/registro"
+            class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] text-sm font-black text-black hover:scale-105 transition-all duration-300 hover:shadow-[0_0_25px_rgba(212,160,23,0.35)]"
+          >
+            Registrarse
+          </a>
+
+        <% end %>
+
+      </div>
+
+    </div>
+
+    <!-- ───────────────── JACKPOT ───────────────── -->
+    <div class="relative overflow-hidden rounded-[34px] border border-[#d4a017]/20 bg-[#090909] shadow-[0_0_60px_rgba(212,160,23,0.08)] mb-14">
+
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,160,23,0.16),transparent_35%)]"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(212,160,23,0.06),transparent_35%)]"></div>
+
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[220px] bg-[#d4a017]/10 blur-3xl rounded-full"></div>
+
+      <div class="relative z-10 p-6 lg:p-8">
+
+        <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 items-center">
+
+          <!-- LEFT -->
+          <div>
+
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#d4a017]/20 bg-[#d4a017]/10 text-[#f6d06b] text-[11px] font-black tracking-[0.15em] mb-5">
+              🔥 JACKPOT MILLONARIO
+            </div>
+
+            <%= if @jackpot do %>
+
+              <div class="mb-5">
+
+                <p class="text-xs uppercase tracking-[0.3em] text-gray-500 mb-2">
+                  Premio acumulado
+                </p>
+
+                <h2 class="text-5xl lg:text-7xl font-black leading-none tracking-tight bg-gradient-to-b from-[#fff3c7] via-[#f6d06b] to-[#d4a017] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(212,160,23,0.25)]">
+                  $<%= @jackpot.premio.valor %>
+                </h2>
+
+              </div>
+
+              <div class="flex flex-wrap items-center gap-3 mb-6">
+
+                <div class="px-4 py-2 rounded-2xl border border-white/5 bg-white/[0.03]">
+                  <p class="text-white font-black text-base leading-none">
+                    <%= @jackpot.nombre %>
+                  </p>
+
+                  <p class="text-gray-500 text-[11px] mt-1">
+                    Sorteo principal
+                  </p>
+                </div>
+
+                <div class="px-4 py-2 rounded-2xl border border-emerald-500/15 bg-emerald-500/10">
+                  <p class="text-emerald-400 text-[11px] font-bold uppercase tracking-wider">
+                    Activo
+                  </p>
+                </div>
+
+              </div>
+
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+
+                <div class="rounded-2xl border border-[#d4a017]/10 bg-[#121212]/80 p-3">
+                  <p class="text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-1">
+                    Finaliza en
+                  </p>
+
+                  <p
+                    id="jackpot-timer"
+                    class="text-lg font-black text-[#f6d06b] font-mono"
+                  >
+                    Calculando...
+                  </p>
+                </div>
+
+                <div class="rounded-2xl border border-white/5 bg-[#121212]/80 p-3">
+                  <p class="text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-1">
+                    Fecha
+                  </p>
+
+                  <p class="text-base font-black text-white">
+                    <%= @jackpot.fecha %>
+                  </p>
+                </div>
+
+                <div class="rounded-2xl border border-white/5 bg-[#121212]/80 p-3">
+                  <p class="text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-1">
+                    Sorteos
+                  </p>
+
+                  <p class="text-base font-black text-[#d4a017]">
+                    <%= length(@sorteos) %>
+                  </p>
+                </div>
+
+              </div>
+
+              <div class="flex flex-wrap gap-3">
+
+                <a
+                  href={"/sorteos/" <> @jackpot.id}
+                  class="group inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] px-7 py-3 text-sm font-black text-black transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,160,23,0.4)]"
+                >
+                  Participar
+
+                  <span class="transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </a>
+
+              </div>
+
+            <% else %>
+
+              <div class="py-6">
+
+                <h2 class="text-4xl font-black text-gray-500">
+                  Sin jackpots activos
+                </h2>
+
+                <p class="text-gray-600 mt-3">
+                  Próximamente nuevos premios millonarios.
+                </p>
+
+              </div>
+
+            <% end %>
+
+          </div>
+
+          <!-- RIGHT -->
+          <div class="relative flex items-center justify-center">
+
+            <div class="absolute inset-0 bg-[#d4a017]/10 blur-3xl rounded-full scale-125"></div>
+
+            <div class="relative w-[240px] h-[240px] rounded-full border border-[#d4a017]/15 bg-gradient-to-br from-[#1d1607] to-[#0c0c0c] flex items-center justify-center shadow-[0_0_60px_rgba(212,160,23,0.14)]">
+
+              <div class="absolute inset-5 rounded-full border border-[#d4a017]/10"></div>
+
+              <div class="relative animate-[pulse_4s_ease-in-out_infinite]">
+
+                <div class="absolute inset-0 bg-[#d4a017]/20 blur-3xl rounded-full"></div>
+
+                <div class="relative w-28 h-28 rounded-full bg-gradient-to-br from-[#f6d06b] to-[#b88708] flex items-center justify-center shadow-[0_0_40px_rgba(212,160,23,0.4)]">
+                  <span class="text-6xl">
+                    💰
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ───────────────── HEADER SORTEOS ───────────────── -->
+    <div
+      id="sorteos"
+      class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10"
+    >
 
       <div>
+
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12141a] border border-[#23262f] text-[#d4a017] text-xs font-semibold mb-4">
           🎟️ Sorteos activos
         </div>
@@ -20,242 +291,418 @@
         </h1>
 
         <p class="text-gray-400 mt-3 text-sm max-w-2xl leading-relaxed">
-          Participa en sorteos activos, compra billetes completos o por fracciones
-          y juega por premios millonarios en segundos.
+          Participa en sorteos activos y juega por premios millonarios.
+        </p>
+
+      </div>
+
+      <div class="bg-[#12141a] border border-[#23262f] rounded-2xl px-5 py-4 shadow-xl">
+        <p class="text-xs uppercase tracking-[0.2em] text-gray-500">
+          Sorteos activos
+        </p>
+
+        <p class="text-3xl font-black text-[#d4a017] mt-1">
+          <%= length(@sorteos) %>
         </p>
       </div>
 
-      <div class="flex flex-col items-end gap-4">
+    </div>
 
-        <!-- Botones -->
-        <div class="flex items-center gap-3">
+    <!-- ───────────────── SORTEOS ───────────────── -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
 
-          <!-- Notificaciones -->
+      <%= for sorteo <- @sorteos do %>
+
+        <% url = "/sorteos/" <> sorteo.id %>
+
+        <% billetes_disponibles =
+          Enum.count(sorteo.billetes, fn b ->
+            case b["tipo"] do
+              "completo" -> false
+              _ ->
+                fracs = Map.get(b, "fracciones_tomadas", [])
+                length(fracs) < sorteo.cantidad_fracciones
+            end
+          end)
+        %>
+
+        <% fracciones_totales =
+          sorteo.cantidad_billetes * sorteo.cantidad_fracciones
+        %>
+
+        <% fracciones_vendidas =
+          Enum.reduce(sorteo.billetes, 0, fn b, acc ->
+            acc + length(Map.get(b, "fracciones_tomadas", []))
+          end)
+        %>
+
+        <% porcentaje =
+          if fracciones_totales > 0,
+            do: round(fracciones_vendidas / fracciones_totales * 100),
+            else: 0
+        %>
+
+        <div class="group relative overflow-hidden rounded-[30px] border border-[#23262f] bg-[#101217]/90 backdrop-blur-xl p-6 shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-[#d4a017]/40 hover:shadow-[0_0_40px_rgba(212,160,23,0.15)]">
+
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(circle_at_top,rgba(212,160,23,0.12),transparent_60%)]"></div>
+
+          <div class="relative z-10 flex items-start justify-between gap-4 mb-6">
+
+            <div>
+
+              <div class="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold text-emerald-300 mb-4">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                ACTIVO
+              </div>
+
+              <h2 class="text-2xl font-black leading-tight text-white group-hover:text-[#f6d06b] transition">
+                <%= sorteo.nombre %>
+              </h2>
+
+            </div>
+
+            <div class="w-14 h-14 rounded-2xl bg-[#181b22] border border-[#2a2d36] flex items-center justify-center text-2xl shadow-inner">
+              🎟️
+            </div>
+
+          </div>
+
+          <div class="relative z-10 rounded-2xl border border-[#272b35] bg-[#14171d] px-5 py-4 mb-5">
+
+            <p class="text-xs uppercase tracking-[0.2em] text-gray-500">
+              Premio
+            </p>
+
+            <div class="mt-2 flex items-end justify-between gap-4">
+
+              <div>
+
+                <p class="text-3xl font-black text-[#d4a017] leading-none">
+                  <%= if sorteo.premio, do: "$#{sorteo.premio.valor}", else: "—" %>
+                </p>
+
+                <p class="text-xs text-gray-500 mt-2">
+                  <%= if sorteo.premio, do: sorteo.premio.nombre, else: "Sin premio asignado" %>
+                </p>
+
+              </div>
+
+              <div class="text-4xl opacity-70">
+                💰
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="relative z-10 space-y-4 mb-6">
+
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-500">Fecha sorteo</span>
+              <span class="font-semibold text-gray-200"><%= sorteo.fecha %></span>
+            </div>
+
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-500">Valor billete</span>
+              <span class="font-semibold text-white">$<%= sorteo.valor_billete %></span>
+            </div>
+
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-500">Fracciones</span>
+              <span class="font-semibold text-white"><%= sorteo.cantidad_fracciones %></span>
+            </div>
+
+          </div>
+
+          <div class="relative z-10 mb-7">
+
+            <div class="flex justify-between text-xs text-gray-500 mb-2">
+              <span><%= billetes_disponibles %> disponibles</span>
+              <span><%= porcentaje %>% vendido</span>
+            </div>
+
+            <div class="h-3 rounded-full bg-[#1a1d24] overflow-hidden border border-[#272b35]">
+
+              <div
+                class="h-full rounded-full bg-gradient-to-r from-[#a87800] via-[#d4a017] to-[#ffdc73] shadow-[0_0_20px_rgba(212,160,23,0.6)] transition-all duration-700"
+                style={"width: #{porcentaje}%"}
+              ></div>
+
+            </div>
+
+          </div>
+
           <a
-            href="/notificaciones"
-            class="relative w-11 h-11 rounded-2xl border border-[#23262f] bg-[#12141a] flex items-center justify-center text-xl text-gray-300 hover:border-[#d4a017]/40 hover:text-[#d4a017] transition-all"
+            href={url}
+            class="relative z-10 flex items-center justify-center gap-3 w-full rounded-2xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] px-5 py-4 text-sm font-black text-black transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,160,23,0.4)]"
           >
-            🔔
+            Ver billetes
 
-            <%= if no_leidas > 0 do %>
-              <span class="absolute -top-1 -right-1 flex items-center justify-center min-w-[20px] h-5 px-1 rounded-full bg-red-500 text-[10px] font-bold text-white">
-                <%= no_leidas %>
-              </span>
-            <% end %>
+            <span class="transition-transform duration-300 group-hover:translate-x-1">
+              →
+            </span>
+
           </a>
-
-          <!-- Auth -->
-          <%= if @cliente do %>
-
-            <a
-              href="/perfil"
-              class="px-5 py-2 rounded-xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] text-sm font-black text-black hover:scale-105 transition-all"
-            >
-              👤 <%= @cliente.nombre %>
-            </a>
-
-            <form action="/logout" method="post">
-              <input type="hidden" name="_method" value="delete" />
-              <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
-
-              <button
-                type="submit"
-                class="px-5 py-2 rounded-xl border border-red-500/30 text-sm font-semibold text-red-400 hover:border-red-400 hover:text-red-300 transition"
-              >
-                Salir
-              </button>
-            </form>
-
-          <% else %>
-
-            <a
-              href="/login"
-              class="px-5 py-2 rounded-xl border border-[#23262f] text-sm font-semibold text-gray-300 hover:border-[#d4a017]/50 hover:text-[#d4a017] transition"
-            >
-              Iniciar sesión
-            </a>
-
-            <a
-              href="/registro"
-              class="px-5 py-2 rounded-xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] text-sm font-black text-black hover:scale-105 hover:shadow-[0_0_20px_rgba(212,160,23,0.4)] transition-all"
-            >
-              Registrarse
-            </a>
-
-          <% end %>
 
         </div>
 
-        <!-- Contador -->
-        <div class="bg-[#12141a] border border-[#23262f] rounded-2xl px-5 py-4 shadow-xl">
-          <p class="text-xs uppercase tracking-[0.2em] text-gray-500">
-            Sorteos activos
-          </p>
+      <% end %>
 
-          <p class="text-3xl font-black text-[#d4a017] mt-1">
-            <%= length(@sorteos) %>
-          </p>
+    </div>
+
+    <!-- ───────────────── RANKINGS ───────────────── -->
+    <div class="mt-24">
+
+      <div class="text-center mb-14">
+
+        <h2 class="text-4xl font-black text-white tracking-tight">
+          Rankings globales
+        </h2>
+
+        <p class="text-gray-500 text-sm mt-3">
+          Los jugadores más destacados de la plataforma
+        </p>
+
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-end">
+
+        <!-- LEFT -->
+        <div class="lg:mb-10 relative overflow-hidden rounded-[32px] border border-white/5 bg-[#101217]/90 p-6 shadow-2xl">
+
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#6b7280] to-transparent"></div>
+
+          <div class="flex items-center justify-between mb-8">
+            <div>
+              <p class="text-xl font-black text-white">
+                Compradores
+              </p>
+
+              <p class="text-xs text-gray-500 mt-1">
+                Mayor inversión total
+              </p>
+            </div>
+
+            <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-xl">
+              🎟️
+            </div>
+          </div>
+
+          <div class="space-y-4">
+
+            <%= for {jugador, idx} <- Enum.with_index(Enum.take(@top_compradores, 3)) do %>
+
+              <div class="group flex items-center justify-between rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-4 hover:border-white/10 transition-all">
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-sm font-black text-gray-400">
+                    #<%= idx + 1 %>
+                  </div>
+
+                  <div>
+                    <p class="text-sm font-bold text-white">
+                      <%= jugador.nombre %>
+                    </p>
+
+                    <p class="text-xs text-gray-500 mt-1">
+                      Comprador premium
+                    </p>
+                  </div>
+
+                </div>
+
+                <span class="text-sm font-black text-gray-300">
+                  $<%= jugador.total_gastado %>
+                </span>
+
+              </div>
+
+            <% end %>
+
+          </div>
+
+        </div>
+
+        <!-- CENTER -->
+        <div class="relative overflow-hidden rounded-[36px] border border-[#d4a017]/15 bg-gradient-to-b from-[#161109] to-[#0d0d0d] p-7 shadow-[0_0_50px_rgba(212,160,23,0.12)] scale-[1.03]">
+
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#d4a017] to-transparent"></div>
+          <div class="absolute top-0 right-0 w-40 h-40 bg-[#d4a017]/10 blur-3xl rounded-full"></div>
+
+          <div class="flex items-center justify-between mb-8">
+
+            <div>
+              <p class="text-2xl font-black text-white">
+                Ganadores
+              </p>
+
+              <p class="text-xs text-gray-500 mt-1">
+                Más dinero ganado
+              </p>
+            </div>
+
+            <div class="w-14 h-14 rounded-2xl bg-[#d4a017]/10 border border-[#d4a017]/15 flex items-center justify-center text-2xl shadow-inner">
+              👑
+            </div>
+
+          </div>
+
+          <div class="space-y-4">
+
+            <%= for {jugador, idx} <- Enum.with_index(Enum.take(@top_ganadores, 3)) do %>
+
+              <div class="group flex items-center justify-between rounded-2xl border border-[#d4a017]/10 bg-[#d4a017]/5 px-4 py-4 hover:border-[#d4a017]/20 transition-all">
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#f6d06b] to-[#a87800] flex items-center justify-center text-black text-sm font-black shadow-lg">
+                    #<%= idx + 1 %>
+                  </div>
+
+                  <div>
+                    <p class="text-sm font-bold text-white">
+                      <%= jugador.nombre %>
+                    </p>
+
+                    <p class="text-xs text-gray-500 mt-1">
+                      Jugador destacado
+                    </p>
+                  </div>
+
+                </div>
+
+                <span class="text-sm font-black text-[#f6d06b]">
+                  $<%= jugador.total_ganado %>
+                </span>
+
+              </div>
+
+            <% end %>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="lg:mb-10 relative overflow-hidden rounded-[32px] border border-white/5 bg-[#101217]/90 p-6 shadow-2xl">
+
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#10b981] to-transparent"></div>
+
+          <div class="flex items-center justify-between mb-8">
+
+            <div>
+              <p class="text-xl font-black text-white">
+                Suertudos
+              </p>
+
+              <p class="text-xs text-gray-500 mt-1">
+                Más sorteos ganados
+              </p>
+            </div>
+
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/10 flex items-center justify-center text-xl">
+              ✨
+            </div>
+
+          </div>
+
+          <div class="space-y-4">
+
+            <%= for {jugador, idx} <- Enum.with_index(Enum.take(@top_suertudos, 3)) do %>
+
+              <div class="group flex items-center justify-between rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-4 hover:border-emerald-500/15 transition-all">
+
+                <div class="flex items-center gap-4">
+
+                  <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/10 flex items-center justify-center text-sm font-black text-emerald-400">
+                    #<%= idx + 1 %>
+                  </div>
+
+                  <div>
+                    <p class="text-sm font-bold text-white">
+                      <%= jugador.nombre %>
+                    </p>
+
+                    <p class="text-xs text-gray-500 mt-1">
+                      <%= jugador.sorteos_ganados %> ganados
+                    </p>
+                  </div>
+
+                </div>
+
+                <div class="flex items-center gap-1">
+
+                  <span class="text-emerald-400 text-sm">
+                    ⭐
+                  </span>
+
+                  <span class="text-sm font-black text-emerald-400">
+                    <%= jugador.sorteos_ganados %>
+                  </span>
+
+                </div>
+
+              </div>
+
+            <% end %>
+
+          </div>
+
         </div>
 
       </div>
 
     </div>
 
-    <!-- Flash -->
-    <%= if @flash["info"] do %>
-      <div class="mb-6 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-5 py-4 text-sm text-emerald-300 backdrop-blur-xl animate-fade-in">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-            ✅
-          </div>
-          <span><%= @flash["info"] %></span>
-        </div>
-      </div>
-    <% end %>
-
-    <%= if @flash["error"] do %>
-      <div class="mb-6 rounded-2xl border border-red-500/20 bg-red-500/10 px-5 py-4 text-sm text-red-300 backdrop-blur-xl animate-fade-in">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
-            ⚠️
-          </div>
-          <span><%= @flash["error"] %></span>
-        </div>
-      </div>
-    <% end %>
-
-    <!-- Empty -->
-    <%= if @sorteos == [] do %>
-
-      <div class="rounded-[28px] border border-dashed border-[#2a2d36] bg-[#111318]/80 backdrop-blur-xl py-24 text-center shadow-2xl">
-        <div class="w-24 h-24 rounded-full bg-[#181b22] border border-[#2b2f39] flex items-center justify-center mx-auto mb-6 text-5xl">
-          🎰
-        </div>
-        <h2 class="text-2xl font-bold text-white">
-          No hay sorteos disponibles
-        </h2>
-        <p class="text-gray-500 mt-3 text-sm">
-          Vuelve pronto para participar en nuevos sorteos.
-        </p>
-      </div>
-
-    <% else %>
-
-      <!-- Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
-
-        <%= for sorteo <- @sorteos do %>
-
-          <% url = "/sorteos/" <> sorteo.id %>
-
-          <% billetes_disponibles =
-            Enum.count(sorteo.billetes, fn b ->
-              case b["tipo"] do
-                "completo" -> false
-                _ ->
-                  fracs = Map.get(b, "fracciones_tomadas", [])
-                  length(fracs) < sorteo.cantidad_fracciones
-              end
-            end)
-          %>
-
-          <% fracciones_totales = sorteo.cantidad_billetes * sorteo.cantidad_fracciones %>
-
-          <% fracciones_vendidas =
-            Enum.reduce(sorteo.billetes, 0, fn b, acc ->
-              acc + length(Map.get(b, "fracciones_tomadas", []))
-            end)
-          %>
-
-          <% porcentaje =
-            if fracciones_totales > 0,
-              do: round(fracciones_vendidas / fracciones_totales * 100),
-              else: 0
-          %>
-
-          <div class="group relative overflow-hidden rounded-[30px] border border-[#23262f] bg-[#101217]/90 backdrop-blur-xl p-6 shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-[#d4a017]/40 hover:shadow-[0_0_40px_rgba(212,160,23,0.15)]">
-
-            <!-- Glow -->
-            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(circle_at_top,rgba(212,160,23,0.12),transparent_60%)]"></div>
-
-            <!-- Top -->
-            <div class="relative z-10 flex items-start justify-between gap-4 mb-6">
-              <div>
-                <div class="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold text-emerald-300 mb-4">
-                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  ACTIVO
-                </div>
-                <h2 class="text-2xl font-black leading-tight text-white group-hover:text-[#f6d06b] transition">
-                  <%= sorteo.nombre %>
-                </h2>
-              </div>
-              <div class="w-14 h-14 rounded-2xl bg-[#181b22] border border-[#2a2d36] flex items-center justify-center text-2xl shadow-inner">
-                🎟️
-              </div>
-            </div>
-
-            <!-- Prize -->
-            <div class="relative z-10 rounded-2xl border border-[#272b35] bg-[#14171d] px-5 py-4 mb-5">
-              <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Premio</p>
-              <div class="mt-2 flex items-end justify-between gap-4">
-                <div>
-                  <p class="text-3xl font-black text-[#d4a017] leading-none">
-                    <%= if sorteo.premio, do: "$#{sorteo.premio.valor}", else: "—" %>
-                  </p>
-                  <p class="text-xs text-gray-500 mt-2">
-                    <%= if sorteo.premio, do: sorteo.premio.nombre, else: "Sin premio asignado" %>
-                  </p>
-                </div>
-                <div class="text-4xl opacity-70">💰</div>
-              </div>
-            </div>
-
-            <!-- Info -->
-            <div class="relative z-10 space-y-4 mb-6">
-              <div class="flex items-center justify-between text-sm">
-                <span class="text-gray-500">Fecha sorteo</span>
-                <span class="font-semibold text-gray-200"><%= sorteo.fecha %></span>
-              </div>
-              <div class="flex items-center justify-between text-sm">
-                <span class="text-gray-500">Valor billete completo</span>
-                <span class="font-semibold text-white">$<%= sorteo.valor_billete %></span>
-              </div>
-              <div class="flex items-center justify-between text-sm">
-                <span class="text-gray-500">Fracciones por billete</span>
-                <span class="font-semibold text-white"><%= sorteo.cantidad_fracciones %></span>
-              </div>
-            </div>
-
-            <!-- Progress -->
-            <div class="relative z-10 mb-7">
-              <div class="flex justify-between text-xs text-gray-500 mb-2">
-                <span><%= billetes_disponibles %> billetes disponibles</span>
-                <span><%= porcentaje %>% vendido</span>
-              </div>
-              <div class="h-3 rounded-full bg-[#1a1d24] overflow-hidden border border-[#272b35]">
-                <div
-                  class="h-full rounded-full bg-gradient-to-r from-[#a87800] via-[#d4a017] to-[#ffdc73] shadow-[0_0_20px_rgba(212,160,23,0.6)] transition-all duration-700"
-                  style={"width: #{porcentaje}%"}
-                ></div>
-              </div>
-            </div>
-
-            <!-- CTA -->
-            
-             <a href={url}
-              class="relative z-10 flex items-center justify-center gap-3 w-full rounded-2xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] px-5 py-4 text-sm font-black text-black transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,160,23,0.4)]"
-            >
-              Ver billetes
-              <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </a>
-
-          </div>
-
-        <% end %>
-
-      </div>
-
-    <% end %>
-
   </div>
+
 </div>
+
+<!-- TIMER -->
+<%= if @jackpot do %>
+<script>
+  (function () {
+
+    const fechaStr = "<%= @jackpot.fecha %>";
+    const target = new Date(fechaStr + "T23:59:59");
+
+    function pad(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function tick() {
+
+      const now = new Date();
+      const diff = target - now;
+
+      if (diff <= 0) {
+
+        const el = document.getElementById("jackpot-timer");
+
+        if (el) {
+          el.textContent = "¡Sorteo hoy!";
+        }
+
+        return;
+      }
+
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+
+      const el = document.getElementById("jackpot-timer");
+
+      if (el) {
+        el.textContent =
+          pad(h) + ":" + pad(m) + ":" + pad(s);
+      }
+
+    }
+
+    tick();
+    setInterval(tick, 1000);
+
+  })();
+</script>
+<% end %>
