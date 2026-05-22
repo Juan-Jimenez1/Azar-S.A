@@ -95,6 +95,62 @@
       "nombre": "juan",
       "notificaciones": [
         {
+          "cuerpo": "Billete #1010 - Fraccion 7: Ganaste $19999 en \"Crazy\". Premio: Dinero.",
+          "fecha": "2026-05-21 23:47:16.436000-05:00 -05 America/Bogota",
+          "id": "notif_7",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $19999 en Crazy!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1010. Premio: Dinero ($199997). Entra a ver tus resultados.",
+          "fecha": "2026-05-21 23:47:16.387000-05:00 -05 America/Bogota",
+          "id": "notif_6",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"Crazy\" finalizado"
+        },
+        {
+          "cuerpo": "Compraste el billete #1005 del sorteo 'Crazy' por $50000.",
+          "fecha": "2026-05-21 23:47:05.259000-05:00 -05 America/Bogota",
+          "id": "notif_5",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Billete comprado"
+        },
+        {
+          "cuerpo": "Compraste 1 fracción(es) del billete #1010 del sorteo 'Crazy' por $5000.",
+          "fecha": "2026-05-21 23:47:02.221000-05:00 -05 America/Bogota",
+          "id": "notif_4",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
+          "cuerpo": "Compraste 1 fracción(es) del billete #1008 del sorteo 'Crazy' por $5000.",
+          "fecha": "2026-05-21 23:46:57.332000-05:00 -05 America/Bogota",
+          "id": "notif_3",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
+          "cuerpo": "Compraste 3 fracción(es) del billete #1001 del sorteo 'Crazy' por $15000.",
+          "fecha": "2026-05-21 23:44:45.650000-05:00 -05 America/Bogota",
+          "id": "notif_2",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
+          "cuerpo": "Compraste 7 fracción(es) del billete #1001 del sorteo 'Crazy' por $35000.",
+          "fecha": "2026-05-21 23:44:39.022000-05:00 -05 America/Bogota",
+          "id": "notif_1",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
           "cuerpo": "Billete #1001 completo: Ganaste $1000001 en \"x\". Premio: Dinero.",
           "fecha": "2026-05-21 00:06:45.791000-05:00 -05 America/Bogota",
           "id": "notif_20",
@@ -224,7 +280,7 @@
         }
       ],
       "password_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
-      "saldo": 5965433
+      "saldo": 5875432
     },
     {
       "documento": "2",

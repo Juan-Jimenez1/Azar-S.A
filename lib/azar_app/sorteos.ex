@@ -118,21 +118,40 @@ defmodule AzarApp.Sorteos do
   def clientes_por_sorteo(sorteo_id) do
     case get_sorteo(sorteo_id) do
       {:ok, sorteo} ->
+        clientes = AzarApp.JsonStore.all(:clientes)
+        billetes_vendidos = Enum.reject(sorteo.billetes, & &1["disponible"])
+
+        resolver = fn doc ->
+          c = Enum.find(clientes, &(&1.documento == doc))
+          if c, do: c.nombre, else: doc
+        end
+
         completos =
-          sorteo.billetes
+          billetes_vendidos
           |> Enum.filter(&(&1["tipo"] == "completo"))
-          |> Enum.map(fn b -> %{doc: b["propietario_doc"], billete: b["numero"]} end)
-          |> Enum.sort_by(& &1.doc)
+          |> Enum.map(fn b ->
+            %{
+              doc: b["propietario_doc"],
+              nombre: resolver.(b["propietario_doc"]),
+              billete: b["numero"]
+            }
+          end)
+          |> Enum.sort_by(& &1.nombre)
 
         fracciones =
-          sorteo.billetes
+          billetes_vendidos
           |> Enum.filter(&(&1["tipo"] == "fraccion"))
           |> Enum.flat_map(fn b ->
-            Enum.map(b["fracciones_tomadas"], fn f ->
-              %{doc: f["propietario_doc"], billete: b["numero"], fraccion: f["fraccion"]}
+            Enum.map(Map.get(b, "fracciones_tomadas", []), fn f ->
+              %{
+                doc: f["propietario_doc"],
+                nombre: resolver.(f["propietario_doc"]),
+                billete: b["numero"],
+                fraccion: f["fraccion"]
+              }
             end)
           end)
-          |> Enum.sort_by(& &1.doc)
+          |> Enum.sort_by(& &1.nombre)
 
         {:ok, %{completos: completos, fracciones: fracciones}}
 
@@ -387,6 +406,65 @@ defmodule AzarApp.Sorteos do
 
       :error ->
         []
+    end
+  end
+
+  def balance_sorteos_pasados do
+    listar_sorteos()
+    |> Enum.filter(& &1.realizado)
+    |> Enum.map(fn sorteo ->
+      {:ok, ingresos} = ingresos_por_sorteo(sorteo.id)
+      valor_premio = if sorteo.premio, do: sorteo.premio.valor, else: 0
+      ganancia = ingresos - valor_premio
+
+      ganador_nombre =
+        if sorteo.numero_ganador do
+          billete = Enum.find(sorteo.billetes, &(&1["numero"] == sorteo.numero_ganador))
+          resolver_nombre_ganador(billete)
+        end
+
+      %{
+        sorteo: sorteo.nombre,
+        fecha: sorteo.fecha,
+        ingresos: ingresos,
+        premio: if(sorteo.premio, do: sorteo.premio.nombre, else: "—"),
+        valor_premio: valor_premio,
+        ganancia: ganancia,
+        resultado: if(ganancia >= 0, do: "ganancia", else: "pérdida"),
+        numero_ganador: sorteo.numero_ganador,
+        ganador_nombre: ganador_nombre
+      }
+    end)
+  end
+
+  defp resolver_nombre_ganador(nil), do: "—"
+
+  defp resolver_nombre_ganador(billete) do
+    clientes = AzarApp.JsonStore.all(:clientes)
+
+    case billete["tipo"] do
+      "completo" ->
+        doc = billete["propietario_doc"]
+        cliente = Enum.find(clientes, &(&1.documento == doc))
+        if cliente, do: cliente.nombre, else: doc
+
+      "fraccion" ->
+        docs =
+          billete
+          |> Map.get("fracciones_tomadas", [])
+          |> Enum.map(& &1["propietario_doc"])
+          |> Enum.uniq()
+
+        nombres =
+          Enum.map(docs, fn doc ->
+            cliente = Enum.find(clientes, &(&1.documento == doc))
+            if cliente, do: cliente.nombre, else: doc
+          end)
+
+        Enum.join(nombres, ", ")
+
+      _ ->
+        "—"
     end
   end
 

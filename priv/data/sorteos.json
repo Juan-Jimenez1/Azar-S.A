@@ -1016,7 +1016,7 @@
       "premio": {
         "id": "premio_4",
         "nombre": "Dinero",
-        "valor": 1000000000
+        "valor": 1000000
       },
       "realizado": true,
       "valor_billete": 69808
@@ -1068,7 +1068,7 @@
             }
           ],
           "numero": 1001,
-          "propietario_doc": "multiple",
+          "propietario_doc": "1",
           "tipo": "completo"
         },
         {
@@ -1150,7 +1150,7 @@
       "premio": {
         "id": "premio_6",
         "nombre": "Dinero",
-        "valor": 1000000
+        "valor": 3233128
       },
       "realizado": true,
       "valor_billete": 50000
@@ -1173,10 +1173,130 @@
       "premio": {
         "id": "premio_8",
         "nombre": "Dinero",
-        "valor": 1000001
+        "valor": 20000
       },
       "realizado": true,
       "valor_billete": 45674
+    },
+    {
+      "billetes": [
+        {
+          "disponible": false,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 1,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 2,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 3,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 4,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 5,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 6,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 7,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 8,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 9,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 10,
+              "propietario_doc": "1"
+            }
+          ],
+          "numero": 1001,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        },
+        {
+          "disponible": true,
+          "numero": 1003
+        },
+        {
+          "disponible": true,
+          "numero": 1004
+        },
+        {
+          "disponible": false,
+          "numero": 1005,
+          "propietario_doc": "1",
+          "tipo": "completo"
+        },
+        {
+          "disponible": true,
+          "numero": 1006
+        },
+        {
+          "disponible": true,
+          "numero": 1007
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 7,
+              "propietario_doc": "1"
+            }
+          ],
+          "numero": 1008,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "numero": 1009
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 7,
+              "propietario_doc": "1"
+            }
+          ],
+          "numero": 1010,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "numero": 1011
+        }
+      ],
+      "cantidad_billetes": 11,
+      "cantidad_fracciones": 10,
+      "fecha": "2026-05-21",
+      "id": "sorteo_9",
+      "nombre": "Crazy",
+      "numero_ganador": 1010,
+      "premio": {
+        "id": "premio_16",
+        "nombre": "Dinero",
+        "valor": 199997
+      },
+      "realizado": true,
+      "valor_billete": 50000
     }
   ]
 }

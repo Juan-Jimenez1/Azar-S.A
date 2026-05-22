@@ -4,7 +4,19 @@ defmodule AzarAppWeb.Admin.SorteoController do
 
   def index(conn, _params) do
     sorteos = Sorteos.listar_sorteos()
-    render(conn, :index, sorteos: sorteos)
+    balance = Sorteos.balance_sorteos_pasados()
+
+    total_ingresos = Enum.reduce(balance, 0, &(&1.ingresos + &2))
+    total_premios  = Enum.reduce(balance, 0, &(&1.valor_premio + &2))
+    total_ganancia = Enum.reduce(balance, 0, &(&1.ganancia + &2))
+
+    render(conn, :index,
+      sorteos:        sorteos,
+      balance:        balance,
+      total_ingresos: total_ingresos,
+      total_premios:  total_premios,
+      total_ganancia: total_ganancia
+    )
   end
 
   def new(conn, _params) do
@@ -32,7 +44,36 @@ defmodule AzarAppWeb.Admin.SorteoController do
       {:ok, sorteo} ->
         {:ok, ingresos} = Sorteos.ingresos_por_sorteo(id)
         {:ok, clientes} = Sorteos.clientes_por_sorteo(id)
-        render(conn, :show, sorteo: sorteo, ingresos: ingresos, clientes: clientes)
+
+        ganador_nombre =
+          if sorteo.realizado and sorteo.numero_ganador do
+            billete = Enum.find(sorteo.billetes, &(&1["numero"] == sorteo.numero_ganador))
+            clientes_todos = AzarApp.JsonStore.all(:clientes)
+
+            case billete["tipo"] do
+              "completo" ->
+                c = Enum.find(clientes_todos, &(&1.documento == billete["propietario_doc"]))
+                if c, do: c.nombre, else: billete["propietario_doc"]
+
+              "fraccion" ->
+                docs = billete |> Map.get("fracciones_tomadas", []) |> Enum.map(& &1["propietario_doc"]) |> Enum.uniq()
+                docs
+                |> Enum.map(fn doc ->
+                  c = Enum.find(clientes_todos, &(&1.documento == doc))
+                  if c, do: c.nombre, else: doc
+                end)
+                |> Enum.join(", ")
+
+              _ -> "—"
+            end
+          end
+
+        render(conn, :show,
+          sorteo:         sorteo,
+          ingresos:       ingresos,
+          clientes:       clientes,
+          ganador_nombre: ganador_nombre
+        )
 
       :error ->
         conn
