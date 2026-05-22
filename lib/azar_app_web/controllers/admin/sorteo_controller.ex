@@ -3,21 +3,9 @@ defmodule AzarAppWeb.Admin.SorteoController do
   alias AzarApp.Sorteos
 
   def index(conn, _params) do
-    sorteos = Sorteos.listar_sorteos()
-    balance = Sorteos.balance_sorteos_pasados()
-
-    total_ingresos = Enum.reduce(balance, 0, &(&1.ingresos + &2))
-    total_premios  = Enum.reduce(balance, 0, &(&1.valor_premio + &2))
-    total_ganancia = Enum.reduce(balance, 0, &(&1.ganancia + &2))
-
-    render(conn, :index,
-      sorteos:        sorteos,
-      balance:        balance,
-      total_ingresos: total_ingresos,
-      total_premios:  total_premios,
-      total_ganancia: total_ganancia
-    )
-  end
+  sorteos = Sorteos.listar_sorteos()
+  render(conn, :index, sorteos: sorteos)
+end
 
   def new(conn, _params) do
     render(conn, :new)
@@ -95,4 +83,23 @@ defmodule AzarAppWeb.Admin.SorteoController do
         |> redirect(to: ~p"/admin/sorteos/#{id}")
     end
   end
+
+  def premios_entregados(conn, _params) do
+  premios = Sorteos.premios_entregados()
+  render(conn, :premios_entregados, premios: premios)
+end
+
+def balance(conn, _params) do
+  balance        = Sorteos.balance_sorteos_pasados()
+  total_ingresos = Enum.reduce(balance, 0, &(&1.ingresos + &2))
+  total_premios  = Enum.reduce(balance, 0, &(&1.valor_premio + &2))
+  total_ganancia = total_ingresos - total_premios
+
+  render(conn, :balance,
+    balance:        balance,
+    total_ingresos: total_ingresos,
+    total_premios:  total_premios,
+    total_ganancia: total_ganancia
+  )
+end
 end

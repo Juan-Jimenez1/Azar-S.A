@@ -19,9 +19,8 @@ defmodule AzarAppWeb.Router do
   scope "/admin", AzarAppWeb.Admin, as: :admin do
     pipe_through :browser
 
-    get    "/login",  AuthController, :login
-    post   "/login",  AuthController, :do_login
-    delete "/logout", AuthController, :logout
+    get    "/",  AuthController, :login
+    post   "/",  AuthController, :do_login
   end
 
   # ── Admin protegido ───────────────────────────────────────────────────────
@@ -46,6 +45,9 @@ defmodule AzarAppWeb.Router do
     delete "/admins/:id", AdminController, :delete
 
     get "/logs", LogController, :index
+
+    get "/premios-entregados", SorteoController, :premios_entregados
+    get "/balance", SorteoController, :balance
   end
 
   # ── Jugador ────────────────────────────────────────────────────────────────

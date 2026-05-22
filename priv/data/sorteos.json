@@ -1297,6 +1297,116 @@
       },
       "realizado": true,
       "valor_billete": 50000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "numero": 1001
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        },
+        {
+          "disponible": true,
+          "numero": 1003
+        },
+        {
+          "disponible": true,
+          "numero": 1004
+        },
+        {
+          "disponible": true,
+          "numero": 1005
+        },
+        {
+          "disponible": true,
+          "numero": 1006
+        },
+        {
+          "disponible": true,
+          "numero": 1007
+        },
+        {
+          "disponible": true,
+          "numero": 1008
+        }
+      ],
+      "cantidad_billetes": 8,
+      "cantidad_fracciones": 6,
+      "fecha": "2026-05-22",
+      "id": "sorteo_22",
+      "nombre": "Crazy",
+      "numero_ganador": null,
+      "premio": {
+        "id": "premio_27",
+        "nombre": "Dinero",
+        "valor": 9999999
+      },
+      "realizado": false,
+      "valor_billete": 5000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "numero": 1001
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        },
+        {
+          "disponible": true,
+          "numero": 1003
+        },
+        {
+          "disponible": true,
+          "numero": 1004
+        },
+        {
+          "disponible": true,
+          "numero": 1005
+        },
+        {
+          "disponible": true,
+          "numero": 1006
+        },
+        {
+          "disponible": true,
+          "numero": 1007
+        },
+        {
+          "disponible": true,
+          "numero": 1008
+        },
+        {
+          "disponible": true,
+          "numero": 1009
+        },
+        {
+          "disponible": true,
+          "numero": 1010
+        },
+        {
+          "disponible": true,
+          "numero": 1011
+        },
+        {
+          "disponible": true,
+          "numero": 1012
+        }
+      ],
+      "cantidad_billetes": 12,
+      "cantidad_fracciones": 9,
+      "fecha": "2026-05-22",
+      "id": "sorteo_30",
+      "nombre": "algo",
+      "numero_ganador": null,
+      "premio": null,
+      "realizado": false,
+      "valor_billete": 50000
     }
   ]
 }

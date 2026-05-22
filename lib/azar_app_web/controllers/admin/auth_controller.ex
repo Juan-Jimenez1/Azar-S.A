@@ -7,23 +7,24 @@ defmodule AzarAppWeb.Admin.AuthController do
   end
 
   def do_login(conn, %{"admin" => params}) do
-    case Admins.login(params["nombre"], params["password"]) do
-      {:ok, admin} ->
-        conn
-        |> put_session(:admin_id, admin.id)
-        |> put_flash(:info, "Bienvenido #{admin.nombre}")
-        |> redirect(to: ~p"/admin/sorteos")
+  case Admins.login(params["nombre"], params["password"]) do
+    {:ok, admin} ->
+      conn
+      |> configure_session(renew: true)
+      |> put_session(:admin_id, admin.id)
+      |> put_flash(:info, "Bienvenido #{admin.nombre}")
+      |> redirect(to: ~p"/admin/sorteos")
 
-      {:error, motivo} ->
-        conn
-        |> put_flash(:error, motivo)
-        |> redirect(to: ~p"/admin/login")
-    end
+    {:error, motivo} ->
+      conn
+      |> put_flash(:error, motivo)
+      |> redirect(to: ~p"/admin/")
   end
+end
 
-  def logout(conn, _params) do
-    conn
-    |> clear_session()
-    |> redirect(to: ~p"/admin/login")
-  end
+def logout(conn, _params) do
+  conn
+  |> configure_session(drop: true)
+  |> redirect(to: ~p"/admin/")
+end
 end
