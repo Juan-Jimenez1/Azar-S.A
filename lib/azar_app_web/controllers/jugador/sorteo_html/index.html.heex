@@ -454,22 +454,39 @@
 <script>
   (function () {
     const fechaStr = "<%= @jackpot.fecha %>";
-    const target = new Date(fechaStr + "T23:59:59");
+    const hoy      = new Date().toISOString().slice(0, 10);
+    const el       = document.getElementById("jackpot-timer");
+
+    if (fechaStr === hoy) {
+      if (el) el.textContent = "¡Sorteo hoy!";
+      return;
+    }
+
+    const target = new Date(fechaStr + "T00:00:00");
+
     function pad(n) { return String(n).padStart(2, "0"); }
+
     function tick() {
-      const now = new Date();
+      const now  = new Date();
       const diff = target - now;
+
       if (diff <= 0) {
-        const el = document.getElementById("jackpot-timer");
         if (el) el.textContent = "¡Sorteo hoy!";
         return;
       }
-      const h = Math.floor(diff / 3600000);
+
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
       const m = Math.floor((diff % 3600000) / 60000);
       const s = Math.floor((diff % 60000) / 1000);
-      const el = document.getElementById("jackpot-timer");
-      if (el) el.textContent = pad(h) + ":" + pad(m) + ":" + pad(s);
+
+      if (el) {
+        el.textContent = d > 0
+          ? `${d}d ${pad(h)}:${pad(m)}:${pad(s)}`
+          : `${pad(h)}:${pad(m)}:${pad(s)}`;
+      }
     }
+
     tick();
     setInterval(tick, 1000);
   })();

@@ -115,50 +115,56 @@ defmodule AzarApp.Sorteos do
 
   # ── Clientes de un sorteo ──────────────────────────────────────────────────
 
-  def clientes_por_sorteo(sorteo_id) do
-    case get_sorteo(sorteo_id) do
-      {:ok, sorteo} ->
-        clientes = AzarApp.JsonStore.all(:clientes)
-        billetes_vendidos = Enum.reject(sorteo.billetes, & &1["disponible"])
+ def clientes_por_sorteo(sorteo_id) do
+  case get_sorteo(sorteo_id) do
+    {:ok, sorteo} ->
+      clientes = AzarApp.JsonStore.all(:clientes)
 
-        resolver = fn doc ->
-          c = Enum.find(clientes, &(&1.documento == doc))
-          if c, do: c.nombre, else: doc
-        end
+      resolver = fn doc ->
+        c = Enum.find(clientes, &(&1.documento == doc))
+        if c, do: c.nombre, else: doc
+      end
 
-        completos =
-          billetes_vendidos
-          |> Enum.filter(&(&1["tipo"] == "completo"))
-          |> Enum.map(fn b ->
+      # ← Ya no filtra por disponible, filtra por tipo
+      billetes_con_ventas =
+        Enum.filter(sorteo.billetes, fn b ->
+          b["tipo"] == "completo" or b["tipo"] == "fraccion"
+        end)
+
+      completos =
+        billetes_con_ventas
+        |> Enum.filter(&(&1["tipo"] == "completo"))
+        |> Enum.map(fn b ->
+          %{
+            doc:     b["propietario_doc"],
+            nombre:  resolver.(b["propietario_doc"]),
+            billete: b["numero"]
+          }
+        end)
+        |> Enum.sort_by(& &1.nombre)
+
+      fracciones =
+        billetes_con_ventas
+        |> Enum.filter(&(&1["tipo"] == "fraccion"))
+        |> Enum.flat_map(fn b ->
+          Map.get(b, "fracciones_tomadas", [])
+          |> Enum.map(fn f ->
             %{
-              doc: b["propietario_doc"],
-              nombre: resolver.(b["propietario_doc"]),
-              billete: b["numero"]
+              doc:      f["propietario_doc"],
+              nombre:   resolver.(f["propietario_doc"]),
+              billete:  b["numero"],
+              fraccion: f["fraccion"]
             }
           end)
-          |> Enum.sort_by(& &1.nombre)
+        end)
+        |> Enum.sort_by(& &1.nombre)
 
-        fracciones =
-          billetes_vendidos
-          |> Enum.filter(&(&1["tipo"] == "fraccion"))
-          |> Enum.flat_map(fn b ->
-            Enum.map(Map.get(b, "fracciones_tomadas", []), fn f ->
-              %{
-                doc: f["propietario_doc"],
-                nombre: resolver.(f["propietario_doc"]),
-                billete: b["numero"],
-                fraccion: f["fraccion"]
-              }
-            end)
-          end)
-          |> Enum.sort_by(& &1.nombre)
+      {:ok, %{completos: completos, fracciones: fracciones}}
 
-        {:ok, %{completos: completos, fracciones: fracciones}}
-
-      :error ->
-        {:error, "Sorteo no encontrado"}
-    end
+    :error ->
+      {:error, "Sorteo no encontrado"}
   end
+end
 
   # ── Ejecución ──────────────────────────────────────────────────────────────
 

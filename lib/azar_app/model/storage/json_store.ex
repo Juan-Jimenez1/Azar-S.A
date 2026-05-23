@@ -92,9 +92,10 @@ defmodule AzarApp.JsonStore do
 
   # Genera un ID único dentro del VM de Erlang (monotónico, nunca se repite).
   # Reemplaza System.system_time/1 que podía colisionar en llamadas concurrentes.
-  def generar_id(prefijo) do
-    "#{prefijo}_#{System.unique_integer([:positive, :monotonic])}"
-  end
+ def generar_id(prefijo) do
+  sufijo = :crypto.strong_rand_bytes(8) |> Base.encode16(case: :lower)
+  "#{prefijo}_#{sufijo}"
+end
 
   # ── Privado ─────────────────────────────────────────────
 

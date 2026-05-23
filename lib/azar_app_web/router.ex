@@ -21,6 +21,7 @@ defmodule AzarAppWeb.Router do
 
     get    "/",  AuthController, :login
     post   "/",  AuthController, :do_login
+    delete   "/logout", AuthController, :logout
   end
 
   # ── Admin protegido ───────────────────────────────────────────────────────

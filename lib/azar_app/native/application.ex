@@ -15,19 +15,21 @@ defmodule AzarApp.Application do
       # Start a worker by calling: AzarApp.Worker.start_link(arg)
       # {AzarApp.Worker, arg},
       # Start to serve requests, typically the last entry
+      AzarApp.Sorteo.Scheduler,
       AzarAppWeb.Endpoint,
-       {Registry, keys: :unique, name: AzarApp.SorteoRegistry},
-    AzarApp.SorteoSupervisor,
-    AzarApp.Logger
+      {Registry, keys: :unique, name: AzarApp.SorteoRegistry},
+      AzarApp.SorteoSupervisor,
+      AzarApp.Logger
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: AzarApp.Supervisor]
+
     with {:ok, pid} <- Supervisor.start_link(children, opts) do
-    AzarApp.SorteoSupervisor.cargar_sorteos()
-    {:ok, pid}
-  end
+      AzarApp.SorteoSupervisor.cargar_sorteos()
+      {:ok, pid}
+    end
   end
 
   # Tell Phoenix to update the endpoint configuration
