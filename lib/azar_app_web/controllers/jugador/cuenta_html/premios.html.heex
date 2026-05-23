@@ -1,0 +1,54 @@
+<div class="min-h-screen bg-[#06070a] px-4 py-10 text-white">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="mb-8">
+      <a href="/perfil" class="text-sm text-[#d4a017] hover:text-[#f6d06b] transition">← Volver al perfil</a>
+      <h1 class="text-4xl font-black mt-4">Premios obtenidos</h1>
+      <p class="text-gray-500 mt-2 text-sm">Sorteos en los que fuiste ganador.</p>
+    </div>
+
+    <!-- Total ganado -->
+    <div class="rounded-2xl bg-[#101217] border border-[#d4a017]/20 p-6 mb-8">
+      <p class="text-xs uppercase tracking-widest text-[#d4a017]/70 mb-1">Total ganado</p>
+      <p class="text-4xl font-black text-[#d4a017]">$<%= @total_ganado %></p>
+    </div>
+
+    <%= if @premios == [] do %>
+      <div class="text-center py-20 text-gray-500">
+        <div class="text-6xl mb-4">🏆</div>
+        <p class="text-xl font-bold text-white">Sin premios aún</p>
+        <p class="text-sm mt-2">¡Sigue participando, la suerte puede cambiar!</p>
+        <a href="/" class="inline-block mt-6 px-6 py-3 rounded-xl bg-[#d4a017] text-black font-bold text-sm">
+          Ver sorteos
+        </a>
+      </div>
+    <% else %>
+      <div class="space-y-4">
+        <%= for premio <- @premios do %>
+          <div class="rounded-2xl bg-gradient-to-r from-[#1a1407] to-[#15110a] border border-[#d4a017]/20 p-5 flex items-center justify-between gap-4">
+
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-[#d4a017]/10 border border-[#d4a017]/20 flex items-center justify-center text-xl">
+                🏆
+              </div>
+              <div>
+                <p class="font-bold text-white"><%= premio.sorteo_nombre %></p>
+                <p class="text-sm text-gray-400 mt-0.5">
+                  Billete #<%= premio.numero %>
+                  <%= if premio.tipo == :fraccion do %>
+                    · Fracción <%= premio.fraccion %>
+                  <% end %>
+                  · <%= premio.premio_nombre %>
+                </p>
+              </div>
+            </div>
+
+            <p class="text-2xl font-black text-[#d4a017]">$<%= premio.valor %></p>
+
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

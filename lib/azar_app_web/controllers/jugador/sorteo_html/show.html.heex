@@ -86,6 +86,106 @@
       </div>
     <% end %>
 
+    <!-- ── Mis billetes ─────────────────────────────────────────────────── -->
+    <%= if @billetes_del_cliente != [] and !@sorteo.realizado do %>
+      <div class="mb-10">
+        <h2 class="text-2xl font-black text-white mb-2">Mis billetes en este sorteo</h2>
+        <p class="text-sm text-gray-500 mb-5">Selecciona las fracciones que quieres devolver o devuelve todo.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <%= for billete <- @billetes_del_cliente do %>
+            <% numero_mio         = billete["numero"] %>
+            <% tipo               = billete["tipo"] %>
+            <% fracs_mias         = billete |> Map.get("fracciones_tomadas", []) |> Enum.filter(&(&1["propietario_doc"] == @cliente_doc)) %>
+            <% nums_mios          = Enum.map(fracs_mias, & &1["fraccion"]) %>
+            <% valor_fraccion_mio = div(@sorteo.valor_billete, @sorteo.cantidad_fracciones) %>
+            <% valor_mio          = if tipo == "completo", do: @sorteo.valor_billete, else: length(fracs_mias) * valor_fraccion_mio %>
+            <% url_devolver       = "/sorteos/" <> @sorteo.id <> "/devolver/" <> to_string(numero_mio) %>
+            <% form_id            = "form-devolver-#{numero_mio}" %>
+
+            <div class="rounded-[24px] border border-blue-500/20 bg-blue-500/5 backdrop-blur-xl p-5 shadow-xl">
+
+              <div class="flex items-center justify-between mb-5">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.2em] text-blue-400/70 mb-1">Mi billete</p>
+                  <h3 class="text-3xl font-black text-white">#<%= numero_mio %></h3>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-xl">
+                  🎟️
+                </div>
+              </div>
+
+              <div class="rounded-2xl border border-blue-500/10 bg-[#0e1015] p-4 mb-5 space-y-3">
+
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-500">Tipo de compra</span>
+                  <span class={"font-semibold " <> if tipo == "completo", do: "text-emerald-300", else: "text-blue-300"}>
+                    <%= if tipo == "completo", do: "Billete completo", else: "Fracciones" %>
+                  </span>
+                </div>
+
+                <%= if tipo == "fraccion" do %>
+                  <div class="border-t border-white/5 pt-3">
+                    <p class="text-xs text-gray-500 mb-2">
+                      Selecciona las fracciones a devolver:
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                      <%= for f <- nums_mios do %>
+                        <label class="flex items-center gap-1.5 cursor-pointer group/check">
+                          <input
+                            type="checkbox"
+                            form={form_id}
+                            name="fracciones[]"
+                            value={f}
+                            checked
+                            class="w-4 h-4 rounded accent-red-400 cursor-pointer"
+                          />
+                          <span class="px-2 py-1 rounded-lg text-xs font-bold bg-blue-500/30 text-blue-300 border border-blue-400/40 group-hover/check:border-red-400/40 transition">
+                            Frac. <%= f %>
+                          </span>
+                        </label>
+                      <% end %>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center justify-between text-sm border-t border-white/5 pt-3">
+                    <span class="text-gray-500">Cantidad</span>
+                    <span class="text-white font-semibold">
+                      <%= length(fracs_mias) %> de <%= @sorteo.cantidad_fracciones %>
+                    </span>
+                  </div>
+                <% end %>
+
+                <div class="flex items-center justify-between text-sm border-t border-white/5 pt-3">
+                  <span class="text-gray-500">Valor pagado</span>
+                  <span class="text-white font-black text-base">$<%= valor_mio %></span>
+                </div>
+
+                <div class="flex items-center justify-between text-sm bg-emerald-500/5 border border-emerald-500/10 rounded-xl px-3 py-2">
+                  <span class="text-emerald-400/70 text-xs">Reembolso máx.</span>
+                  <span class="text-emerald-400 font-black">$<%= valor_mio %></span>
+                </div>
+
+              </div>
+
+              <form id={form_id} action={url_devolver} method="post"
+                    onsubmit="return confirm('¿Estás seguro? Se devolverán las fracciones seleccionadas.')">
+                <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+                <input type="hidden" name="_method" value="post" />
+                <button type="submit"
+                  class="w-full rounded-2xl border border-red-500/30 bg-red-500/10 py-3 text-sm font-bold text-red-400 transition hover:bg-red-500/20 hover:border-red-500/50 flex items-center justify-center gap-2">
+                  <span>↩️</span>
+                  Devolver seleccionadas
+                </button>
+              </form>
+
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- ── Billetes disponibles ────────────────────────────────────────── -->
     <div>
       <div class="flex items-center justify-between mb-6">
         <div>
@@ -117,7 +217,6 @@
 
               <div class="relative z-10">
 
-                <!-- Número -->
                 <div class="flex items-center justify-between mb-5">
                   <div>
                     <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Billete</p>
@@ -128,21 +227,17 @@
                   </div>
                 </div>
 
-                <!-- Mapa de fracciones -->
-                
-                  <div class="mb-4">
-                    <p class="text-xs text-gray-500 mb-2">Fracciones:</p>
-                    <div class="flex flex-wrap gap-1">
-                      <%= for f <- 1..@sorteo.cantidad_fracciones do %>
-                        <span class={"px-2 py-1 rounded-lg text-xs font-bold " <> if f in nums_tomados, do: "bg-red-500/20 text-red-400 border border-red-500/30", else: "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"}>
-                          <%= f %>
-                        </span>
-                      <% end %>
-                    </div>
+                <div class="mb-4">
+                  <p class="text-xs text-gray-500 mb-2">Fracciones:</p>
+                  <div class="flex flex-wrap gap-1">
+                    <%= for f <- 1..@sorteo.cantidad_fracciones do %>
+                      <span class={"px-2 py-1 rounded-lg text-xs font-bold " <> if f in nums_tomados, do: "bg-red-500/20 text-red-400 border border-red-500/30", else: "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"}>
+                        <%= f %>
+                      </span>
+                    <% end %>
                   </div>
-                
+                </div>
 
-                <!-- Precio -->
                 <div class="rounded-2xl border border-[#272b35] bg-[#14171d] p-4 mb-5">
                   <%= if tiene_fracciones do %>
                     <div class="flex items-center justify-between text-sm">
@@ -165,12 +260,10 @@
                   <% end %>
                 </div>
 
-                <!-- Botón principal -->
                 <%= if tiene_fracciones do %>
                   <form action={url_fracciones_restantes} method="post" class="mb-4">
                     <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
                     <input type="hidden" name="numero" value={numero} />
-                    <input type="hidden" name="cliente_doc" value={@cliente_doc} />
                     <button type="submit"
                       class="w-full rounded-2xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] px-4 py-3 text-sm font-black text-black transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,160,23,0.4)]">
                       Comprar <%= length(fracciones_libres) %> restantes — $<%= valor_restante %>
@@ -180,7 +273,6 @@
                   <form action={url_comprar_billete} method="post" class="mb-4">
                     <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
                     <input type="hidden" name="numero" value={numero} />
-                    <input type="hidden" name="cliente_doc" value={@cliente_doc} />
                     <button type="submit"
                       class="w-full rounded-2xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] px-4 py-3 text-sm font-black text-black transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,160,23,0.4)]">
                       Comprar completo — $<%= @sorteo.valor_billete %>
@@ -188,29 +280,45 @@
                   </form>
                 <% end %>
 
-                <!-- Fracción individual -->
+                <!-- Comprar múltiples fracciones -->
                 <%= if fracciones_libres != [] do %>
                   <details class="group/details">
                     <summary class="flex items-center justify-center gap-2 cursor-pointer rounded-2xl border border-[#2b2f39] bg-[#16191f] px-4 py-3 text-sm font-semibold text-gray-300 transition hover:border-[#d4a017]/40 hover:text-white">
-                      Comprar fracción individual
+                      Comprar fracciones
                       <span class="transition-transform group-open/details:rotate-180">⌄</span>
                     </summary>
 
-                    <form action={url_comprar_fraccion} method="post" class="mt-4 space-y-3">
-                      <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
-                      <input type="hidden" name="numero" value={numero} />
-                      <input type="hidden" name="cliente_doc" value={@cliente_doc} />
-                      <select name="fraccion"
-                        class="w-full rounded-2xl border border-[#2b2f39] bg-[#181b22] px-4 py-3 text-sm text-white outline-none transition focus:border-[#d4a017]">
+                    <% frac_form_id = "form-frac-#{numero}" %>
+
+                    <div class="mt-4 space-y-3">
+                      <p class="text-xs text-gray-500">Selecciona las fracciones que quieres comprar:</p>
+
+                      <div class="flex flex-wrap gap-2">
                         <%= for f <- fracciones_libres do %>
-                          <option value={f}>Fracción <%= f %> — $<%= valor_fraccion %></option>
+                          <label class="flex items-center gap-1.5 cursor-pointer group/fcheck">
+                            <input
+                              type="checkbox"
+                              form={frac_form_id}
+                              name="fracciones[]"
+                              value={f}
+                              class="w-4 h-4 rounded accent-yellow-400 cursor-pointer"
+                            />
+                            <span class="px-2 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 group-hover/fcheck:border-[#d4a017]/40 transition">
+                              Frac. <%= f %> — $<%= valor_fraccion %>
+                            </span>
+                          </label>
                         <% end %>
-                      </select>
-                      <button type="submit"
-                        class="w-full rounded-2xl bg-[#1c212a] border border-[#2b2f39] py-3 text-sm font-bold text-white transition hover:border-[#d4a017]/40 hover:bg-[#222832]">
-                        Confirmar compra
-                      </button>
-                    </form>
+                      </div>
+
+                      <form id={frac_form_id} action={url_comprar_fraccion} method="post">
+                        <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+                        <input type="hidden" name="numero" value={numero} />
+                        <button type="submit"
+                          class="w-full rounded-2xl bg-[#1c212a] border border-[#2b2f39] py-3 text-sm font-bold text-white transition hover:border-[#d4a017]/40 hover:bg-[#222832]">
+                          Confirmar compra
+                        </button>
+                      </form>
+                    </div>
                   </details>
                 <% end %>
 

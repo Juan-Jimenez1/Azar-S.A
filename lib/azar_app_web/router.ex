@@ -8,24 +8,46 @@ defmodule AzarAppWeb.Router do
     plug :put_root_layout, html: {AzarAppWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug AzarApp.Plugs.RequestLogger
   end
 
-  # ── Admin ──────────────────────────────────────────────────────────────────
+  pipeline :require_admin do
+    plug AzarApp.Plugs.RequireAdmin
+  end
+
+  # ── Auth admin (sin protección) ───────────────────────────────────────────
   scope "/admin", AzarAppWeb.Admin, as: :admin do
     pipe_through :browser
 
-    get "/sorteos", SorteoController, :index
-    get "/sorteos/nuevo", SorteoController, :new
-    post "/sorteos", SorteoController, :create
-    get "/sorteos/:id", SorteoController, :show
-    delete "/sorteos/:id", SorteoController, :delete
+    get    "/",  AuthController, :login
+    post   "/",  AuthController, :do_login
+  end
 
-    get "/sorteos/:sorteo_id/premios/nuevo", PremioController, :new
-    post "/sorteos/:sorteo_id/premios", PremioController, :create
-    delete "/sorteos/:sorteo_id/premios", PremioController, :delete
+  # ── Admin protegido ───────────────────────────────────────────────────────
+  scope "/admin", AzarAppWeb.Admin, as: :admin do
+    pipe_through [:browser, :require_admin]
+
+    get    "/sorteos",       SorteoController, :index
+    get    "/sorteos/nuevo", SorteoController, :new
+    post   "/sorteos",       SorteoController, :create
+    get    "/sorteos/:id",   SorteoController, :show
+    delete "/sorteos/:id",   SorteoController, :delete
+
+    get    "/sorteos/:sorteo_id/premios/nuevo", PremioController, :new
+    post   "/sorteos/:sorteo_id/premios",       PremioController, :create
+    delete "/sorteos/:sorteo_id/premios",       PremioController, :delete
 
     post "/sistema/actualizar-fecha", SistemaController, :ejecutar_sorteos_pendientes
-    post "/sorteos/:id/ejecutar", SistemaController, :ejecutar_sorteo
+    post "/sorteos/:id/ejecutar",     SistemaController, :ejecutar_sorteo
+
+    get    "/admins",     AdminController, :index
+    post   "/admins",     AdminController, :create
+    delete "/admins/:id", AdminController, :delete
+
+    get "/logs", LogController, :index
+
+    get "/premios-entregados", SorteoController, :premios_entregados
+    get "/balance", SorteoController, :balance
   end
 
   # ── Jugador ────────────────────────────────────────────────────────────────
@@ -64,5 +86,10 @@ defmodule AzarAppWeb.Router do
     get "/notificaciones", ClienteController, :notificaciones
     post "/notificaciones/leer", ClienteController, :marcar_leidas
     delete "/notificaciones/:id", ClienteController, :eliminar_notificacion
+
+    get "/cuenta/historial", CuentaController, :historial
+    get "/cuenta/premios", CuentaController, :premios
+    get "/cuenta/balance", CuentaController, :balance
+    post "/sorteos/:sorteo_id/devolver/:numero", CompraController, :devolver
   end
 end

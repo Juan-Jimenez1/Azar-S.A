@@ -3,8 +3,15 @@ defmodule AzarAppWeb.Admin.PremioController do
   alias AzarApp.Sorteos
 
   def new(conn, %{"sorteo_id" => sorteo_id}) do
-    {:ok, sorteo} = Sorteos.get_sorteo(sorteo_id)
-    render(conn, :new, sorteo: sorteo)
+    case Sorteos.get_sorteo(sorteo_id) do
+      {:ok, sorteo} ->
+        render(conn, :new, sorteo: sorteo)
+
+      :error ->
+        conn
+        |> put_flash(:error, "Sorteo no encontrado.")
+        |> redirect(to: ~p"/admin/sorteos")
+    end
   end
 
   def create(conn, %{"sorteo_id" => sorteo_id, "premio" => params}) do

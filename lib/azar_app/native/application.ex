@@ -17,7 +17,8 @@ defmodule AzarApp.Application do
       # Start to serve requests, typically the last entry
       AzarAppWeb.Endpoint,
        {Registry, keys: :unique, name: AzarApp.SorteoRegistry},
-    AzarApp.SorteoSupervisor
+    AzarApp.SorteoSupervisor,
+    AzarApp.Logger
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

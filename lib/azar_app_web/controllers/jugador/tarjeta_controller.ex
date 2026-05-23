@@ -9,10 +9,10 @@ defmodule AzarAppWeb.Jugador.TarjetaController do
   def procesar(conn, params) do
     conn
     |> put_session(:tarjeta_pendiente, %{
-      valor:    params["valor"],
-      nombre:   params["nombre"],
-      numero:   params["numero"] |> String.slice(-4, 4),
-      tipo:     params["tipo"] || "Crédito"
+      valor:  params["valor"],
+      nombre: params["nombre"],
+      numero: params["numero"] |> String.slice(-4, 4),
+      tipo:   params["tipo"] || "Crédito"
     })
     |> redirect(to: ~p"/tarjeta/cargando")
   end
@@ -22,20 +22,33 @@ defmodule AzarAppWeb.Jugador.TarjetaController do
   end
 
   def exito(conn, _params) do
-    pendiente   = get_session(conn, :tarjeta_pendiente)
-    cliente_doc = get_session(conn, :cliente_doc)
-    valor_int   = String.to_integer(pendiente.valor)
+    case get_session(conn, :tarjeta_pendiente) do
+      nil ->
+        conn
+        |> put_flash(:error, "No hay una transacción de tarjeta pendiente.")
+        |> redirect(to: ~p"/perfil")
 
-    {:ok, cliente} = Clientes.recargar_saldo(cliente_doc, valor_int)
+      pendiente ->
+        cliente_doc = get_session(conn, :cliente_doc)
+        valor_int   = String.to_integer(pendiente.valor)
 
-    conn
-    |> delete_session(:tarjeta_pendiente)
-    |> render(:exito, info: %{
-      valor:  valor_int,
-      nombre: pendiente.nombre,
-      numero: pendiente.numero,
-      tipo:   pendiente.tipo,
-      saldo:  cliente.saldo
-    })
+        case Clientes.recargar_saldo(cliente_doc, valor_int) do
+          {:ok, cliente} ->
+            conn
+            |> delete_session(:tarjeta_pendiente)
+            |> render(:exito, info: %{
+              valor:  valor_int,
+              nombre: pendiente.nombre,
+              numero: pendiente.numero,
+              tipo:   pendiente.tipo,
+              saldo:  cliente.saldo
+            })
+
+          {:error, motivo} ->
+            conn
+            |> put_flash(:error, motivo)
+            |> redirect(to: ~p"/perfil")
+        end
+    end
   end
 end

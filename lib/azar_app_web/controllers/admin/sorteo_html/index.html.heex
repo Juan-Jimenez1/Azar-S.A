@@ -1,418 +1,313 @@
 <div class="min-h-screen bg-[#07090d] relative overflow-hidden px-4 py-10 font-[Outfit]">
 
-  <!-- Background -->
   <div class="absolute inset-0 overflow-hidden">
-
-    <!-- Glow -->
     <div class="absolute -top-40 left-[-100px] w-[500px] h-[500px] bg-yellow-400/[0.04] rounded-full blur-3xl"></div>
-
     <div class="absolute bottom-[-220px] right-[-120px] w-[550px] h-[550px] bg-amber-500/[0.03] rounded-full blur-3xl"></div>
-
-    <!-- Grid -->
-    <div
-      class="absolute inset-0 opacity-[0.03]"
-      style="
-        background-image:
-        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
-        background-size: 42px 42px;
-      ">
+    <div class="absolute inset-0 opacity-[0.03]"
+      style="background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 42px 42px;">
     </div>
-
-    <!-- Floating Numbers -->
-    <div class="absolute top-[8%] left-[6%] text-yellow-400/[0.04] text-8xl font-black rotate-[-10deg] select-none">
-      777
-    </div>
-
-    <div class="absolute bottom-[12%] right-[8%] text-white/[0.03] text-7xl font-black rotate-[10deg] select-none">
-      1001
-    </div>
-
+    <div class="absolute top-[8%] left-[6%] text-yellow-400/[0.04] text-8xl font-black rotate-[-10deg] select-none">777</div>
+    <div class="absolute bottom-[12%] right-[8%] text-white/[0.03] text-7xl font-black rotate-[10deg] select-none">1001</div>
   </div>
 
   <div class="relative max-w-7xl mx-auto">
 
     <!-- Header -->
     <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 mb-10">
-
-      <!-- Left -->
       <div>
-
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-yellow-500/20 bg-yellow-500/[0.04] text-yellow-400 text-xs font-semibold tracking-wide uppercase">
-
           <span class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
-
           Panel administrativo
-
         </div>
-
-        <h1 class="mt-6 text-5xl font-black text-white tracking-tight leading-none">
-          Sorteos
-        </h1>
-
-        <p class="text-gray-500 mt-4 text-lg leading-relaxed">
-          Administra sorteos, premios y ejecuciones desde un solo lugar.
-        </p>
-
+        <h1 class="mt-6 text-5xl font-black text-white tracking-tight leading-none">Sorteos</h1>
+        <p class="text-gray-500 mt-4 text-lg leading-relaxed">Administra sorteos, premios y ejecuciones desde un solo lugar.</p>
       </div>
 
-      <!-- Actions -->
-      <div class="flex flex-col sm:flex-row gap-4">
-
-        <!-- Ejecutar -->
-        <form action="/admin/sistema/actualizar-fecha" method="post">
-          <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
-
-          <button
-            type="submit"
-            class="group relative overflow-hidden w-full sm:w-auto inline-flex items-center justify-center gap-3 rounded-2xl bg-[#171a21] border border-yellow-500/20 px-6 py-4 text-sm font-semibold text-yellow-300 transition-all duration-300 hover:border-yellow-400/40 hover:bg-[#1b1f29] hover:-translate-y-[1px]"
-          >
-
-            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-yellow-400/[0.03]"></div>
-
-            <span class="relative">
-              ⏳
-            </span>
-
-            <span class="relative">
-              Ejecutar pendientes
-            </span>
-
-          </button>
-
-        </form>
-
-        <!-- Nuevo -->
-        <a
-          href="/admin/sorteos/nuevo"
-          class="group relative overflow-hidden w-full sm:w-auto inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 px-7 py-4 text-sm font-black text-black transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] hover:shadow-[0_10px_40px_rgba(250,204,21,0.25)]"
-        >
-
-          <!-- Shine -->
-          <div class="absolute inset-0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"></div>
-
-          <span class="relative z-10 text-lg">
-            +
-          </span>
-
-          <span class="relative z-10">
-            Nuevo sorteo
-          </span>
-
-        </a>
-
-      </div>
-
+     <div class="flex flex-wrap gap-2">
+  <a href="/admin/balance"
+    class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#171a21] border border-white/10 px-4 py-2.5 text-sm font-semibold text-gray-300 transition hover:border-yellow-500/20 hover:text-yellow-300">
+    📊 Balance
+  </a>
+  <a href="/admin/logs"
+    class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#171a21] border border-white/10 px-4 py-2.5 text-sm font-semibold text-gray-300 transition hover:border-yellow-500/20 hover:text-yellow-300">
+    📋 Bitácora
+  </a>
+  <a href="/admin/admins"
+    class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#171a21] border border-white/10 px-4 py-2.5 text-sm font-semibold text-gray-300 transition hover:border-yellow-500/20 hover:text-yellow-300">
+    ⚙️ Admins
+  </a>
+  <form action="/admin/sistema/actualizar-fecha" method="post">
+    <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+    <button type="submit"
+      class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#171a21] border border-yellow-500/20 px-4 py-2.5 text-sm font-semibold text-yellow-300 transition hover:border-yellow-400/40 hover:bg-[#1b1f29]">
+      ⏳ Ejecutar pendientes
+    </button>
+  </form>
+  <a href="/admin/sorteos/nuevo"
+    class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 px-4 py-2.5 text-sm font-black text-black transition hover:scale-[1.01] hover:shadow-[0_8px_25px_rgba(250,204,21,0.25)]">
+    + Nuevo sorteo
+  </a>
+  <form action="/admin/logout" method="post">
+    <input type="hidden" name="_method" value="delete" />
+    <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+    <button type="submit"
+      class="inline-flex items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-500/[0.04] px-4 py-2.5 text-sm font-semibold text-red-400 transition hover:bg-red-500/[0.08]">
+      Salir
+    </button>
+  </form>
+</div>
     </div>
 
     <!-- Flash -->
     <%= if @flash["info"] do %>
       <div class="mb-6 rounded-2xl border border-green-500/20 bg-green-500/[0.05] px-5 py-4 backdrop-blur-xl">
-
         <div class="flex items-center gap-3">
-
-          <div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-400">
-            ✓
-          </div>
-
+          <div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-400">✓</div>
           <div>
-            <p class="text-sm font-semibold text-green-300">
-              Operación completada
-            </p>
-
-            <p class="text-sm text-green-400/80 mt-1">
-              <%= @flash["info"] %>
-            </p>
+            <p class="text-sm font-semibold text-green-300">Operación completada</p>
+            <p class="text-sm text-green-400/80 mt-1"><%= @flash["info"] %></p>
           </div>
-
         </div>
-
       </div>
     <% end %>
 
     <%= if @flash["error"] do %>
       <div class="mb-6 rounded-2xl border border-red-500/20 bg-red-500/[0.05] px-5 py-4 backdrop-blur-xl">
-
         <div class="flex items-center gap-3">
-
-          <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400">
-            ⚠
-          </div>
-
+          <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400">⚠</div>
           <div>
-            <p class="text-sm font-semibold text-red-300">
-              Ocurrió un problema
-            </p>
-
-            <p class="text-sm text-red-400/80 mt-1">
-              <%= @flash["error"] %>
-            </p>
+            <p class="text-sm font-semibold text-red-300">Ocurrió un problema</p>
+            <p class="text-sm text-red-400/80 mt-1"><%= @flash["error"] %></p>
           </div>
-
         </div>
-
       </div>
     <% end %>
 
     <!-- Empty -->
     <%= if @sorteos == [] do %>
-
       <div class="rounded-[32px] border border-dashed border-white/10 bg-[#101216]/80 backdrop-blur-2xl py-24 px-8 text-center shadow-[0_20px_80px_rgba(0,0,0,.7)]">
-
-        <div class="w-24 h-24 mx-auto rounded-[28px] bg-[#171a21] border border-yellow-500/10 flex items-center justify-center text-5xl text-yellow-400 shadow-2xl">
-          ✦
-        </div>
-
-        <h2 class="mt-8 text-3xl font-black text-white tracking-tight">
-          No hay sorteos registrados
-        </h2>
-
-        <p class="text-gray-500 mt-4 text-lg max-w-xl mx-auto leading-relaxed">
-          Crea tu primer sorteo para comenzar a gestionar premios, billetes y resultados.
-        </p>
-
-        <a
-          href="/admin/sorteos/nuevo"
-          class="group relative overflow-hidden inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 px-7 py-4 mt-8 font-black text-black transition-all duration-300 hover:scale-[1.02]"
-        >
-
+        <div class="w-24 h-24 mx-auto rounded-[28px] bg-[#171a21] border border-yellow-500/10 flex items-center justify-center text-5xl text-yellow-400 shadow-2xl">✦</div>
+        <h2 class="mt-8 text-3xl font-black text-white tracking-tight">No hay sorteos registrados</h2>
+        <p class="text-gray-500 mt-4 text-lg max-w-xl mx-auto leading-relaxed">Crea tu primer sorteo para comenzar a gestionar premios, billetes y resultados.</p>
+        <a href="/admin/sorteos/nuevo"
+          class="group relative overflow-hidden inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 px-7 py-4 mt-8 font-black text-black transition-all duration-300 hover:scale-[1.02]">
           <div class="absolute inset-0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"></div>
-
-          <span class="relative text-lg">
-            +
-          </span>
-
-          <span class="relative">
-            Crear sorteo
-          </span>
-
+          <span class="relative text-lg">+</span>
+          <span class="relative">Crear sorteo</span>
         </a>
-
       </div>
 
     <% else %>
 
-      <!-- Table Card -->
-      <div class="rounded-[32px] border border-white/10 bg-[#101216]/80 backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,.7)] overflow-hidden">
+      <!-- Tabla sorteos -->
+      <div class="rounded-[32px] border border-white/10 bg-[#101216]/80 backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,.7)] overflow-hidden mb-10">
 
-        <!-- Top -->
+        <!-- Top con filtros -->
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 px-8 py-7 border-b border-white/5">
-
           <div>
-
-            <h2 class="text-2xl font-bold text-white tracking-tight">
-              Lista de sorteos
-            </h2>
-
+            <h2 class="text-2xl font-bold text-white tracking-tight">Lista de sorteos</h2>
             <p class="text-sm text-gray-500 mt-2">
-              Total registrados:
-              <span class="text-yellow-400 font-semibold">
-                <%= length(@sorteos) %>
-              </span>
+              Total registrados: <span class="text-yellow-400 font-semibold"><%= length(@sorteos) %></span>
             </p>
-
           </div>
 
+          <!-- Filtros -->
+          <div class="flex flex-wrap items-center gap-3">
+
+            <!-- Búsqueda -->
+            <div class="relative">
+              <div class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">🔍</div>
+              <input
+                id="filtro-busqueda"
+                type="text"
+                placeholder="Buscar sorteo..."
+                oninput="filtrarSorteos()"
+                class="bg-[#171a21] border border-white/5 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-yellow-500/40 transition w-48"
+              />
+            </div>
+
+            <!-- Estado -->
+            <select
+              id="filtro-estado"
+              onchange="filtrarSorteos()"
+              class="bg-[#171a21] border border-white/5 rounded-xl px-4 py-2.5 text-sm text-gray-300 outline-none focus:border-yellow-500/40 transition"
+            >
+              <option value="todos">Todos</option>
+              <option value="pendiente">Pendientes</option>
+              <option value="realizado">Realizados</option>
+              <option value="con-premio">Con premio</option>
+              <option value="sin-premio">Sin premio</option>
+            </select>
+
+            <!-- Orden -->
+            <select
+              id="filtro-orden"
+              onchange="filtrarSorteos()"
+              class="bg-[#171a21] border border-white/5 rounded-xl px-4 py-2.5 text-sm text-gray-300 outline-none focus:border-yellow-500/40 transition"
+            >
+              <option value="asc">Fecha ↑</option>
+              <option value="desc">Fecha ↓</option>
+            </select>
+
+            <!-- Reset -->
+            <button
+              onclick="resetFiltros()"
+              class="px-4 py-2.5 rounded-xl border border-white/5 bg-white/[0.03] text-sm text-gray-500 hover:text-white hover:border-white/10 transition"
+            >
+              Limpiar
+            </button>
+
+          </div>
         </div>
 
-        <!-- Table -->
+        <!-- Tabla -->
         <div class="overflow-x-auto">
-
           <table class="min-w-full">
-
             <thead class="border-b border-white/5 bg-white/[0.02]">
-
               <tr class="text-left text-xs uppercase tracking-[0.2em] text-gray-500">
-
-                <th class="px-8 py-5 font-semibold">
-                  Sorteo
-                </th>
-
-                <th class="px-8 py-5 font-semibold">
-                  Fecha
-                </th>
-
-                <th class="px-8 py-5 font-semibold">
-                  Valor
-                </th>
-
-                <th class="px-8 py-5 font-semibold">
-                  Billetes
-                </th>
-
-                <th class="px-8 py-5 font-semibold">
-                  Premio
-                </th>
-
-                <th class="px-8 py-5 font-semibold">
-                  Estado
-                </th>
-
-                <th class="px-8 py-5 text-right font-semibold">
-                  Acciones
-                </th>
-
+                <th class="px-8 py-5 font-semibold">Sorteo</th>
+                <th class="px-8 py-5 font-semibold">Fecha</th>
+                <th class="px-8 py-5 font-semibold">Valor</th>
+                <th class="px-8 py-5 font-semibold">Billetes</th>
+                <th class="px-8 py-5 font-semibold">Premio</th>
+                <th class="px-8 py-5 font-semibold">Estado</th>
+                <th class="px-8 py-5 text-right font-semibold">Acciones</th>
               </tr>
-
             </thead>
-
             <tbody class="divide-y divide-white/5">
-
               <%= for sorteo <- @sorteos do %>
-
                 <% url_show   = "/admin/sorteos/" <> sorteo.id %>
                 <% url_delete = "/admin/sorteos/" <> sorteo.id %>
+                <tr class="grupo-sorteo group hover:bg-white/[0.02] transition-all duration-300"
+                    data-nombre={String.downcase(sorteo.nombre)}
+                    data-estado={if sorteo.realizado, do: "realizado", else: "pendiente"}
+                    data-premio={if sorteo.premio, do: "con-premio", else: "sin-premio"}
+                    data-fecha={sorteo.fecha}>
 
-                <tr class="group hover:bg-white/[0.02] transition-all duration-300">
-
-                  <!-- Nombre -->
                   <td class="px-8 py-6">
-
                     <div class="flex items-center gap-4">
-
-                      <div class="w-12 h-12 rounded-2xl bg-[#171a21] border border-yellow-500/10 flex items-center justify-center text-yellow-400 text-lg group-hover:scale-105 transition-transform duration-300">
-                        ✦
-                      </div>
-
+                      <div class="w-12 h-12 rounded-2xl bg-[#171a21] border border-yellow-500/10 flex items-center justify-center text-yellow-400 text-lg group-hover:scale-105 transition-transform duration-300">✦</div>
                       <div>
-
-                        <p class="font-bold text-white">
-                          <%= sorteo.nombre %>
-                        </p>
-
-                        <p class="text-sm text-gray-500 mt-1">
-                          ID: <%= sorteo.id %>
-                        </p>
-
+                        <p class="font-bold text-white"><%= sorteo.nombre %></p>
+                        <p class="text-sm text-gray-500 mt-1">ID: <%= sorteo.id %></p>
                       </div>
-
                     </div>
-
                   </td>
-
-                  <!-- Fecha -->
-                  <td class="px-8 py-6 text-gray-300">
-                    <%= sorteo.fecha %>
-                  </td>
-
-                  <!-- Valor -->
+                  <td class="px-8 py-6 text-gray-300"><%= sorteo.fecha %></td>
+                  <td class="px-8 py-6"><span class="font-bold text-yellow-400">$<%= sorteo.valor_billete %></span></td>
+                  <td class="px-8 py-6 text-gray-300"><%= sorteo.cantidad_billetes %></td>
                   <td class="px-8 py-6">
-
-                    <span class="font-bold text-yellow-400">
-                      $<%= sorteo.valor_billete %>
-                    </span>
-
-                  </td>
-
-                  <!-- Billetes -->
-                  <td class="px-8 py-6 text-gray-300">
-                    <%= sorteo.cantidad_billetes %>
-                  </td>
-
-                  <!-- Premio -->
-                  <td class="px-8 py-6">
-
                     <%= if sorteo.premio do %>
-
                       <div>
-
-                        <p class="font-semibold text-white">
-                          <%= sorteo.premio.nombre %>
-                        </p>
-
+                        <p class="font-semibold text-white"><%= sorteo.premio.nombre %></p>
+                        <p class="text-xs text-yellow-400 mt-0.5">$<%= sorteo.premio.valor %></p>
                       </div>
-
                     <% else %>
-
-                      <span class="text-gray-500">
-                        Sin premio
-                      </span>
-
+                      <span class="text-gray-500">Sin premio</span>
                     <% end %>
-
                   </td>
-
-                  <!-- Estado -->
                   <td class="px-8 py-6">
-
                     <%= if sorteo.realizado do %>
-
-                      <span class="inline-flex items-center gap-2 rounded-full border border-gray-700 bg-gray-800/70 px-4 py-2 text-xs font-semibold text-gray-300">
-
-                        <span class="w-2 h-2 rounded-full bg-gray-400"></span>
-
-                        Realizado
-
-                      </span>
-
+                      <div>
+                        <span class="inline-flex items-center gap-2 rounded-full border border-gray-700 bg-gray-800/70 px-4 py-2 text-xs font-semibold text-gray-300">
+                          <span class="w-2 h-2 rounded-full bg-gray-400"></span>
+                          Realizado
+                        </span>
+                        <%= if sorteo.numero_ganador do %>
+                          <p class="text-xs text-yellow-400 mt-2">🏆 #<%= sorteo.numero_ganador %></p>
+                        <% end %>
+                      </div>
                     <% else %>
-
                       <span class="inline-flex items-center gap-2 rounded-full border border-green-500/20 bg-green-500/[0.08] px-4 py-2 text-xs font-semibold text-green-300">
-
                         <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-
                         Pendiente
-
                       </span>
-
                     <% end %>
-
                   </td>
-
-                  <!-- Acciones -->
                   <td class="px-8 py-6">
-
                     <div class="flex items-center justify-end gap-3">
-
-                      <!-- Ver -->
-                      <a
-                        href={url_show}
-                        class="inline-flex items-center rounded-xl bg-white/[0.04] border border-white/5 px-4 py-2 text-sm font-semibold text-gray-300 transition-all duration-300 hover:bg-white/[0.07] hover:text-white"
-                      >
+                      <a href={url_show}
+                        class="inline-flex items-center rounded-xl bg-white/[0.04] border border-white/5 px-4 py-2 text-sm font-semibold text-gray-300 transition-all duration-300 hover:bg-white/[0.07] hover:text-white">
                         Ver
                       </a>
-
-                      <!-- Delete -->
                       <%= if sorteo.premio == nil do %>
-
-                        <form
-                          action={url_delete}
-                          method="post"
-                          onsubmit="return confirm('¿Eliminar este sorteo?')"
-                        >
-
+                        <form action={url_delete} method="post" onsubmit="return confirm('¿Eliminar este sorteo?')">
                           <input type="hidden" name="_method" value="delete" />
                           <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
-
-                          <button
-                            type="submit"
-                            class="inline-flex items-center rounded-xl border border-red-500/10 bg-red-500/[0.04] px-4 py-2 text-sm font-semibold text-red-300 transition-all duration-300 hover:bg-red-500/[0.08]"
-                          >
+                          <button type="submit"
+                            class="inline-flex items-center rounded-xl border border-red-500/10 bg-red-500/[0.04] px-4 py-2 text-sm font-semibold text-red-300 transition-all duration-300 hover:bg-red-500/[0.08]">
                             Eliminar
                           </button>
-
                         </form>
-
                       <% end %>
-
                     </div>
-
                   </td>
 
                 </tr>
-
               <% end %>
-
             </tbody>
-
           </table>
+        </div>
 
+        <!-- Sin resultados -->
+        <div id="sin-resultados" class="hidden py-16 text-center">
+          <p class="text-gray-500 text-lg">No hay sorteos que coincidan con los filtros.</p>
+          <button onclick="resetFiltros()" class="mt-4 text-yellow-400 text-sm hover:text-yellow-300 transition">
+            Limpiar filtros
+          </button>
         </div>
 
       </div>
 
+
     <% end %>
 
   </div>
-
 </div>
+
+<script>
+  function filtrarSorteos() {
+    const busqueda = document.getElementById('filtro-busqueda').value.toLowerCase();
+    const estado   = document.getElementById('filtro-estado').value;
+    const orden    = document.getElementById('filtro-orden').value;
+
+    const filas = Array.from(document.querySelectorAll('.grupo-sorteo'));
+
+    filas.forEach(fila => {
+      const nombre     = fila.dataset.nombre  || '';
+      const estadoFila = fila.dataset.estado;
+      const premioFila = fila.dataset.premio;
+
+      const pasaBusqueda = nombre.includes(busqueda);
+      const pasaEstado =
+        estado === 'todos'      ||
+        estado === estadoFila   ||
+        estado === premioFila;
+
+      fila.style.display = (pasaBusqueda && pasaEstado) ? '' : 'none';
+    });
+
+    // Ordenar visibles
+    const tbody = document.querySelector('tbody');
+    const visibles = filas
+      .filter(f => f.style.display !== 'none')
+      .sort((a, b) => {
+        const fa = a.dataset.fecha;
+        const fb = b.dataset.fecha;
+        return orden === 'asc' ? fa.localeCompare(fb) : fb.localeCompare(fa);
+      });
+    const ocultas = filas.filter(f => f.style.display === 'none');
+    [...visibles, ...ocultas].forEach(f => tbody.appendChild(f));
+
+    // Mostrar mensaje si no hay resultados
+    const sinResultados = document.getElementById('sin-resultados');
+    sinResultados.classList.toggle('hidden', visibles.length > 0);
+  }
+
+  function resetFiltros() {
+    document.getElementById('filtro-busqueda').value = '';
+    document.getElementById('filtro-estado').value   = 'todos';
+    document.getElementById('filtro-orden').value    = 'asc';
+    filtrarSorteos();
+  }
+</script>

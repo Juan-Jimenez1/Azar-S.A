@@ -25,17 +25,23 @@ defmodule AzarApp.JsonStore do
   # ── Lectura ─────────────────────────────────────────────
 
   def all(entidad) do
-    %{archivo: archivo, clave: clave, modulo: modulo} =
-      config!(entidad)
+    %{archivo: archivo, clave: clave, modulo: modulo} = config!(entidad)
 
     path = Path.join(@data_dir, archivo)
 
     case File.read(path) do
       {:ok, raw} ->
-        raw
-        |> Jason.decode!()
-        |> Map.get(clave, [])
-        |> Enum.map(&apply(modulo, :to_struct, [&1]))
+        # Usamos decode/1 (sin bang) para no explotar si el archivo está corrupto.
+        # Puede ocurrir si el proceso muere justo durante una escritura.
+        case Jason.decode(raw) do
+          {:ok, decoded} ->
+            decoded
+            |> Map.get(clave, [])
+            |> Enum.map(&apply(modulo, :to_struct, [&1]))
+
+          {:error, _} ->
+            raise "Archivo #{path} contiene JSON inválido. Restaura el backup en #{path}.tmp si existe."
+        end
 
       {:error, :enoent} ->
         []
@@ -47,11 +53,8 @@ defmodule AzarApp.JsonStore do
 
   def get(entidad, id) do
     case Enum.find(all(entidad), &(&1.id == id)) do
-      nil ->
-        :error
-
-      registro ->
-        {:ok, registro}
+      nil      -> :error
+      registro -> {:ok, registro}
     end
   end
 
@@ -62,17 +65,11 @@ defmodule AzarApp.JsonStore do
 
     nuevos =
       case Enum.find_index(registros, &(&1.id == registro.id)) do
-        nil ->
-          registros ++ [registro]
-
-        index ->
-          List.replace_at(registros, index, registro)
+        nil   -> registros ++ [registro]
+        index -> List.replace_at(registros, index, registro)
       end
 
-    maps =
-      Enum.map(nuevos, fn r ->
-        apply(r.__struct__, :to_map, [r])
-      end)
+    maps = Enum.map(nuevos, fn r -> apply(r.__struct__, :to_map, [r]) end)
     save(entidad, maps)
   end
 
@@ -84,21 +81,19 @@ defmodule AzarApp.JsonStore do
         {:error, "Registro no encontrado"}
 
       _ ->
-        nuevos =
+        maps =
           registros
           |> Enum.reject(&(&1.id == id))
-
-        maps =
-          Enum.map(nuevos, fn r ->
-            apply(r.__struct__, :to_map, [r])
-          end)
+          |> Enum.map(fn r -> apply(r.__struct__, :to_map, [r]) end)
 
         save(entidad, maps)
     end
   end
 
+  # Genera un ID único dentro del VM de Erlang (monotónico, nunca se repite).
+  # Reemplaza System.system_time/1 que podía colisionar en llamadas concurrentes.
   def generar_id(prefijo) do
-    "#{prefijo}_#{System.system_time(:microsecond)}"
+    "#{prefijo}_#{System.unique_integer([:positive, :monotonic])}"
   end
 
   # ── Privado ─────────────────────────────────────────────
@@ -110,14 +105,19 @@ defmodule AzarApp.JsonStore do
     tmp_path = path <> ".tmp"
     File.mkdir_p!(@data_dir)
 
-    File.write!(
-      tmp_path,
-      Jason.encode!(%{clave => registros}, pretty: true)
-    )
+    File.write!(tmp_path, Jason.encode!(%{clave => registros}, pretty: true))
 
-    File.rename!(tmp_path, path)
+    # En Unix, rename es atómico. En Windows puede fallar con :eexist si el
+    # destino ya existe; en ese caso copiamos y borramos el temporal.
+    case File.rename(tmp_path, path) do
+      :ok ->
+        :ok
 
-    :ok
+      {:error, _} ->
+        File.copy!(tmp_path, path)
+        File.rm(tmp_path)
+        :ok
+    end
   end
 
   defp config!(entidad) do

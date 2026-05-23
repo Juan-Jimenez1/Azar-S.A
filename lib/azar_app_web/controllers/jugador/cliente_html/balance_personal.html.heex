@@ -1,0 +1,102 @@
+<div class="min-h-screen bg-[#06070a] px-4 py-10 text-white font-[Outfit]">
+
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-emerald-500/10 blur-3xl rounded-full pointer-events-none"></div>
+
+  <div class="max-w-3xl mx-auto relative z-10">
+
+    <!-- Encabezado -->
+    <div class="mb-10">
+      <a href="/historial" class="inline-flex items-center gap-2 text-sm font-medium text-[#d4a017] hover:text-[#f6d06b] transition">
+        ← Volver al historial
+      </a>
+      <div class="mt-5">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12141a] border border-[#23262f] text-emerald-400 text-xs font-semibold mb-4">
+          📊 Mi balance
+        </div>
+        <h1 class="text-4xl font-black tracking-tight text-white">Balance personal</h1>
+        <p class="text-gray-400 mt-2 text-sm">
+          Hola, <span class="text-white font-semibold"><%= @cliente.nombre %></span>. Así va tu historial financiero en Azar S.A.
+        </p>
+      </div>
+    </div>
+
+    <!-- Tarjetas de resumen -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
+
+      <div class="rounded-[26px] border border-red-500/20 bg-red-500/[0.06] p-6">
+        <p class="text-xs uppercase tracking-[0.2em] text-red-400">Total gastado</p>
+        <p class="mt-3 text-3xl font-black text-red-300">$<%= @total_gastado %></p>
+        <p class="text-xs text-gray-500 mt-2">En compras de billetes</p>
+      </div>
+
+      <div class="rounded-[26px] border border-yellow-500/20 bg-yellow-500/[0.06] p-6">
+        <p class="text-xs uppercase tracking-[0.2em] text-yellow-400">Premios ganados</p>
+        <p class="mt-3 text-3xl font-black text-yellow-300">$<%= @total_premios %></p>
+        <p class="text-xs text-gray-500 mt-2">Suma de todos los premios</p>
+      </div>
+
+      <div class={"rounded-[26px] border p-6 " <> if @resultado == "ganancia", do: "border-emerald-500/20 bg-emerald-500/[0.08]", else: "border-red-500/20 bg-red-500/[0.08]"}>
+        <p class={"text-xs uppercase tracking-[0.2em] " <> if @resultado == "ganancia", do: "text-emerald-400", else: "text-red-400"}>
+          Balance neto
+        </p>
+        <p class={"mt-3 text-3xl font-black " <> if @resultado == "ganancia", do: "text-emerald-300", else: "text-red-300"}>
+          $<%= @balance %>
+        </p>
+        <p class="text-xs text-gray-500 mt-2">
+          <%= if @resultado == "ganancia", do: "Estás en positivo.", else: "Aún no recuperas la inversión." %>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Saldo actual -->
+    <div class="rounded-[28px] border border-emerald-400/20 bg-emerald-500/[0.05] p-6 mb-8 flex items-center justify-between">
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-emerald-400">Saldo disponible en cuenta</p>
+        <p class="text-3xl font-black text-emerald-300 mt-2">$<%= @cliente.saldo %></p>
+      </div>
+      <a href="/perfil" class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-5 py-3 text-sm font-semibold text-emerald-300 hover:bg-emerald-400/20 transition">
+        Recargar saldo
+      </a>
+    </div>
+
+    <!-- Premios obtenidos -->
+    <div class="rounded-[28px] border border-[#23262f] bg-[#101217]/90 overflow-hidden">
+      <div class="px-8 py-5 border-b border-white/5">
+        <h2 class="text-lg font-bold text-white">Premios obtenidos</h2>
+        <p class="text-xs text-gray-500 mt-1"><%= length(@premios) %> premio(s) recibido(s)</p>
+      </div>
+
+      <%= if @premios == [] do %>
+        <div class="py-14 text-center">
+          <div class="text-5xl mb-4">🎰</div>
+          <p class="text-gray-500">Aún no has ganado ningún premio. ¡Sigue participando!</p>
+        </div>
+      <% else %>
+        <div class="divide-y divide-white/5">
+          <%= for premio <- @premios do %>
+            <div class="flex items-center justify-between px-8 py-4 hover:bg-white/[0.02] transition">
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-xl bg-yellow-500/10 flex items-center justify-center text-xl">🏆</div>
+                <div>
+                  <p class="font-semibold text-white"><%= premio.sorteo_nombre %></p>
+                  <p class="text-xs text-gray-500 mt-0.5">
+                    Billete #<%= premio.billete %><%= if premio.fraccion, do: " · Fracción #{premio.fraccion}" %>
+                  </p>
+                </div>
+              </div>
+              <p class="font-black text-yellow-300">$<%= premio.valor %></p>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mt-6 text-center">
+      <a href="/historial" class="text-sm text-gray-500 hover:text-[#d4a017] transition">
+        Ver historial de compras →
+      </a>
+    </div>
+
+  </div>
+</div>

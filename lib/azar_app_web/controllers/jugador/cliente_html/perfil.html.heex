@@ -60,6 +60,25 @@
           </div>
         </div>
 
+        <!-- Navegación cuenta -->
+        <div class="grid grid-cols-3 gap-3 mt-6">
+          <a href="/cuenta/historial"
+             class="flex flex-col items-center gap-2 rounded-2xl border border-[#2a2a2f] bg-[#17171a] px-3 py-4 hover:border-[#d4a017]/30 transition group">
+            <span class="text-2xl">🎟️</span>
+            <span class="text-xs text-gray-400 group-hover:text-white transition font-medium text-center">Historial</span>
+          </a>
+          <a href="/cuenta/premios"
+             class="flex flex-col items-center gap-2 rounded-2xl border border-[#2a2a2f] bg-[#17171a] px-3 py-4 hover:border-[#d4a017]/30 transition group">
+            <span class="text-2xl">🏆</span>
+            <span class="text-xs text-gray-400 group-hover:text-white transition font-medium text-center">Premios</span>
+          </a>
+          <a href="/cuenta/balance"
+             class="flex flex-col items-center gap-2 rounded-2xl border border-[#2a2a2f] bg-[#17171a] px-3 py-4 hover:border-[#d4a017]/30 transition group">
+            <span class="text-2xl">📊</span>
+            <span class="text-xs text-gray-400 group-hover:text-white transition font-medium text-center">Balance</span>
+          </a>
+        </div>
+
         <!-- Recargar -->
         <div class="mt-8">
           <div class="mb-5">
@@ -67,7 +86,6 @@
             <p class="text-sm text-gray-500 mt-1">Ingresa el monto y elige tu método de pago.</p>
           </div>
 
-          <!-- Monto -->
           <div class="mb-6">
             <label class="block text-sm font-semibold text-gray-300 mb-2">Monto a recargar</label>
             <div class="relative group">
@@ -106,12 +124,10 @@
             </div>
           </div>
 
-          <!-- Métodos de pago -->
           <div>
             <label class="block text-sm font-semibold text-gray-300 mb-3">Método de pago</label>
             <div class="grid grid-cols-2 gap-3">
 
-              <!-- PSE -->
               <button type="button" onclick="irAPagar('pse')"
                       class="flex flex-col items-center gap-3 rounded-2xl border border-[#2a2a2f] bg-[#17171a] px-4 py-5 cursor-pointer hover:border-blue-400/50 hover:bg-blue-500/5 transition group">
                 <div class="w-14 h-14 rounded-2xl bg-[#00529b] flex items-center justify-center shadow-lg">
@@ -123,11 +139,9 @@
                 </div>
               </button>
 
-              <!-- Tarjeta -->
               <button type="button" onclick="irAPagar('tarjeta')"
                       class="flex flex-col items-center gap-3 rounded-2xl border border-[#2a2a2f] bg-[#17171a] px-4 py-5 cursor-pointer hover:border-yellow-400/50 hover:bg-yellow-500/5 transition group">
                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1a1a2e] to-[#16213e] border border-white/10 flex items-center justify-center shadow-lg overflow-hidden relative">
-                  <!-- Chip simulado -->
                   <div class="absolute top-2 left-2 w-4 h-3 rounded-sm bg-yellow-400/80"></div>
                   <div class="flex gap-1 mt-2">
                     <div class="w-5 h-5 rounded-full bg-red-500/80"></div>
@@ -142,7 +156,6 @@
 
             </div>
 
-            <!-- Logos de redes -->
             <div class="flex items-center justify-center gap-4 mt-4">
               <div class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#1a1a2e] border border-white/5">
                 <div class="w-4 h-4 rounded-full bg-red-500"></div>
@@ -156,10 +169,8 @@
                 <span class="text-[10px] text-blue-300 font-bold">PSE</span>
               </div>
             </div>
-
           </div>
 
-          <!-- Seguridad -->
           <div class="mt-5 flex items-center justify-center gap-2 text-xs text-gray-600">
             <span>🔒</span>
             <span>Transacciones cifradas con SSL 256-bit</span>

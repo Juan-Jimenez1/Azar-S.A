@@ -1,0 +1,43 @@
+<div class="min-h-screen bg-[#06070a] px-4 py-10 text-white">
+  <div class="max-w-2xl mx-auto">
+
+    <div class="mb-8">
+      <a href="/perfil" class="text-sm text-[#d4a017] hover:text-[#f6d06b] transition">← Volver al perfil</a>
+      <h1 class="text-4xl font-black mt-4">Balance personal</h1>
+      <p class="text-gray-500 mt-2 text-sm">Diferencia entre lo gastado y lo ganado.</p>
+    </div>
+
+    <div class="space-y-4 mb-8">
+
+      <div class="rounded-2xl bg-[#101217] border border-red-500/20 p-6">
+        <p class="text-xs uppercase tracking-widest text-red-400/70 mb-1">Total gastado</p>
+        <p class="text-4xl font-black text-red-400">$<%= @balance.gastado %></p>
+      </div>
+
+      <div class="rounded-2xl bg-[#101217] border border-[#d4a017]/20 p-6">
+        <p class="text-xs uppercase tracking-widest text-[#d4a017]/70 mb-1">Total ganado</p>
+        <p class="text-4xl font-black text-[#d4a017]">$<%= @balance.ganado %></p>
+      </div>
+
+      <div class={"rounded-2xl p-6 border " <> if @balance.resultado == "positivo", do: "bg-emerald-500/10 border-emerald-500/20", else: "bg-red-500/10 border-red-500/20"}>
+        <p class={"text-xs uppercase tracking-widest mb-1 " <> if @balance.resultado == "positivo", do: "text-emerald-400/70", else: "text-red-400/70"}>
+          <%= if @balance.resultado == "positivo", do: "Ganancia neta", else: "Pérdida neta" %>
+        </p>
+        <p class={"text-5xl font-black " <> if @balance.resultado == "positivo", do: "text-emerald-400", else: "text-red-400"}>
+          <%= if @balance.diferencia >= 0, do: "+", else: "" %>$<%= @balance.diferencia %>
+        </p>
+      </div>
+
+    </div>
+
+    <div class="flex gap-3">
+      <a href="/cuenta/historial" class="flex-1 text-center rounded-xl border border-[#23262f] bg-[#101217] py-3 text-sm font-semibold text-gray-300 hover:border-[#d4a017]/30 transition">
+        Ver historial
+      </a>
+      <a href="/cuenta/premios" class="flex-1 text-center rounded-xl border border-[#d4a017]/20 bg-[#d4a017]/5 py-3 text-sm font-semibold text-[#d4a017] hover:bg-[#d4a017]/10 transition">
+        Ver premios
+      </a>
+    </div>
+
+  </div>
+</div>

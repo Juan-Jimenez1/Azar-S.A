@@ -29,25 +29,32 @@ defmodule AzarAppWeb.Jugador.PseController do
   end
 
   def exito(conn, _params) do
-    pendiente   = get_session(conn, :pse_pendiente)
-    cliente_doc = get_session(conn, :cliente_doc)
-    valor_int   = String.to_integer(pendiente.valor)
+    case get_session(conn, :pse_pendiente) do
+      nil ->
+        conn
+        |> put_flash(:error, "No hay una transacción PSE pendiente.")
+        |> redirect(to: ~p"/perfil")
 
-    {:ok, cliente} = Clientes.recargar_saldo(cliente_doc, valor_int)
+      pendiente ->
+        cliente_doc = get_session(conn, :cliente_doc)
+        valor_int   = String.to_integer(pendiente.valor)
 
-    conn
-    |> delete_session(:pse_pendiente)
-    |> put_session(:pse_info, %{
-      valor:  valor_int,
-      banco:  pendiente.banco,
-      cuenta: pendiente.cuenta,
-      saldo:  cliente.saldo
-    })
-    |> render(:exito, info: %{
-      valor:  valor_int,
-      banco:  pendiente.banco,
-      cuenta: pendiente.cuenta,
-      saldo:  cliente.saldo
-    })
+        case Clientes.recargar_saldo(cliente_doc, valor_int) do
+          {:ok, cliente} ->
+            conn
+            |> delete_session(:pse_pendiente)
+            |> render(:exito, info: %{
+              valor:  valor_int,
+              banco:  pendiente.banco,
+              cuenta: pendiente.cuenta,
+              saldo:  cliente.saldo
+            })
+
+          {:error, motivo} ->
+            conn
+            |> put_flash(:error, motivo)
+            |> redirect(to: ~p"/perfil")
+        end
+    end
   end
 end
