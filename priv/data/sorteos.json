@@ -1302,11 +1302,24 @@
       "billetes": [
         {
           "disponible": true,
-          "numero": 1001
+          "fracciones_tomadas": [
+            {
+              "fraccion": 1,
+              "propietario_doc": "1"
+            },
+            {
+              "fraccion": 6,
+              "propietario_doc": "2"
+            }
+          ],
+          "numero": 1001,
+          "tipo": "fraccion"
         },
         {
-          "disponible": true,
-          "numero": 1002
+          "disponible": false,
+          "numero": 1002,
+          "propietario_doc": "1126905118",
+          "tipo": "completo"
         },
         {
           "disponible": true,
@@ -1351,11 +1364,29 @@
       "billetes": [
         {
           "disponible": true,
-          "numero": 1001
+          "fracciones_tomadas": [
+            {
+              "fraccion": 4,
+              "propietario_doc": "1126905118"
+            },
+            {
+              "fraccion": 6,
+              "propietario_doc": "1126905118"
+            }
+          ],
+          "numero": 1001,
+          "tipo": "fraccion"
         },
         {
           "disponible": true,
-          "numero": 1002
+          "fracciones_tomadas": [
+            {
+              "fraccion": 3,
+              "propietario_doc": "2"
+            }
+          ],
+          "numero": 1002,
+          "tipo": "fraccion"
         },
         {
           "disponible": true,
