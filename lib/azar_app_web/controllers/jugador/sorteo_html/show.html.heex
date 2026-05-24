@@ -171,7 +171,7 @@
               <form id={form_id} action={url_devolver} method="post"
                     onsubmit="return confirm('¿Estás seguro? Se devolverán las fracciones seleccionadas.')">
                 <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
-                <input type="hidden" name="_method" value="post" />
+                <input type="hidden" name="_method" value="delete" />
                 <button type="submit"
                   class="w-full rounded-2xl border border-red-500/30 bg-red-500/10 py-3 text-sm font-bold text-red-400 transition hover:bg-red-500/20 hover:border-red-500/50 flex items-center justify-center gap-2">
                   <span>↩️</span>

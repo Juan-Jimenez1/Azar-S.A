@@ -9,39 +9,45 @@ defmodule AzarAppWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug AzarApp.Plugs.RequestLogger
+    plug AzarApp.Plugs.FetchCliente
   end
 
   pipeline :require_admin do
     plug AzarApp.Plugs.RequireAdmin
   end
 
+  pipeline :require_cliente do
+    plug AzarApp.Plugs.RequireCliente
+  end
+
   # ── Auth admin (sin protección) ───────────────────────────────────────────
   scope "/admin", AzarAppWeb.Admin, as: :admin do
     pipe_through :browser
 
-    get    "/",  AuthController, :login
-    post   "/",  AuthController, :do_login
+    get "/", AuthController, :login
+    post "/", AuthController, :do_login
+    delete "/logout", AuthController, :logout
   end
 
   # ── Admin protegido ───────────────────────────────────────────────────────
   scope "/admin", AzarAppWeb.Admin, as: :admin do
     pipe_through [:browser, :require_admin]
 
-    get    "/sorteos",       SorteoController, :index
-    get    "/sorteos/nuevo", SorteoController, :new
-    post   "/sorteos",       SorteoController, :create
-    get    "/sorteos/:id",   SorteoController, :show
-    delete "/sorteos/:id",   SorteoController, :delete
+    get "/sorteos", SorteoController, :index
+    get "/sorteos/nuevo", SorteoController, :new
+    post "/sorteos", SorteoController, :create
+    get "/sorteos/:id", SorteoController, :show
+    delete "/sorteos/:id", SorteoController, :delete
 
-    get    "/sorteos/:sorteo_id/premios/nuevo", PremioController, :new
-    post   "/sorteos/:sorteo_id/premios",       PremioController, :create
-    delete "/sorteos/:sorteo_id/premios",       PremioController, :delete
+    get "/sorteos/:sorteo_id/premios/nuevo", PremioController, :new
+    post "/sorteos/:sorteo_id/premios", PremioController, :create
+    delete "/sorteos/:sorteo_id/premios", PremioController, :delete
 
     post "/sistema/actualizar-fecha", SistemaController, :ejecutar_sorteos_pendientes
-    post "/sorteos/:id/ejecutar",     SistemaController, :ejecutar_sorteo
+    post "/sorteos/:id/ejecutar", SistemaController, :ejecutar_sorteo
 
-    get    "/admins",     AdminController, :index
-    post   "/admins",     AdminController, :create
+    get "/admins", AdminController, :index
+    post "/admins", AdminController, :create
     delete "/admins/:id", AdminController, :delete
 
     get "/logs", LogController, :index
@@ -50,9 +56,23 @@ defmodule AzarAppWeb.Router do
     get "/balance", SorteoController, :balance
   end
 
-  # ── Jugador ────────────────────────────────────────────────────────────────
   scope "/", AzarAppWeb.Jugador, as: :jugador do
     pipe_through :browser
+
+    get "/registro", ClienteController, :new
+    post "/registro", ClienteController, :create
+    get "/", ClienteController, :login
+    post "/", ClienteController, :do_login
+    delete "/logout", ClienteController, :logout
+
+    get "/recuperar", ClienteController, :recuperar
+    post "/recuperar/buscar", ClienteController, :buscar_pregunta
+    post "/recuperar/cambiar", ClienteController, :cambiar_password
+  end
+
+  # ── Jugador ────────────────────────────────────────────────────────────────
+  scope "/", AzarAppWeb.Jugador, as: :jugador do
+    pipe_through [:browser, :require_cliente]
 
     get "/index", SorteoController, :index
     get "/sorteos/:id", SorteoController, :show
@@ -65,11 +85,6 @@ defmodule AzarAppWeb.Router do
          CompraController,
          :comprar_fracciones_restantes
 
-    get "/registro", ClienteController, :new
-    post "/registro", ClienteController, :create
-    get "/", ClienteController, :login
-    post "/", ClienteController, :login
-    delete "/logout", ClienteController, :logout
     get "/perfil", ClienteController, :perfil
     post "/perfil/recargar", ClienteController, :recargar
 
@@ -90,6 +105,5 @@ defmodule AzarAppWeb.Router do
     get "/cuenta/historial", CuentaController, :historial
     get "/cuenta/premios", CuentaController, :premios
     get "/cuenta/balance", CuentaController, :balance
-    post "/sorteos/:sorteo_id/devolver/:numero", CompraController, :devolver
   end
 end

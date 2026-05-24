@@ -10,9 +10,10 @@ defmodule AzarAppWeb.Jugador.ClienteController do
     case Clientes.registrar(params) do
       {:ok, cliente} ->
         conn
+        |> configure_session(renew: true)
         |> put_session(:cliente_doc, cliente.documento)
         |> put_flash(:info, "Bienvenido #{cliente.nombre}!")
-        |> redirect(to: ~p"/index")
+        |> redirect(to: ~p"/")
 
       {:error, motivo} ->
         conn
@@ -21,20 +22,14 @@ defmodule AzarAppWeb.Jugador.ClienteController do
     end
   end
 
-  def logout(conn, _params) do
-    conn
-    |> clear_session()
-    |> redirect(to: ~p"/")
-  end
-
-  # POST /login - procesa el formulario
-  def login(conn, %{"cliente" => params}) do
+  def do_login(conn, %{"cliente" => params}) do
     case Clientes.login(params["documento"], params["password"]) do
       {:ok, cliente} ->
         conn
+        |> configure_session(renew: true)
         |> put_session(:cliente_doc, cliente.documento)
         |> put_flash(:info, "Bienvenido de nuevo #{cliente.nombre}!")
-        |> redirect(to: ~p"/index")
+        |> redirect(to: ~p"/")
 
       {:error, motivo} ->
         conn
@@ -43,14 +38,29 @@ defmodule AzarAppWeb.Jugador.ClienteController do
     end
   end
 
-  # GET /login - muestra el formulario
   def login(conn, _params) do
-    render(conn, :login)
+    if get_session(conn, :cliente_doc) do
+      redirect(conn, to: ~p"/index")
+    else
+      render(conn, :login)
+    end
+  end
+
+
+  def logout(conn, _params) do
+    conn
+    |> configure_session(drop: true)
+    |> redirect(to: ~p"/")
+  end
+
+  def perfil(conn, _params) do
+    cliente = conn.assigns.cliente_actual
+    render(conn, :perfil, cliente: cliente)
   end
 
   def recargar(conn, %{"valor" => valor}) do
     cliente_doc = get_session(conn, :cliente_doc)
-    valor = String.to_integer(valor)
+    valor       = String.to_integer(valor)
 
     case Clientes.recargar_saldo(cliente_doc, valor) do
       {:ok, cliente} ->
@@ -65,29 +75,57 @@ defmodule AzarAppWeb.Jugador.ClienteController do
     end
   end
 
-  def perfil(conn, _params) do
-    cliente_doc = get_session(conn, :cliente_doc)
-    {:ok, cliente} = Clientes.get_cliente(cliente_doc)
-    render(conn, :perfil, cliente: cliente)
-  end
-
   def notificaciones(conn, _params) do
     cliente_doc = get_session(conn, :cliente_doc)
-    {:ok, _cliente} = Clientes.get_cliente(cliente_doc)
     Clientes.marcar_notificaciones_leidas(cliente_doc)
-    {:ok, cliente_actualizado} = Clientes.get_cliente(cliente_doc)
-    render(conn, :notificaciones, notificaciones: cliente_actualizado.notificaciones)
+    {:ok, cliente} = Clientes.get_cliente(cliente_doc)
+    render(conn, :notificaciones, notificaciones: cliente.notificaciones)
   end
 
   def marcar_leidas(conn, _params) do
     cliente_doc = get_session(conn, :cliente_doc)
     Clientes.marcar_notificaciones_leidas(cliente_doc)
-    conn |> redirect(to: ~p"/notificaciones")
+    redirect(conn, to: ~p"/notificaciones")
   end
 
   def eliminar_notificacion(conn, %{"id" => notif_id}) do
     cliente_doc = get_session(conn, :cliente_doc)
     Clientes.eliminar_notificacion(cliente_doc, notif_id)
     redirect(conn, to: ~p"/notificaciones")
+  end
+
+  def recuperar(conn, _params) do
+    render(conn, :recuperar)
+  end
+
+  def buscar_pregunta(conn, %{"documento" => documento}) do
+    case Clientes.get_pregunta(documento) do
+      {:ok, pregunta} ->
+        render(conn, :responder_pregunta, documento: documento, pregunta: pregunta)
+
+      {:error, motivo} ->
+        conn
+        |> put_flash(:error, motivo)
+        |> redirect(to: ~p"/recuperar")
+    end
+  end
+
+  def cambiar_password(conn, %{
+    "documento"            => documento,
+    "respuesta"            => respuesta,
+    "password"             => password,
+    "password_confirmacion" => confirmacion
+  }) do
+    case Clientes.recuperar_password(documento, respuesta, password, confirmacion) do
+      {:ok, _} ->
+        conn
+        |> put_flash(:info, "Contraseña actualizada. Ya puedes iniciar sesión.")
+        |> redirect(to: ~p"/")
+
+      {:error, motivo} ->
+        conn
+        |> put_flash(:error, motivo)
+        |> redirect(to: ~p"/recuperar")
+    end
   end
 end

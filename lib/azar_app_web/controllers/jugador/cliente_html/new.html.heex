@@ -168,51 +168,65 @@
               />
 
             </div>
-
-          </div>
-
-          <!-- Tarjeta -->
-          <div>
-
-            <label class="block text-sm font-semibold text-gray-300 mb-2">
-              Tarjeta
-            </label>
-
-            <div class="relative group">
-
-              <div class="absolute left-0 top-0 h-full w-12 flex items-center justify-center text-gray-500 group-focus-within:text-amber-300 transition">
-                💳
-              </div>
-
-              <input
-                type="text"
-                id="cc_input"
-                maxlength="19"
-                placeholder="1234 5678 9012 3456"
-                class="w-full h-14 rounded-2xl bg-[#17171a]
-                       border border-[#2a2a2f]
-                       focus:border-amber-400/50
-                       focus:ring-4 focus:ring-amber-400/10
-                       pl-12 pr-4 text-white placeholder-gray-600
-                       outline-none transition-all duration-300"
-              />
-
-            </div>
-
-            <div class="flex items-center justify-between mt-3">
-              <p class="text-[11px] text-gray-500">
-                Pago protegido y cifrado.
-              </p>
-
-              <div class="flex gap-2 text-gray-600 text-xs">
-                <span>VISA</span>
-                <span>•</span>
-                <span>MC</span>
+            <!-- Confirmar contraseña -->
+            <div>
+              <label class="block text-sm font-semibold text-gray-300 mb-2">Confirmar contraseña</label>
+              <div class="relative group">
+                <div class="absolute left-0 top-0 h-full w-12 flex items-center justify-center text-gray-500 group-focus-within:text-amber-300 transition">
+                  🔒
+                </div>
+                <input
+                  type="password"
+                  name="cliente[password_confirmacion]"
+                  placeholder="••••••••"
+                  required
+                  class="w-full h-14 rounded-2xl bg-[#17171a] border border-[#2a2a2f] focus:border-amber-400/50 focus:ring-4 focus:ring-amber-400/10 pl-12 pr-4 text-white placeholder-gray-600 outline-none transition-all duration-300"
+                />
               </div>
             </div>
 
-          </div>
+            <!-- Pregunta secreta -->
+            <div>
+              <label class="block text-sm font-semibold text-gray-300 mb-2">Pregunta secreta</label>
+              <div class="relative group">
+                <div class="absolute left-0 top-0 h-full w-12 flex items-center justify-center text-gray-500 group-focus-within:text-amber-300 transition">
+                  🔐
+                </div>
+                <select
+                  name="cliente[pregunta_secreta]"
+                  required
+                  class="w-full h-14 rounded-2xl bg-[#17171a] border border-[#2a2a2f] focus:border-amber-400/50 focus:ring-4 focus:ring-amber-400/10 pl-12 pr-4 text-white outline-none transition-all duration-300 appearance-none"
+                >
+                  <option value="" disabled selected>— Selecciona una pregunta —</option>
+                  <option value="¿Cuál es el nombre de tu primera mascota?">¿Cuál es el nombre de tu primera mascota?</option>
+                  <option value="¿En qué ciudad naciste?">¿En qué ciudad naciste?</option>
+                  <option value="¿Cuál fue el nombre de tu colegio?">¿Cuál fue el nombre de tu colegio?</option>
+                  <option value="¿Cuál es tu comida favorita?">¿Cuál es tu comida favorita?</option>
+                  <option value="¿Cuál fue tu primer trabajo?">¿Cuál fue tu primer trabajo?</option>
+                </select>
+              </div>
+            </div>
 
+            <!-- Respuesta secreta -->
+            <div>
+              <label class="block text-sm font-semibold text-gray-300 mb-2">Respuesta secreta</label>
+              <div class="relative group">
+                <div class="absolute left-0 top-0 h-full w-12 flex items-center justify-center text-gray-500 group-focus-within:text-amber-300 transition">
+                  💬
+                </div>
+                <input
+                  type="text"
+                  name="cliente[respuesta_secreta]"
+                  placeholder="Tu respuesta"
+                  required
+                  autocomplete="off"
+                  class="w-full h-14 rounded-2xl bg-[#17171a] border border-[#2a2a2f] focus:border-amber-400/50 focus:ring-4 focus:ring-amber-400/10 pl-12 pr-4 text-white placeholder-gray-600 outline-none transition-all duration-300"
+                />
+              </div>
+              <p class="text-xs text-gray-600 mt-2">La usarás si olvidas tu contraseña. No distingue mayúsculas.</p>
+            </div>
+
+          </div>
           <!-- Button -->
           <button
             type="submit"

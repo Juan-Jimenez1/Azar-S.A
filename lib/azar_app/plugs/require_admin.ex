@@ -10,7 +10,7 @@ defmodule AzarApp.Plugs.RequireAdmin do
     else
       conn
       |> put_flash(:error, "Debes iniciar sesión como administrador.")
-      |> redirect(to: "/admin/login")
+      |> redirect(to: "/admin/")
       |> halt()
     end
   end

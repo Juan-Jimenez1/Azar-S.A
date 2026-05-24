@@ -2,13 +2,8 @@
 
   <!-- Background -->
   <div class="absolute inset-0 overflow-hidden">
-
-    <!-- Soft glow -->
     <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-yellow-400/[0.04] rounded-full blur-3xl"></div>
-
     <div class="absolute bottom-[-200px] right-[-120px] w-[500px] h-[500px] bg-amber-500/[0.03] rounded-full blur-3xl"></div>
-
-    <!-- Grid -->
     <div
       class="absolute inset-0 opacity-[0.03]"
       style="
@@ -18,137 +13,73 @@
         background-size: 42px 42px;
       ">
     </div>
-
-    <!-- Floating Numbers -->
-    <div class="absolute top-[10%] left-[8%] text-yellow-400/[0.04] text-8xl font-black rotate-[-10deg] select-none">
-      777
-    </div>
-
-    <div class="absolute bottom-[12%] right-[10%] text-white/[0.03] text-7xl font-black rotate-[12deg] select-none">
-      1001
-    </div>
-
+    <div class="absolute top-[10%] left-[8%] text-yellow-400/[0.04] text-8xl font-black rotate-[-10deg] select-none">777</div>
+    <div class="absolute bottom-[12%] right-[10%] text-white/[0.03] text-7xl font-black rotate-[12deg] select-none">1001</div>
   </div>
+
+  <!-- Botón admin -->
+  
+   <a href="/admin"
+    class="group absolute top-6 right-6 w-11 h-11 rounded-2xl bg-[#101216]/80 border border-white/10 backdrop-blur-xl flex items-center justify-center text-gray-600 hover:text-yellow-400 hover:border-yellow-500/30 hover:bg-[#171a21] hover:shadow-[0_0_20px_rgba(250,204,21,0.1)] transition-all duration-300 hover:rotate-45"
+    title="Acceso administrador"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+    </svg>
+  </a>
 
   <!-- Main Card -->
   <div class="relative w-full max-w-6xl grid lg:grid-cols-2 rounded-[36px] overflow-hidden border border-white/10 bg-[#101216]/80 backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,.7)]">
 
     <!-- LEFT SIDE -->
     <div class="hidden lg:flex relative flex-col justify-center px-14 py-12 overflow-hidden">
-
-      <!-- Glow -->
       <div class="absolute top-20 right-10 w-64 h-64 bg-yellow-400/[0.05] rounded-full blur-3xl"></div>
-
-      <!-- Badge -->
       <div class="relative z-10 inline-flex items-center gap-3 px-4 py-2 rounded-full border border-yellow-500/20 bg-yellow-500/[0.04] text-yellow-400 text-sm font-medium w-fit">
-
         <span class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
-
         Sorteos digitales
-
       </div>
-
-      <!-- Title -->
       <h1 class="relative z-10 mt-10 text-6xl font-black text-white leading-[0.95] tracking-tight">
-
         Tu suerte,
         <br />
-
         <span class="bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent">
           más moderna.
         </span>
-
       </h1>
-
-      <!-- Description -->
       <p class="relative z-10 mt-7 text-gray-400 text-lg leading-relaxed max-w-md">
         Accede a tus sorteos, revisa tus billetes y participa desde una experiencia elegante, rápida y segura.
       </p>
 
       <!-- Decorative Ticket -->
       <div class="relative z-10 mt-14">
-
         <div class="relative w-[320px] rounded-[28px] bg-gradient-to-br from-yellow-400 to-amber-600 p-[1px] shadow-2xl rotate-[-5deg] hover:rotate-[-2deg] transition-transform duration-500">
-
           <div class="bg-[#111318] rounded-[28px] p-6">
-
-            <!-- Top -->
             <div class="flex items-center justify-between">
-
               <div>
-
-                <p class="text-yellow-400 font-black tracking-wider">
-                  AZAR S.A
-                </p>
-
-                <p class="text-xs text-gray-500 mt-1">
-                  Ticket digital
-                </p>
-
+                <p class="text-yellow-400 font-black tracking-wider">AZAR S.A</p>
+                <p class="text-xs text-gray-500 mt-1">Ticket digital</p>
               </div>
-
-              <div class="w-12 h-12 rounded-2xl bg-yellow-400/10 flex items-center justify-center text-yellow-400 text-xl">
-                ✦
-              </div>
-
+              <div class="w-12 h-12 rounded-2xl bg-yellow-400/10 flex items-center justify-center text-yellow-400 text-xl">✦</div>
             </div>
-
-            <!-- Numbers -->
             <div class="mt-8 flex items-center gap-3">
-
-              <div class="bg-[#1a1d24] rounded-xl px-4 py-3 text-white font-black text-xl">
-                7
-              </div>
-
-              <div class="bg-[#1a1d24] rounded-xl px-4 py-3 text-white font-black text-xl">
-                8
-              </div>
-
-              <div class="bg-[#1a1d24] rounded-xl px-4 py-3 text-white font-black text-xl">
-                1
-              </div>
-
-              <div class="bg-[#1a1d24] rounded-xl px-4 py-3 text-white font-black text-xl">
-                2
-              </div>
-
+              <div class="bg-[#1a1d24] rounded-xl px-4 py-3 text-white font-black text-xl">7</div>
+              <div class="bg-[#1a1d24] rounded-xl px-4 py-3 text-white font-black text-xl">8</div>
+              <div class="bg-[#1a1d24] rounded-xl px-4 py-3 text-white font-black text-xl">1</div>
+              <div class="bg-[#1a1d24] rounded-xl px-4 py-3 text-white font-black text-xl">2</div>
             </div>
-
-            <!-- Footer -->
             <div class="mt-8 flex items-center justify-between">
-
               <div>
-
-                <p class="text-xs text-gray-500 uppercase tracking-widest">
-                  Sorteo
-                </p>
-
-                <p class="text-white font-semibold mt-1">
-                  Viernes 8PM
-                </p>
-
+                <p class="text-xs text-gray-500 uppercase tracking-widest">Sorteo</p>
+                <p class="text-white font-semibold mt-1">Viernes 8PM</p>
               </div>
-
               <div>
-
-                <p class="text-xs text-gray-500 uppercase tracking-widest text-right">
-                  Premio
-                </p>
-
-                <p class="text-yellow-400 font-black mt-1">
-                  $500M
-                </p>
-
+                <p class="text-xs text-gray-500 uppercase tracking-widest text-right">Premio</p>
+                <p class="text-yellow-400 font-black mt-1">$500M</p>
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
 
     <!-- RIGHT SIDE -->
@@ -156,74 +87,35 @@
 
       <!-- Mobile Header -->
       <div class="lg:hidden text-center mb-10">
-
         <div class="inline-flex items-center justify-center w-24 h-24 rounded-[28px] bg-[#1b1f27] border border-yellow-500/20 shadow-2xl relative mb-6">
-
           <div class="absolute inset-0 rounded-[28px] bg-yellow-400/[0.08] blur-xl"></div>
-
-          <span class="relative text-5xl text-yellow-400">
-            ✦
-          </span>
-
+          <span class="relative text-5xl text-yellow-400">✦</span>
         </div>
-
-        <h1 class="text-5xl font-black text-white tracking-tight">
-          Azar S.A
-        </h1>
-
-        <p class="text-gray-500 mt-3">
-          Inicia sesión para continuar
-        </p>
-
+        <h1 class="text-5xl font-black text-white tracking-tight">Azar S.A</h1>
+        <p class="text-gray-500 mt-3">Inicia sesión para continuar</p>
       </div>
 
       <!-- Desktop Header -->
       <div class="hidden lg:flex items-center gap-5 mb-12">
-
         <div class="relative">
-
           <div class="absolute inset-0 bg-yellow-400/[0.15] blur-xl rounded-2xl"></div>
-
-          <div class="relative w-16 h-16 rounded-2xl bg-[#1b1f27] border border-yellow-500/20 flex items-center justify-center text-yellow-400 text-3xl">
-
-            ✦
-
-          </div>
-
+          <div class="relative w-16 h-16 rounded-2xl bg-[#1b1f27] border border-yellow-500/20 flex items-center justify-center text-yellow-400 text-3xl">✦</div>
         </div>
-
         <div>
-
-          <h2 class="text-3xl font-black text-white tracking-tight">
-            Azar S.A
-          </h2>
-
-          <p class="text-sm text-gray-500 mt-1">
-            Acceso seguro
-          </p>
-
+          <h2 class="text-3xl font-black text-white tracking-tight">Azar S.A</h2>
+          <p class="text-sm text-gray-500 mt-1">Acceso seguro</p>
         </div>
-
       </div>
 
       <!-- FORM -->
       <form action="/" method="post" class="space-y-6">
-
         <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
 
         <!-- Documento -->
         <div>
-
-          <label class="block text-sm font-medium text-gray-300 mb-3">
-            Documento
-          </label>
-
+          <label class="block text-sm font-medium text-gray-300 mb-3">Documento</label>
           <div class="relative group">
-
-            <div class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-yellow-400 transition-colors duration-300">
-              #
-            </div>
-
+            <div class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-yellow-400 transition-colors duration-300">#</div>
             <input
               type="text"
               name="cliente[documento]"
@@ -231,24 +123,14 @@
               required
               class="w-full bg-[#171a21] border border-white/5 rounded-2xl pl-12 pr-5 py-4 text-white placeholder-gray-600 outline-none transition-all duration-300 focus:border-yellow-500/40 focus:bg-[#1b1f29] focus:-translate-y-[1px] focus:shadow-[0_0_0_4px_rgba(250,204,21,0.08)]"
             />
-
           </div>
-
         </div>
 
         <!-- Password -->
         <div>
-
-          <label class="block text-sm font-medium text-gray-300 mb-3">
-            Contraseña
-          </label>
-
+          <label class="block text-sm font-medium text-gray-300 mb-3">Contraseña</label>
           <div class="relative group">
-
-            <div class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-yellow-400 transition-colors duration-300">
-              ●
-            </div>
-
+            <div class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-yellow-400 transition-colors duration-300">●</div>
             <input
               type="password"
               name="cliente[password]"
@@ -256,99 +138,46 @@
               required
               class="w-full bg-[#171a21] border border-white/5 rounded-2xl pl-12 pr-5 py-4 text-white placeholder-gray-600 outline-none transition-all duration-300 focus:border-yellow-500/40 focus:bg-[#1b1f29] focus:-translate-y-[1px] focus:shadow-[0_0_0_4px_rgba(250,204,21,0.08)]"
             />
-
           </div>
-
-          <!-- Forgot -->
           <div class="flex justify-end mt-3">
-
-            <a
-              href="/recuperar-password"
-              class="text-sm text-gray-500 hover:text-yellow-400 transition-all duration-300 hover:translate-x-0.5"
-            >
+            <a href="/recuperar-password" class="text-sm text-gray-500 hover:text-yellow-400 transition-all duration-300 hover:translate-x-0.5">
               ¿Olvidaste tu contraseña?
             </a>
-
           </div>
-
         </div>
 
-        <!-- Remember -->
-        <div class="flex items-center justify-between text-sm">
-
-          <label class="flex items-center gap-3 text-gray-500 cursor-pointer">
-
-            <input
-              type="checkbox"
-              class="rounded border-gray-700 bg-[#1b1d23] text-yellow-400 focus:ring-yellow-400"
-            />
-
-            Mantener sesión iniciada
-          </label>
-
-        </div>
+      
 
         <!-- Button -->
         <button
           type="submit"
           class="group relative overflow-hidden w-full rounded-2xl bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 py-4 font-black text-black text-lg transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] hover:shadow-[0_10px_40px_rgba(250,204,21,0.25)]"
         >
-
-          <!-- Shine -->
           <div class="absolute inset-0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"></div>
-
           <span class="relative z-10 flex items-center justify-center gap-3">
-
             Entrar
-
-            <span class="transition-transform duration-300 group-hover:translate-x-1">
-              →
-            </span>
-
+            <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
           </span>
-
         </button>
 
       </form>
 
       <!-- Footer -->
       <div class="mt-10 pt-6 border-t border-white/5">
-
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-
           <p class="text-sm text-gray-500">
             ¿No tienes cuenta?
-            <a
-              href="/registro"
-              class="text-yellow-400 font-semibold hover:text-yellow-300 transition-colors"
-            >
+            <a href="/registro" class="text-yellow-400 font-semibold hover:text-yellow-300 transition-colors">
               Crear cuenta
             </a>
           </p>
-
-          <!-- Card Symbols -->
           <div class="flex items-center gap-4 text-xl">
-
-            <span class="text-gray-700 hover:text-yellow-400 hover:-translate-y-1 transition-all duration-300 cursor-default">
-              ♠
-            </span>
-
-            <span class="text-gray-700 hover:text-red-500 hover:-translate-y-1 transition-all duration-300 cursor-default">
-              ♥
-            </span>
-
-            <span class="text-gray-700 hover:text-yellow-400 hover:-translate-y-1 transition-all duration-300 cursor-default">
-              ♦
-            </span>
-
-            <span class="text-gray-700 hover:text-green-500 hover:-translate-y-1 transition-all duration-300 cursor-default">
-              ♣
-            </span>
-
+            <span class="text-gray-700 hover:text-yellow-400 hover:-translate-y-1 transition-all duration-300 cursor-default">♠</span>
+            <span class="text-gray-700 hover:text-red-500 hover:-translate-y-1 transition-all duration-300 cursor-default">♥</span>
+            <span class="text-gray-700 hover:text-yellow-400 hover:-translate-y-1 transition-all duration-300 cursor-default">♦</span>
+            <span class="text-gray-700 hover:text-green-500 hover:-translate-y-1 transition-all duration-300 cursor-default">♣</span>
           </div>
-
         </div>
-
       </div>
 
     </div>
