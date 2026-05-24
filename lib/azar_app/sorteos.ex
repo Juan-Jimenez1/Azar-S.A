@@ -290,6 +290,7 @@ end
     end)
   end
 
+
   # ── Reportes jugador ───────────────────────────────────────────────────────
 
   @doc "Todas las compras de un cliente en todos los sorteos."
@@ -420,7 +421,21 @@ end
     |> Enum.filter(& &1.realizado)
     |> Enum.map(fn sorteo ->
       {:ok, ingresos} = ingresos_por_sorteo(sorteo.id)
-      valor_premio = if sorteo.premio, do: sorteo.premio.valor, else: 0
+      valor_premio =
+        if sorteo.premio && sorteo.numero_ganador do
+          billete = Enum.find(sorteo.billetes, &(&1["numero"] == sorteo.numero_ganador))
+          case billete["tipo"] do
+            "completo" ->
+              sorteo.premio.valor
+            "fraccion" ->
+              fracciones_tomadas = length(billete["fracciones_tomadas"] || [])
+              div(sorteo.premio.valor, sorteo.cantidad_fracciones) * fracciones_tomadas
+            _ -> 0
+          end
+        else
+          0
+        end
+
       ganancia = ingresos - valor_premio
 
       ganador_nombre =

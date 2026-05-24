@@ -87,7 +87,7 @@ end
   def premios_entregados(conn, _params) do
   premios = Sorteos.premios_entregados()
   render(conn, :premios_entregados, premios: premios)
-end
+  end
 
 def balance(conn, _params) do
   balance        = Sorteos.balance_sorteos_pasados()

@@ -81,10 +81,290 @@
       "nombre": "Maleja",
       "notificaciones": [
         {
+          "cuerpo": "Billete #1002 completo: Ganaste $8 en \"ganancia pura\". Premio: 2.",
+          "fecha": "2026-05-24 15:11:13.923000-05:00 -05 America/Bogota",
+          "id": "notif_91705d674de38d11",
+          "leida": false,
+          "tipo": "premio",
+          "titulo": "Ganaste $8 en ganancia pura!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1002. Premio: 2 ($8). Entra a ver tus resultados.",
+          "fecha": "2026-05-24 15:11:13.871000-05:00 -05 America/Bogota",
+          "id": "notif_4a1f453f51b2ae21",
+          "leida": false,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"ganancia pura\" finalizado"
+        },
+        {
+          "cuerpo": "Compraste el billete #1003 del sorteo 'ganancia pura' por $800000.",
+          "fecha": "2026-05-24 15:11:02.930000-05:00 -05 America/Bogota",
+          "id": "notif_9c791d47b820d918",
+          "leida": false,
+          "tipo": "compra",
+          "titulo": "Billete comprado"
+        },
+        {
+          "cuerpo": "Compraste el billete #1002 del sorteo 'ganancia pura' por $800000.",
+          "fecha": "2026-05-24 15:08:20.571000-05:00 -05 America/Bogota",
+          "id": "notif_0962ac32077c7ecc",
+          "leida": false,
+          "tipo": "compra",
+          "titulo": "Billete comprado"
+        },
+        {
+          "cuerpo": "Se revirtió tu compra del billete #1003 del sorteo 'ganancia pura'. Se acreditaron $800000 a tu saldo.",
+          "fecha": "2026-05-24 15:08:01.323000-05:00 -05 America/Bogota",
+          "id": "notif_e6723fa0b8fa50c8",
+          "leida": false,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        },
+        {
+          "cuerpo": "Se revirtió tu compra del billete #1001 del sorteo 'ganancia pura'. Se acreditaron $800000 a tu saldo.",
+          "fecha": "2026-05-24 15:07:57.003000-05:00 -05 America/Bogota",
+          "id": "notif_449b29b45d3c3eaf",
+          "leida": false,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        },
+        {
+          "cuerpo": "Compraste el billete #1003 del sorteo 'ganancia pura' por $800000.",
+          "fecha": "2026-05-24 15:03:51.543000-05:00 -05 America/Bogota",
+          "id": "notif_afb7d7051567457e",
+          "leida": false,
+          "tipo": "compra",
+          "titulo": "Billete comprado"
+        },
+        {
+          "cuerpo": "Compraste el billete #1001 del sorteo 'ganancia pura' por $800000.",
+          "fecha": "2026-05-24 15:03:43.158000-05:00 -05 America/Bogota",
+          "id": "notif_2deee49849bb6102",
+          "leida": false,
+          "tipo": "compra",
+          "titulo": "Billete comprado"
+        },
+        {
+          "cuerpo": "Billete #1001 - Fraccion 2: Ganaste $1000 en \"queso\". Premio: queso.",
+          "fecha": "2026-05-24 14:43:38.826000-05:00 -05 America/Bogota",
+          "id": "notif_7697d744781d48b5",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $1000 en queso!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1001. Premio: queso ($4000). Entra a ver tus resultados.",
+          "fecha": "2026-05-24 14:43:38.742000-05:00 -05 America/Bogota",
+          "id": "notif_27e8d21f4baebf89",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"queso\" finalizado"
+        },
+        {
+          "cuerpo": "Compraste 2 fracción(es) del billete #1002 del sorteo 'queso' por $2000.",
+          "fecha": "2026-05-24 14:43:22.545000-05:00 -05 America/Bogota",
+          "id": "notif_516a0eead75dfdc1",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
+          "cuerpo": "Compraste 1 fracción(es) del billete #1001 del sorteo 'queso' por $1000.",
+          "fecha": "2026-05-24 14:43:12.291000-05:00 -05 America/Bogota",
+          "id": "notif_83f8ae463520df36",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
+          "cuerpo": "Billete #1003 - Fraccion 1: Ganaste $40000 en \"quejeso\". Premio: quejeso.",
+          "fecha": "2026-05-24 14:41:16.517000-05:00 -05 America/Bogota",
+          "id": "notif_d2575d70db71fd7c",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $40000 en quejeso!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1003. Premio: quejeso ($40000). Entra a ver tus resultados.",
+          "fecha": "2026-05-24 14:41:16.431000-05:00 -05 America/Bogota",
+          "id": "notif_3e6b6150f2ea6bc0",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"quejeso\" finalizado"
+        },
+        {
+          "cuerpo": "Compraste 1 fracción(es) del billete #1003 del sorteo 'quejeso' por $50000.",
+          "fecha": "2026-05-24 14:40:53.115000-05:00 -05 America/Bogota",
+          "id": "notif_973ac9b62e6aaa65",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
+          "cuerpo": "Se revirtió tu compra del billete #1001 del sorteo 'quejeso'. Se acreditaron $50000 a tu saldo.",
+          "fecha": "2026-05-24 14:40:02.108000-05:00 -05 America/Bogota",
+          "id": "notif_e90d3b82453605aa",
+          "leida": true,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        },
+        {
+          "cuerpo": "Compraste el billete #1001 del sorteo 'quejeso' por $50000.",
+          "fecha": "2026-05-24 14:39:53.761000-05:00 -05 America/Bogota",
+          "id": "notif_295b64ca6e30e9ee",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Billete comprado"
+        },
+        {
+          "cuerpo": "Billete #1001 completo: Ganaste $30000 en \"o\". Premio: 30000.",
+          "fecha": "2026-05-24 14:36:51.585000-05:00 -05 America/Bogota",
+          "id": "notif_d36ece0c303281b1",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $30000 en o!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1001. Premio: 30000 ($30000). Entra a ver tus resultados.",
+          "fecha": "2026-05-24 14:36:51.440000-05:00 -05 America/Bogota",
+          "id": "notif_5cf69abe61214ec5",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"o\" finalizado"
+        },
+        {
+          "cuerpo": "Compraste el billete #1001 del sorteo 'o' por $30000.",
+          "fecha": "2026-05-24 14:36:48.274000-05:00 -05 America/Bogota",
+          "id": "notif_e667e0cf488153b1",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Billete comprado"
+        },
+        {
+          "cuerpo": "Billete #1001 - Fraccion 3: Ganaste $25000 en \"Toto\". Premio: Barco.",
+          "fecha": "2026-05-24 14:27:22.548000-05:00 -05 America/Bogota",
+          "id": "notif_6ff8044ed9f4995c",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $25000 en Toto!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1001. Premio: Barco ($100000). Entra a ver tus resultados.",
+          "fecha": "2026-05-24 14:27:22.459000-05:00 -05 America/Bogota",
+          "id": "notif_900ee8ecd8fcf32d",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"Toto\" finalizado"
+        },
+        {
+          "cuerpo": "Se revirtió tu compra del billete #1002 del sorteo 'Toto'. Se acreditaron $5000 a tu saldo.",
+          "fecha": "2026-05-24 14:26:16.653000-05:00 -05 America/Bogota",
+          "id": "notif_cd8dcab9bec24724",
+          "leida": true,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        },
+        {
+          "cuerpo": "Compraste 2 fracción(es) del billete #1003 del sorteo 'Toto' por $2500.",
+          "fecha": "2026-05-24 14:26:07.172000-05:00 -05 America/Bogota",
+          "id": "notif_49e124aafdec3752",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
+          "cuerpo": "Compraste 1 fracción(es) del billete #1001 del sorteo 'Toto' por $1250.",
+          "fecha": "2026-05-24 14:25:48.163000-05:00 -05 America/Bogota",
+          "id": "notif_fb75d37c43a015a3",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
+          "cuerpo": "Compraste el billete #1002 del sorteo 'Toto' por $5000.",
+          "fecha": "2026-05-24 14:25:38.665000-05:00 -05 America/Bogota",
+          "id": "notif_f4ca5c233b488012",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Billete comprado"
+        },
+        {
+          "cuerpo": "Billete #1001 - Fraccion 2: Ganaste $100000 en \"Loto\". Premio: Avión.",
+          "fecha": "2026-05-24 14:10:04.630000-05:00 -05 America/Bogota",
+          "id": "notif_e023e6ef72d35cf7",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $100000 en Loto!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1001. Premio: Avión ($400000). Entra a ver tus resultados.",
+          "fecha": "2026-05-24 14:10:04.549000-05:00 -05 America/Bogota",
+          "id": "notif_7283cdd14d1dc774",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"Loto\" finalizado"
+        },
+        {
+          "cuerpo": "Se revirtió tu compra del billete #1001 del sorteo 'Loto'. Se acreditaron $3000 a tu saldo.",
+          "fecha": "2026-05-24 14:09:33.532000-05:00 -05 America/Bogota",
+          "id": "notif_c4315a363cffa364",
+          "leida": true,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        },
+        {
+          "cuerpo": "Compraste 3 fracción(es) del billete #1001 del sorteo 'Loto' por $4500.",
+          "fecha": "2026-05-24 12:51:45.222000-05:00 -05 America/Bogota",
+          "id": "notif_90880bd129f5766d",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
+          "cuerpo": "Se revirtió tu compra del billete #1001 del sorteo 'Loto'. Se acreditaron $3000 a tu saldo.",
+          "fecha": "2026-05-24 12:51:21.682000-05:00 -05 America/Bogota",
+          "id": "notif_45b15d973fb17e5f",
+          "leida": true,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        },
+        {
+          "cuerpo": "Compraste 2 fracción(es) del billete #1001 del sorteo 'Loto' por $3000.",
+          "fecha": "2026-05-24 12:50:50.038000-05:00 -05 America/Bogota",
+          "id": "notif_71820af4f4fc88fe",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
+          "cuerpo": "Se revirtió tu compra del billete #1001 del sorteo 'Loto'. Se acreditaron $1500 a tu saldo.",
+          "fecha": "2026-05-24 12:49:14.866000-05:00 -05 America/Bogota",
+          "id": "notif_1053535b38d26b8e",
+          "leida": true,
+          "tipo": "devolucion",
+          "titulo": "Compra devuelta"
+        },
+        {
+          "cuerpo": "Compraste el billete #1002 del sorteo 'Loto' por $6000.",
+          "fecha": "2026-05-24 12:48:25.997000-05:00 -05 America/Bogota",
+          "id": "notif_d8c7eff2c868ee7b",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Billete comprado"
+        },
+        {
+          "cuerpo": "Compraste 1 fracción(es) del billete #1001 del sorteo 'Loto' por $1500.",
+          "fecha": "2026-05-24 12:48:16.602000-05:00 -05 America/Bogota",
+          "id": "notif_ee58dbd63423e297",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
           "cuerpo": "Billete #1002 - Fraccion 2: Ganaste $50000000 en \"Hola\". Premio: Dinero.",
           "fecha": "2026-05-24 12:22:34.352000-05:00 -05 America/Bogota",
           "id": "notif_135a8e21464653c2",
-          "leida": false,
+          "leida": true,
           "tipo": "premio",
           "titulo": "Ganaste $50000000 en Hola!"
         },
@@ -92,7 +372,7 @@
           "cuerpo": "El billete ganador fue el #1002. Premio: Dinero ($150000000). Entra a ver tus resultados.",
           "fecha": "2026-05-24 12:22:34.300000-05:00 -05 America/Bogota",
           "id": "notif_c067acb352229913",
-          "leida": false,
+          "leida": true,
           "tipo": "sorteo_realizado",
           "titulo": "Sorteo \"Hola\" finalizado"
         },
@@ -100,7 +380,7 @@
           "cuerpo": "Compraste 1 fracción(es) del billete #1002 del sorteo 'Hola' por $166666.",
           "fecha": "2026-05-24 12:20:25.646000-05:00 -05 America/Bogota",
           "id": "notif_dd64ea4835967950",
-          "leida": false,
+          "leida": true,
           "tipo": "compra",
           "titulo": "Fracciones compradas"
         },
@@ -156,7 +436,7 @@
       "password_hash": "056b69ad25c1f1b95ed1508529252797b4f379da690c2b628eeac2f05198492e",
       "pregunta_secreta": null,
       "respuesta_hash": null,
-      "saldo": 62242557
+      "saldo": 60744315
     },
     {
       "documento": "25081555",

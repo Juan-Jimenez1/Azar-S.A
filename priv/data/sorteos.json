@@ -1537,6 +1537,271 @@
       },
       "realizado": true,
       "valor_billete": 500000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 2,
+              "propietario_doc": "1126905118"
+            }
+          ],
+          "numero": 1001,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": false,
+          "numero": 1002,
+          "propietario_doc": "1126905118",
+          "tipo": "completo"
+        },
+        {
+          "disponible": true,
+          "numero": 1003
+        }
+      ],
+      "cantidad_billetes": 3,
+      "cantidad_fracciones": 4,
+      "fecha": "2026-10-23",
+      "id": "sorteo_46dab67f1435d015",
+      "nombre": "Loto",
+      "numero_ganador": 1001,
+      "premio": {
+        "id": "premio_a3ec56ba2b9b10d7",
+        "nombre": "Avión",
+        "valor": 400000
+      },
+      "realizado": true,
+      "valor_billete": 6000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 3,
+              "propietario_doc": "1126905118"
+            }
+          ],
+          "numero": 1001,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 1,
+              "propietario_doc": "1126905118"
+            },
+            {
+              "fraccion": 2,
+              "propietario_doc": "1126905118"
+            }
+          ],
+          "numero": 1003,
+          "tipo": "fraccion"
+        }
+      ],
+      "cantidad_billetes": 3,
+      "cantidad_fracciones": 4,
+      "fecha": "2026-05-24",
+      "id": "sorteo_8e25721a82fb4a11",
+      "nombre": "Toto",
+      "numero_ganador": 1001,
+      "premio": {
+        "id": "premio_564f70036b7e180f",
+        "nombre": "Barco",
+        "valor": 100000
+      },
+      "realizado": true,
+      "valor_billete": 5000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": false,
+          "numero": 1001,
+          "propietario_doc": "1126905118",
+          "tipo": "completo"
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        }
+      ],
+      "cantidad_billetes": 2,
+      "cantidad_fracciones": 10,
+      "fecha": "1111-11-11",
+      "id": "sorteo_e5568831820aa130",
+      "nombre": "o",
+      "numero_ganador": 1001,
+      "premio": {
+        "id": "premio_32728a8a1a9b8233",
+        "nombre": "30000",
+        "valor": 30000
+      },
+      "realizado": true,
+      "valor_billete": 30000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "numero": 1001
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        },
+        {
+          "disponible": false,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 1,
+              "propietario_doc": "1126905118"
+            }
+          ],
+          "numero": 1003,
+          "tipo": "fraccion"
+        }
+      ],
+      "cantidad_billetes": 3,
+      "cantidad_fracciones": 1,
+      "fecha": "2026-05-23",
+      "id": "sorteo_1a3b8f9a97b28a91",
+      "nombre": "quejeso",
+      "numero_ganador": 1003,
+      "premio": {
+        "id": "premio_e74404275d9ae880",
+        "nombre": "quejeso",
+        "valor": 40000
+      },
+      "realizado": true,
+      "valor_billete": 50000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 2,
+              "propietario_doc": "1126905118"
+            }
+          ],
+          "numero": 1001,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 3,
+              "propietario_doc": "1126905118"
+            },
+            {
+              "fraccion": 4,
+              "propietario_doc": "1126905118"
+            }
+          ],
+          "numero": 1002,
+          "tipo": "fraccion"
+        }
+      ],
+      "cantidad_billetes": 2,
+      "cantidad_fracciones": 4,
+      "fecha": "2026-02-23",
+      "id": "sorteo_447b121074ceaf85",
+      "nombre": "queso",
+      "numero_ganador": 1001,
+      "premio": {
+        "id": "premio_20c1fa1e4c9402a2",
+        "nombre": "queso",
+        "valor": 4000
+      },
+      "realizado": true,
+      "valor_billete": 4000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "numero": 1001
+        },
+        {
+          "disponible": false,
+          "numero": 1002,
+          "propietario_doc": "1126905118",
+          "tipo": "completo"
+        },
+        {
+          "disponible": false,
+          "numero": 1003,
+          "propietario_doc": "1126905118",
+          "tipo": "completo"
+        }
+      ],
+      "cantidad_billetes": 3,
+      "cantidad_fracciones": 10,
+      "fecha": "2026-05-24",
+      "id": "sorteo_f4e429e4d6352d3e",
+      "nombre": "ganancia pura",
+      "numero_ganador": 1002,
+      "premio": {
+        "id": "premio_609408b2afa61d91",
+        "nombre": "2",
+        "valor": 8
+      },
+      "realizado": true,
+      "valor_billete": 800000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": true,
+          "numero": 1001
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        },
+        {
+          "disponible": true,
+          "numero": 1003
+        },
+        {
+          "disponible": true,
+          "numero": 1004
+        },
+        {
+          "disponible": true,
+          "numero": 1005
+        },
+        {
+          "disponible": true,
+          "numero": 1006
+        },
+        {
+          "disponible": true,
+          "numero": 1007
+        }
+      ],
+      "cantidad_billetes": 7,
+      "cantidad_fracciones": 7,
+      "fecha": "8888-09-09",
+      "id": "sorteo_dbe697d6fd2cae67",
+      "nombre": ",",
+      "numero_ganador": null,
+      "premio": null,
+      "realizado": false,
+      "valor_billete": 9
     }
   ]
 }

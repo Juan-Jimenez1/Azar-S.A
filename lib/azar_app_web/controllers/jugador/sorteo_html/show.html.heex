@@ -138,6 +138,9 @@
                             name="fracciones[]"
                             value={f}
                             checked
+                            data-billete={numero_mio}
+                            data-valor={valor_fraccion_mio}
+                            onchange={"recalcularReembolso(#{numero_mio})"}
                             class="w-4 h-4 rounded accent-red-400 cursor-pointer"
                           />
                           <span class="px-2 py-1 rounded-lg text-xs font-bold bg-blue-500/30 text-blue-300 border border-blue-400/40 group-hover/check:border-red-400/40 transition">
@@ -161,9 +164,13 @@
                   <span class="text-white font-black text-base">$<%= valor_mio %></span>
                 </div>
 
-                <div class="flex items-center justify-between text-sm bg-emerald-500/5 border border-emerald-500/10 rounded-xl px-3 py-2">
+                
+                <div class="flex items-center justify-between text-sm bg-emerald-500/5 border border-emerald-500/10 rounded-xl px-3 py-2"
+                    id={"reembolso-#{numero_mio}"}>
                   <span class="text-emerald-400/70 text-xs">Reembolso máx.</span>
-                  <span class="text-emerald-400 font-black">$<%= valor_mio %></span>
+                  <span class="text-emerald-400 font-black" id={"monto-#{numero_mio}"}>
+                    $<%= valor_mio %>
+                  </span>
                 </div>
 
               </div>
@@ -331,4 +338,16 @@
     </div>
 
   </div>
+  <script>
+    function recalcularReembolso(numeroBillete) {
+      const checkboxes = document.querySelectorAll(
+        `input[type="checkbox"][data-billete="${numeroBillete}"]`
+      );
+      const valorUnitario = parseInt(checkboxes[0]?.dataset.valor || 0);
+      const seleccionadas = Array.from(checkboxes).filter(cb => cb.checked).length;
+      const total = seleccionadas * valorUnitario;
+
+      document.getElementById(`monto-${numeroBillete}`).textContent = `$${total}`;
+    }
+  </script>
 </div>
