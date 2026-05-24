@@ -29,6 +29,13 @@ defmodule AzarAppWeb.Jugador.CuentaController do
          valor          =  calcular_devolucion(billete, sorteo, cliente_doc),
          :ok            <- Sorteos.devolver_compra(sorteo_id, numero, cliente_doc),
          {:ok, _}       <- Clientes.acreditar_saldo(cliente_doc, valor) do
+
+      Clientes.agregar_notificacion(cliente_doc, %{
+        tipo:   "devolucion",
+        titulo: "Compra devuelta",
+        cuerpo: "Se revirtió tu compra del billete ##{numero} del sorteo '#{sorteo.nombre}'. Se acreditaron $#{valor} a tu saldo."
+      })
+
       conn
       |> put_flash(:info, "Compra devuelta. Se acreditaron $#{valor} a tu saldo.")
       |> redirect(to: ~p"/cuenta/historial")
@@ -44,15 +51,12 @@ defmodule AzarAppWeb.Jugador.CuentaController do
     valor_fraccion = div(sorteo.valor_billete, sorteo.cantidad_fracciones)
 
     case billete["tipo"] do
-      "completo" ->
-        sorteo.valor_billete
-
+      "completo" -> sorteo.valor_billete
       "fraccion" ->
         billete
         |> Map.get("fracciones_tomadas", [])
         |> Enum.count(&(&1["propietario_doc"] == cliente_doc))
         |> Kernel.*(valor_fraccion)
-
       _ -> 0
     end
   end

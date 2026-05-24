@@ -1431,6 +1431,112 @@
       },
       "realizado": true,
       "valor_billete": 90000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": false,
+          "numero": 1001,
+          "propietario_doc": "1126905118",
+          "tipo": "completo"
+        },
+        {
+          "disponible": true,
+          "fracciones_tomadas": [
+            {
+              "fraccion": 2,
+              "propietario_doc": "1126905118"
+            }
+          ],
+          "numero": 1002,
+          "tipo": "fraccion"
+        },
+        {
+          "disponible": true,
+          "numero": 1003
+        },
+        {
+          "disponible": true,
+          "numero": 1004
+        },
+        {
+          "disponible": true,
+          "numero": 1005
+        },
+        {
+          "disponible": true,
+          "numero": 1006
+        },
+        {
+          "disponible": true,
+          "numero": 1007
+        },
+        {
+          "disponible": true,
+          "numero": 1008
+        },
+        {
+          "disponible": true,
+          "numero": 1009
+        },
+        {
+          "disponible": true,
+          "numero": 1010
+        },
+        {
+          "disponible": true,
+          "numero": 1011
+        },
+        {
+          "disponible": true,
+          "numero": 1012
+        },
+        {
+          "disponible": true,
+          "numero": 1013
+        },
+        {
+          "disponible": true,
+          "numero": 1014
+        },
+        {
+          "disponible": true,
+          "numero": 1015
+        },
+        {
+          "disponible": true,
+          "numero": 1016
+        },
+        {
+          "disponible": true,
+          "numero": 1017
+        },
+        {
+          "disponible": true,
+          "numero": 1018
+        },
+        {
+          "disponible": true,
+          "numero": 1019
+        },
+        {
+          "disponible": true,
+          "numero": 1020
+        }
+      ],
+      "cantidad_billetes": 20,
+      "cantidad_fracciones": 3,
+      "fecha": "2026-05-24",
+      "id": "sorteo_1f29f0e90fea1bfd",
+      "nombre": "Hola",
+      "numero_ganador": 1002,
+      "premio": {
+        "id": "premio_a4633c00cbff4b67",
+        "nombre": "Dinero",
+        "valor": 150000000
+      },
+      "realizado": true,
+      "valor_billete": 500000
     }
   ]
 }
