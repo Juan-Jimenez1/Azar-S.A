@@ -1950,3 +1950,13 @@
 [2026-05-24 20:28:03] GET /admin/sorteos/sorteo_dbe697d6fd2cae67/premios/nuevo → OK (200) | ip: 127.0.0.1 | usuario: admin_default
 [2026-05-24 20:28:06] GET /admin/sorteos/sorteo_dbe697d6fd2cae67/premios/nuevo → OK (200) | ip: 127.0.0.1 | usuario: admin_default
 [2026-05-24 20:35:53] GET /admin/sorteos/sorteo_dbe697d6fd2cae67/premios/nuevo → OK (200) | ip: 127.0.0.1 | usuario: admin_default
+[2026-05-24 20:42:26] GET /admin/sorteos/sorteo_dbe697d6fd2cae67 → OK (200) | ip: 127.0.0.1 | usuario: admin_default
+[2026-05-24 20:42:29] GET /admin/sorteos → OK (200) | ip: 127.0.0.1 | usuario: admin_default
+[2026-05-24 20:42:33] GET /admin/sorteos → OK (200) | ip: 127.0.0.1 | usuario: admin_default
+[2026-05-24 20:42:56] GET /admin/logs → OK (200) | ip: 127.0.0.1 | usuario: admin_default
+[2026-05-24 20:43:01] GET /admin/sorteos → OK (200) | ip: 127.0.0.1 | usuario: admin_default
+[2026-05-24 20:43:03] GET /admin/balance → OK (200) | ip: 127.0.0.1 | usuario: admin_default
+[2026-05-24 20:43:06] GET /admin/sorteos → OK (200) | ip: 127.0.0.1 | usuario: admin_default
+[2026-05-24 20:47:26] GET /admin/sorteos → OK (200) | ip: 127.0.0.1 | usuario: admin_default
+[2026-05-24 20:47:29] GET /admin/premios-entregados → OK (200) | ip: 127.0.0.1 | usuario: admin_default
+[2026-05-24 20:47:49] GET /admin/sorteos → OK (200) | ip: 127.0.0.1 | usuario: admin_default

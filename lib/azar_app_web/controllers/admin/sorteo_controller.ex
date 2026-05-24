@@ -84,9 +84,10 @@ end
     end
   end
 
-  def premios_entregados(conn, _params) do
-  premios = Sorteos.premios_entregados()
-  render(conn, :premios_entregados, premios: premios)
+  def premios_entregados(conn, params) do
+    orden = Map.get(params, "orden", "asc")
+    premios = Sorteos.premios_entregados(orden)
+    render(conn, :premios_entregados, premios: premios)
   end
 
 def balance(conn, _params) do

@@ -268,12 +268,12 @@ end
   Retorna lista de mapas con: sorteo, premio, ganadores (nombre + fracción),
   ingresos, balance y resultado (ganancia/pérdida).
   """
-  def premios_entregados do
+  def premios_entregados(orden \\ "asc") do
     clientes = JsonStore.all(:clientes)
 
     listar_sorteos()
     |> Enum.filter(fn s -> s.realizado and s.premio != nil end)
-    |> Enum.sort_by(& &1.fecha)
+    |> Enum.sort_by(& &1.fecha, if(orden == "desc", do: :desc, else: :asc))
     |> Enum.map(fn sorteo ->
       {:ok, ingresos} = ingresos_por_sorteo(sorteo.id)
       ganadores = encontrar_ganadores(sorteo, clientes)
