@@ -10,25 +10,38 @@ defmodule AzarApp.Clientes do
   end
 
   def registrar(params) do
-    case get_cliente(params["documento"]) do
-      {:ok, _} ->
-        {:error, "Ya existe un cliente con ese documento"}
+  case get_cliente(params["documento"]) do
+    {:ok, _} ->
+      {:error, "Ya existe un cliente con ese documento"}
 
-      :error ->
-        cliente = %Cliente{
-          id: JsonStore.generar_id("cliente"),
-          nombre: params["nombre"],
-          documento: params["documento"],
-          password_hash: hashear(params["password"]),
-          saldo: 0,
-          notificaciones: []
-        }
+    :error ->
+      cond do
+        params["password"] != params["password_confirmacion"] ->
+          {:error, "Las contraseñas no coinciden"}
 
-        JsonStore.upsert(:clientes, cliente)
-        {:ok, cliente}
-    end
+        is_nil(params["pregunta_secreta"]) or params["pregunta_secreta"] == "" ->
+          {:error, "La pregunta secreta es requerida"}
+
+        is_nil(params["respuesta_secreta"]) or params["respuesta_secreta"] == "" ->
+          {:error, "La respuesta secreta es requerida"}
+
+        true ->
+          cliente = %Cliente{
+            id:               JsonStore.generar_id("cliente"),
+            nombre:           params["nombre"],
+            documento:        params["documento"],
+            password_hash:    hashear(params["password"]),
+            pregunta_secreta: params["pregunta_secreta"],
+            respuesta_hash:   hashear(String.downcase(String.trim(params["respuesta_secreta"]))),
+            saldo:            0,
+            notificaciones:   []
+          }
+
+          JsonStore.upsert(:clientes, cliente)
+          {:ok, cliente}
+      end
   end
-
+end
   def login(documento, password) do
     case get_cliente(documento) do
       {:ok, cliente} ->
@@ -261,6 +274,40 @@ defmodule AzarApp.Clientes do
        }}
     end
   end
+
+
+
+def recuperar_password(documento, respuesta, nueva_password, confirmacion) do
+  cond do
+    nueva_password != confirmacion ->
+      {:error, "Las contraseñas no coinciden"}
+
+    true ->
+      case get_cliente(documento) do
+        {:ok, cliente} ->
+          respuesta_hash = hashear(String.downcase(String.trim(respuesta)))
+
+          if cliente.respuesta_hash == respuesta_hash do
+            actualizado = %{cliente | password_hash: hashear(nueva_password)}
+            JsonStore.upsert(:clientes, actualizado)
+            {:ok, actualizado}
+          else
+            {:error, "Respuesta incorrecta"}
+          end
+
+        :error ->
+          {:error, "No existe un cliente con ese documento"}
+      end
+  end
+end
+
+def get_pregunta(documento) do
+  case get_cliente(documento) do
+    {:ok, cliente} -> {:ok, cliente.pregunta_secreta}
+    :error         -> {:error, "No existe un cliente con ese documento"}
+  end
+end
+
 
   # ── Privado ────────────────────────────────────────────────────────────────
 

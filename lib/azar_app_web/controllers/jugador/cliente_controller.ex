@@ -90,4 +90,34 @@ defmodule AzarAppWeb.Jugador.ClienteController do
     Clientes.eliminar_notificacion(cliente_doc, notif_id)
     redirect(conn, to: ~p"/notificaciones")
   end
+
+  def recuperar(conn, _params) do
+  render(conn, :recuperar)
+end
+
+def buscar_pregunta(conn, %{"documento" => documento}) do
+  case AzarApp.Clientes.get_pregunta(documento) do
+    {:ok, pregunta} ->
+      render(conn, :responder_pregunta, documento: documento, pregunta: pregunta)
+
+    {:error, motivo} ->
+      conn
+      |> put_flash(:error, motivo)
+      |> redirect(to: ~p"/recuperar")
+  end
+end
+
+def cambiar_password(conn, %{"documento" => documento, "respuesta" => respuesta, "password" => password, "password_confirmacion" => confirmacion}) do
+  case AzarApp.Clientes.recuperar_password(documento, respuesta, password, confirmacion) do
+    {:ok, _} ->
+      conn
+      |> put_flash(:info, "Contraseña actualizada correctamente. Ya puedes iniciar sesión.")
+      |> redirect(to: ~p"/")
+
+    {:error, motivo} ->
+      conn
+      |> put_flash(:error, motivo)
+      |> redirect(to: ~p"/recuperar")
+  end
+end
 end

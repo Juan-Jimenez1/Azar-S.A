@@ -103,3 +103,73 @@
 [data-phx-session], [data-phx-teleported-src] { display: contents }
 
 /* This file is for your main application CSS */
+/* ── Temas ── */
+:root {
+  --bg-primary:    #07090d;
+  --bg-secondary:  #101217;
+  --bg-card:       #101216;
+  --bg-input:      #171a21;
+  --border-subtle: rgba(255,255,255,0.06);
+  --text-primary:  #ffffff;
+  --text-muted:    #6b7280;
+  --surface:       rgba(16,18,23,0.9);
+}
+
+[data-theme="light"] {
+  --bg-primary:    #f0f2f5;
+  --bg-secondary:  #ffffff;
+  --bg-card:       #ffffff;
+  --bg-input:      #f5f6f8;
+  --border-subtle: rgba(0,0,0,0.08);
+  --text-primary:  #0f1117;
+  --text-muted:    #6b7280;
+  --surface:       rgba(255,255,255,0.9);
+}
+
+[data-theme="dark"] {
+  --bg-primary:    #07090d;
+  --bg-secondary:  #101217;
+  --bg-card:       #101216;
+  --bg-input:      #171a21;
+  --border-subtle: rgba(255,255,255,0.06);
+  --text-primary:  #ffffff;
+  --text-muted:    #6b7280;
+  --surface:       rgba(16,18,23,0.9);
+}
+
+/* Liquid glass base */
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+}
+
+/* Animación float */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+/* Animación spin lenta */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Liquid morph */
+@keyframes liquid-morph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50%       { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+
+.animate-liquid {
+  animation: liquid-morph 6s ease-in-out infinite;
+}

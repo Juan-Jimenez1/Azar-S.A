@@ -469,4 +469,209 @@ defmodule AzarAppWeb.CoreComponents do
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
+
+  def theme_toggle(assigns) do
+  ~H"""
+  <div id="theme-toggle" class="relative" x-data="{ open: false }">
+
+    <button
+      id="theme-btn"
+      onclick="toggleThemePanel()"
+      class="group relative w-11 h-11 rounded-2xl flex items-center justify-center transition-all duration-300 overflow-hidden"
+      style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1);"
+      title="Cambiar tema"
+    >
+      <!-- Liquid blob -->
+      <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+           style="background: radial-gradient(circle at 50% 50%, rgba(212,160,23,0.15), transparent 70%);">
+      </div>
+
+      <!-- Sol (light) -->
+      <svg id="icon-light" class="w-5 h-5 absolute transition-all duration-500 opacity-0 scale-50 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"/>
+        <path stroke-linecap="round" d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      </svg>
+
+      <!-- Luna (dark) -->
+      <svg id="icon-dark" class="w-5 h-5 absolute transition-all duration-500 opacity-0 scale-50 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+      </svg>
+
+      <!-- Monitor (system) -->
+      <svg id="icon-system" class="w-5 h-5 absolute transition-all duration-500 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path stroke-linecap="round" d="M8 21h8M12 17v4"/>
+      </svg>
+
+    </button>
+
+    <!-- Panel liquid glass -->
+    <div
+      id="theme-panel"
+      class="absolute right-0 top-14 z-50 hidden"
+      style="width: 220px;"
+    >
+      <!-- Liquid glass container -->
+      <div class="relative overflow-hidden rounded-[24px] p-1.5"
+           style="background: rgba(255,255,255,0.07); backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%); border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);">
+
+        <!-- Blob decorativo -->
+        <div class="absolute -top-8 -right-8 w-24 h-24 rounded-full opacity-30 animate-liquid"
+             style="background: radial-gradient(circle, rgba(212,160,23,0.4), transparent 70%);">
+        </div>
+        <div class="absolute -bottom-6 -left-6 w-20 h-20 rounded-full opacity-20 animate-liquid"
+             style="background: radial-gradient(circle, rgba(99,102,241,0.5), transparent 70%); animation-delay: -3s;">
+        </div>
+
+        <p class="text-[10px] uppercase tracking-[0.25em] text-gray-500 px-3 pt-2 pb-1.5 font-semibold">
+          Apariencia
+        </p>
+
+        <!-- Opciones -->
+        <button onclick="setThemeOption('light')"
+          id="opt-light"
+          class="theme-option w-full flex items-center gap-3 px-3 py-3 rounded-[18px] transition-all duration-200 text-left group/opt">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200"
+               style="background: rgba(250,204,21,0.1); border: 1px solid rgba(250,204,21,0.15);">
+            <svg class="w-4 h-4 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <path stroke-linecap="round" d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-white">Claro</p>
+            <p class="text-xs text-gray-500">Fondo luminoso</p>
+          </div>
+          <div id="check-light" class="ml-auto w-4 h-4 rounded-full hidden"
+               style="background: linear-gradient(135deg, #f6d06b, #d4a017); box-shadow: 0 0 8px rgba(212,160,23,0.6);">
+          </div>
+        </button>
+
+        <button onclick="setThemeOption('dark')"
+          id="opt-dark"
+          class="theme-option w-full flex items-center gap-3 px-3 py-3 rounded-[18px] transition-all duration-200 text-left group/opt">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200"
+               style="background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.15);">
+            <svg class="w-4 h-4 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-white">Oscuro</p>
+            <p class="text-xs text-gray-500">Fondo profundo</p>
+          </div>
+          <div id="check-dark" class="ml-auto w-4 h-4 rounded-full hidden"
+               style="background: linear-gradient(135deg, #818cf8, #6366f1); box-shadow: 0 0 8px rgba(99,102,241,0.6);">
+          </div>
+        </button>
+
+        <button onclick="setThemeOption('system')"
+          id="opt-system"
+          class="theme-option w-full flex items-center gap-3 px-3 py-3 rounded-[18px] transition-all duration-200 text-left group/opt">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200"
+               style="background: rgba(107,114,128,0.1); border: 1px solid rgba(107,114,128,0.15);">
+            <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path stroke-linecap="round" d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-white">Sistema</p>
+            <p class="text-xs text-gray-500">Según tu dispositivo</p>
+          </div>
+          <div id="check-system" class="ml-auto w-4 h-4 rounded-full hidden"
+               style="background: linear-gradient(135deg, #9ca3af, #6b7280); box-shadow: 0 0 8px rgba(107,114,128,0.5);">
+          </div>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    (function() {
+      function getCurrentTheme() {
+        return localStorage.getItem("phx:theme") || "system";
+      }
+
+      function updateIcons(theme) {
+        document.getElementById("icon-light").classList.toggle("opacity-100", theme === "light");
+        document.getElementById("icon-light").classList.toggle("scale-100",   theme === "light");
+        document.getElementById("icon-light").classList.toggle("opacity-0",   theme !== "light");
+        document.getElementById("icon-light").classList.toggle("scale-50",    theme !== "light");
+
+        document.getElementById("icon-dark").classList.toggle("opacity-100", theme === "dark");
+        document.getElementById("icon-dark").classList.toggle("scale-100",   theme === "dark");
+        document.getElementById("icon-dark").classList.toggle("opacity-0",   theme !== "dark");
+        document.getElementById("icon-dark").classList.toggle("scale-50",    theme !== "dark");
+
+        document.getElementById("icon-system").classList.toggle("opacity-100", theme === "system");
+        document.getElementById("icon-system").classList.toggle("opacity-40",  theme !== "system");
+
+        ["light","dark","system"].forEach(t => {
+          document.getElementById("check-" + t).classList.toggle("hidden", t !== theme);
+          const opt = document.getElementById("opt-" + t);
+          if (t === theme) {
+            opt.style.background = "rgba(255,255,255,0.06)";
+          } else {
+            opt.style.background = "";
+          }
+        });
+      }
+
+      window.setThemeOption = function(theme) {
+        if (theme === "system") {
+          localStorage.removeItem("phx:theme");
+          document.documentElement.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("phx:theme", theme);
+          document.documentElement.setAttribute("data-theme", theme);
+        }
+        updateIcons(theme);
+
+        // Animación del botón
+        const btn = document.getElementById("theme-btn");
+        btn.style.transform = "scale(0.9)";
+        setTimeout(() => btn.style.transform = "", 150);
+      };
+
+      window.toggleThemePanel = function() {
+        const panel = document.getElementById("theme-panel");
+        const isHidden = panel.classList.contains("hidden");
+
+        if (isHidden) {
+          panel.classList.remove("hidden");
+          panel.style.opacity = "0";
+          panel.style.transform = "translateY(-8px) scale(0.96)";
+          panel.style.transition = "opacity 0.2s ease, transform 0.2s ease";
+          requestAnimationFrame(() => {
+            panel.style.opacity = "1";
+            panel.style.transform = "translateY(0) scale(1)";
+          });
+        } else {
+          panel.style.opacity = "0";
+          panel.style.transform = "translateY(-8px) scale(0.96)";
+          setTimeout(() => panel.classList.add("hidden"), 200);
+        }
+      };
+
+      // Cerrar al click fuera
+      document.addEventListener("click", function(e) {
+        const toggle = document.getElementById("theme-toggle");
+        if (toggle && !toggle.contains(e.target)) {
+          const panel = document.getElementById("theme-panel");
+          if (panel && !panel.classList.contains("hidden")) {
+            panel.style.opacity = "0";
+            panel.style.transform = "translateY(-8px) scale(0.96)";
+            setTimeout(() => panel.classList.add("hidden"), 200);
+          }
+        }
+      });
+
+      updateIcons(getCurrentTheme());
+    })();
+  </script>
+  """
+end
 end

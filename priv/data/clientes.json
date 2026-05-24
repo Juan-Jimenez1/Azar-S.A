@@ -6,6 +6,8 @@
       "nombre": "Pablito",
       "notificaciones": [],
       "password_hash": "594ebf8373a864de5204b43ef4f10360390b3fc006f920332676a7e182971b31",
+      "pregunta_secreta": null,
+      "respuesta_hash": null,
       "saldo": 60000
     },
     {
@@ -14,6 +16,8 @@
       "nombre": "PABLITO",
       "notificaciones": [],
       "password_hash": "198676f9e8a91c1e6b81e7b37cd688b737902360fa1355b8de0515dd1f0a4b54",
+      "pregunta_secreta": null,
+      "respuesta_hash": null,
       "saldo": 0
     },
     {
@@ -22,6 +26,8 @@
       "nombre": "Carlitos",
       "notificaciones": [],
       "password_hash": "fa3cfb3f1bb823aa9501f88f1f95f732ee6fef2c3a48be7f1d38037b216a549f",
+      "pregunta_secreta": null,
+      "respuesta_hash": null,
       "saldo": 0
     },
     {
@@ -55,6 +61,8 @@
         }
       ],
       "password_hash": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+      "pregunta_secreta": null,
+      "respuesta_hash": null,
       "saldo": 1037668
     },
     {
@@ -63,6 +71,8 @@
       "nombre": "Pablito",
       "notificaciones": [],
       "password_hash": "594ebf8373a864de5204b43ef4f10360390b3fc006f920332676a7e182971b31",
+      "pregunta_secreta": null,
+      "respuesta_hash": null,
       "saldo": 0
     },
     {
@@ -70,6 +80,30 @@
       "id": "cliente_1778992165719139",
       "nombre": "Maleja",
       "notificaciones": [
+        {
+          "cuerpo": "El billete ganador fue el #1001.  Entra a ver tus resultados.",
+          "fecha": "2026-05-24 00:01:33.619000-05:00 -05 America/Bogota",
+          "id": "notif_88aa888091caaa5f",
+          "leida": false,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"algo\" finalizado"
+        },
+        {
+          "cuerpo": "Billete #1002 completo: Ganaste $9999999 en \"Crazy\". Premio: Dinero.",
+          "fecha": "2026-05-24 00:01:33.582000-05:00 -05 America/Bogota",
+          "id": "notif_7d0a67675aed9ab2",
+          "leida": false,
+          "tipo": "premio",
+          "titulo": "Ganaste $9999999 en Crazy!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1002. Premio: Dinero ($9999999). Entra a ver tus resultados.",
+          "fecha": "2026-05-24 00:01:33.517000-05:00 -05 America/Bogota",
+          "id": "notif_63d4b44e79944bff",
+          "leida": false,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"Crazy\" finalizado"
+        },
         {
           "cuerpo": "Compraste el billete #1002 del sorteo 'Crazy' por $5000.",
           "fecha": "2026-05-22 22:50:52.776000-05:00 -05 America/Bogota",
@@ -88,7 +122,9 @@
         }
       ],
       "password_hash": "056b69ad25c1f1b95ed1508529252797b4f379da690c2b628eeac2f05198492e",
-      "saldo": 2909224
+      "pregunta_secreta": null,
+      "respuesta_hash": null,
+      "saldo": 12909223
     },
     {
       "documento": "25081555",
@@ -96,6 +132,8 @@
       "nombre": "Deina",
       "notificaciones": [],
       "password_hash": "2acb99a26fb3d8e390f96c8935c43f6646cb517ba3b2e70409dd1b432de65661",
+      "pregunta_secreta": null,
+      "respuesta_hash": null,
       "saldo": 100005000
     },
     {
@@ -104,6 +142,8 @@
       "nombre": "Sergio",
       "notificaciones": [],
       "password_hash": "9bcbdfa04fb53ac0e8baa9938cbfaa27e716db65a0d8bbd68cab18a26050117d",
+      "pregunta_secreta": null,
+      "respuesta_hash": null,
       "saldo": 6009000
     },
     {
@@ -111,6 +151,38 @@
       "id": "cliente_1779068061052676",
       "nombre": "juan",
       "notificaciones": [
+        {
+          "cuerpo": "Billete #1001 - Fraccion 1: Ganaste $2777777 en \"Hola\". Premio: Dinero.",
+          "fecha": "2026-05-24 00:16:18.134000-05:00 -05 America/Bogota",
+          "id": "notif_8661812bddab6fa7",
+          "leida": true,
+          "tipo": "premio",
+          "titulo": "Ganaste $2777777 en Hola!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1001. Premio: Dinero ($49999999). Entra a ver tus resultados.",
+          "fecha": "2026-05-24 00:16:18.079000-05:00 -05 America/Bogota",
+          "id": "notif_ecce77fefa4f279a",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"Hola\" finalizado"
+        },
+        {
+          "cuerpo": "Compraste 1 fracción(es) del billete #1001 del sorteo 'Hola' por $5000.",
+          "fecha": "2026-05-24 00:16:06.343000-05:00 -05 America/Bogota",
+          "id": "notif_dff3a057e4afd6c9",
+          "leida": true,
+          "tipo": "compra",
+          "titulo": "Fracciones compradas"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1002. Premio: Dinero ($9999999). Entra a ver tus resultados.",
+          "fecha": "2026-05-24 00:01:33.391000-05:00 -05 America/Bogota",
+          "id": "notif_3138d7e2c41861d5",
+          "leida": true,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"Crazy\" finalizado"
+        },
         {
           "cuerpo": "Compraste 1 fracción(es) del billete #1001 del sorteo 'Crazy' por $833.",
           "fecha": "2026-05-22 22:42:54.633000-05:00 -05 America/Bogota",
@@ -305,13 +377,31 @@
         }
       ],
       "password_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
-      "saldo": 5874599
+      "pregunta_secreta": null,
+      "respuesta_hash": null,
+      "saldo": 8647376
     },
     {
       "documento": "2",
       "id": "cliente_1",
       "nombre": "Aura",
       "notificaciones": [
+        {
+          "cuerpo": "El billete ganador fue el #1001.  Entra a ver tus resultados.",
+          "fecha": "2026-05-24 00:01:33.650000-05:00 -05 America/Bogota",
+          "id": "notif_f027712389605a2e",
+          "leida": false,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"algo\" finalizado"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1002. Premio: Dinero ($9999999). Entra a ver tus resultados.",
+          "fecha": "2026-05-24 00:01:33.482000-05:00 -05 America/Bogota",
+          "id": "notif_fdfbc434ffb45b93",
+          "leida": false,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \"Crazy\" finalizado"
+        },
         {
           "cuerpo": "Compraste 1 fracción(es) del billete #1002 del sorteo 'algo' por $5555.",
           "fecha": "2026-05-22 23:02:50.232000-05:00 -05 America/Bogota",
@@ -354,6 +444,8 @@
         }
       ],
       "password_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "pregunta_secreta": null,
+      "respuesta_hash": null,
       "saldo": 123582
     },
     {
@@ -362,6 +454,18 @@
       "nombre": "Alejandra ",
       "notificaciones": [],
       "password_hash": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+      "pregunta_secreta": null,
+      "respuesta_hash": null,
+      "saldo": 0
+    },
+    {
+      "documento": "0",
+      "id": "cliente_77f82888b34fe203",
+      "nombre": "Andres",
+      "notificaciones": [],
+      "password_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "pregunta_secreta": "¿Cuál es el nombre de tu primera mascota?",
+      "respuesta_hash": "9baf3a40312f39849f46dad1040f2f039f1cffa1238c41e9db675315cfad39b6",
       "saldo": 0
     }
   ]

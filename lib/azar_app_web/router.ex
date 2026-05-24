@@ -92,5 +92,8 @@ defmodule AzarAppWeb.Router do
     get "/cuenta/premios", CuentaController, :premios
     get "/cuenta/balance", CuentaController, :balance
     post "/sorteos/:sorteo_id/devolver/:numero", CompraController, :devolver
+    get  "/recuperar",          ClienteController, :recuperar
+post "/recuperar/buscar",   ClienteController, :buscar_pregunta
+post "/recuperar/cambiar",  ClienteController, :cambiar_password
   end
 end

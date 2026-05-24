@@ -22,23 +22,26 @@ defmodule AzarApp.Sorteo.Scheduler do
     {:noreply, estado}
   end
 
-  defp revisar_sorteos_pendientes do
-    hoy = Date.utc_today()
+ defp revisar_sorteos_pendientes do
+  hoy = Date.utc_today()
 
-    AzarApp.JsonStore.all(:sorteos)
-    |> Enum.filter(fn sorteo ->
-      !sorteo.realizado and sorteo.fecha <= Date.to_string(hoy)
-    end)
-    |> Enum.each(fn sorteo ->
-      Logger.info("[Scheduler] Ejecutando sorteo automático: #{sorteo.nombre}")
-      case AzarApp.SorteoServer.ejecutar(sorteo.id) do
-        {:ok, ganador} ->
-          Logger.info("[Scheduler] Sorteo #{sorteo.nombre} ejecutado — ganador: ##{ganador}")
-        {:error, motivo} ->
-          Logger.warning("[Scheduler] Error ejecutando #{sorteo.nombre}: #{motivo}")
-      end
-    end)
-  end
+  AzarApp.JsonStore.all(:sorteos)
+  |> Enum.filter(fn sorteo ->
+    case Date.from_iso8601(sorteo.fecha) do
+      {:ok, fecha} -> !sorteo.realizado and Date.compare(fecha, hoy) == :lt
+      _            -> false
+    end
+  end)
+  |> Enum.each(fn sorteo ->
+    Logger.info("[Scheduler] Ejecutando sorteo automático: #{sorteo.nombre}")
+    case AzarApp.SorteoServer.ejecutar(sorteo.id) do
+      {:ok, ganador} ->
+        Logger.info("[Scheduler] Sorteo #{sorteo.nombre} ejecutado — ganador: ##{ganador}")
+      {:error, motivo} ->
+        Logger.warning("[Scheduler] Error ejecutando #{sorteo.nombre}: #{motivo}")
+    end
+  end)
+end
 
   defp schedule do
     Process.send_after(self(), :revisar, @intervalo)

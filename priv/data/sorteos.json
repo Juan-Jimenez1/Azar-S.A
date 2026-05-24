@@ -1351,13 +1351,13 @@
       "fecha": "2026-05-22",
       "id": "sorteo_22",
       "nombre": "Crazy",
-      "numero_ganador": null,
+      "numero_ganador": 1002,
       "premio": {
         "id": "premio_27",
         "nombre": "Dinero",
         "valor": 9999999
       },
-      "realizado": false,
+      "realizado": true,
       "valor_billete": 5000
     },
     {
@@ -1366,12 +1366,8 @@
           "disponible": true,
           "fracciones_tomadas": [
             {
-              "fraccion": 4,
-              "propietario_doc": "1126905118"
-            },
-            {
-              "fraccion": 6,
-              "propietario_doc": "1126905118"
+              "fraccion": 1,
+              "propietario_doc": "1"
             }
           ],
           "numero": 1001,
@@ -1379,14 +1375,7 @@
         },
         {
           "disponible": true,
-          "fracciones_tomadas": [
-            {
-              "fraccion": 3,
-              "propietario_doc": "2"
-            }
-          ],
-          "numero": 1002,
-          "tipo": "fraccion"
+          "numero": 1002
         },
         {
           "disponible": true,
@@ -1430,14 +1419,18 @@
         }
       ],
       "cantidad_billetes": 12,
-      "cantidad_fracciones": 9,
-      "fecha": "2026-05-22",
-      "id": "sorteo_30",
-      "nombre": "algo",
-      "numero_ganador": null,
-      "premio": null,
-      "realizado": false,
-      "valor_billete": 50000
+      "cantidad_fracciones": 18,
+      "fecha": "2026-05-24",
+      "id": "sorteo_7e33ef79772cd01e",
+      "nombre": "Hola",
+      "numero_ganador": 1001,
+      "premio": {
+        "id": "premio_a0ab363618f1f813",
+        "nombre": "Dinero",
+        "valor": 49999999
+      },
+      "realizado": true,
+      "valor_billete": 90000
     }
   ]
 }
