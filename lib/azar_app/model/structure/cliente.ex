@@ -1,4 +1,17 @@
 defmodule AzarApp.Model.Structure.Cliente do
+  @moduledoc """
+  Estructura de datos para un jugador (cliente) de la plataforma.
+
+  Campos:
+  - `id` — identificador único generado por `JsonStore.generar_id/1`
+  - `nombre` — nombre completo del jugador
+  - `documento` — número de documento (cédula), clave única de acceso
+  - `password_hash` — hash SHA-256 de la contraseña
+  - `pregunta_secreta` — texto de la pregunta para recuperación de contraseña
+  - `respuesta_hash` — hash SHA-256 de la respuesta (normalizada a minúsculas sin espacios)
+  - `saldo` — saldo disponible en pesos (entero, por defecto 0)
+  - `notificaciones` — lista de mapas con las notificaciones del jugador
+  """
 
   defstruct [
     :id,
@@ -11,6 +24,7 @@ defmodule AzarApp.Model.Structure.Cliente do
     notificaciones: []
   ]
 
+  @doc "Deserializa un mapa con claves string (proveniente de JSON) a una struct `Cliente`."
   def to_struct(m) do
     %__MODULE__{
       id:               m["id"],
@@ -24,6 +38,7 @@ defmodule AzarApp.Model.Structure.Cliente do
     }
   end
 
+  @doc "Serializa una struct `Cliente` a un mapa con claves string para persistir en JSON."
   def to_map(%__MODULE__{} = c) do
     %{
       "id"               => c.id,

@@ -1800,13 +1800,13 @@
       "fecha": "8888-09-09",
       "id": "sorteo_dbe697d6fd2cae67",
       "nombre": ",",
-      "numero_ganador": null,
+      "numero_ganador": 1001,
       "premio": {
         "id": "premio_3628217f0e1beba5",
         "nombre": "Dinero",
         "valor": 1200000001
       },
-      "realizado": false,
+      "realizado": true,
       "valor_billete": 9
     },
     {

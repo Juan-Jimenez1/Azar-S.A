@@ -1,4 +1,18 @@
 defmodule AzarApp.JsonStore do
+  @moduledoc """
+  Capa de persistencia basada en archivos JSON en `priv/data/`.
+
+  Proporciona operaciones CRUD genéricas sobre tres entidades:
+  `:sorteos`, `:clientes` y `:admins`. Cada entidad se mapea a un archivo
+  JSON independiente y a su módulo de estructura (para serialización).
+
+  Escrituras atómicas: los datos se escriben primero en un archivo `.tmp`
+  y luego se renombran al archivo final. En Windows, si `File.rename/2` falla
+  con `:eexist`, se hace copia + eliminación del temporal como alternativa.
+
+  IDs únicos: `generar_id/1` usa bytes criptográficamente aleatorios para
+  garantizar unicidad incluso en llamadas concurrentes.
+  """
 
   alias AzarApp.Model.Structure.{Sorteo, Cliente, Admin}
 
@@ -24,6 +38,13 @@ defmodule AzarApp.JsonStore do
 
   # ── Lectura ─────────────────────────────────────────────
 
+  @doc """
+  Retorna la lista completa de registros de la entidad indicada.
+
+  Lee el archivo JSON correspondiente y deserializa cada elemento usando
+  el módulo de estructura configurado. Retorna `[]` si el archivo no existe.
+  Lanza si el JSON está corrupto (posible si el proceso murió durante una escritura).
+  """
   def all(entidad) do
     %{archivo: archivo, clave: clave, modulo: modulo} = config!(entidad)
 
@@ -51,6 +72,7 @@ defmodule AzarApp.JsonStore do
     end
   end
 
+  @doc "Busca un registro por `id` dentro de la entidad. Retorna `{:ok, registro}` o `:error`."
   def get(entidad, id) do
     case Enum.find(all(entidad), &(&1.id == id)) do
       nil      -> :error
@@ -60,6 +82,12 @@ defmodule AzarApp.JsonStore do
 
   # ── Escritura ───────────────────────────────────────────
 
+  @doc """
+  Inserta o actualiza el `registro` en la entidad.
+
+  Si ya existe un registro con el mismo `id`, lo reemplaza; de lo contrario lo agrega.
+  Persiste de forma atómica usando un archivo temporal.
+  """
   def upsert(entidad, registro) do
     registros = all(entidad)
 
@@ -73,6 +101,7 @@ defmodule AzarApp.JsonStore do
     save(entidad, maps)
   end
 
+  @doc "Elimina el registro con `id` de la entidad. Retorna `:ok` o `{:error, motivo}`."
   def delete(entidad, id) do
     registros = all(entidad)
 
@@ -92,7 +121,13 @@ defmodule AzarApp.JsonStore do
 
   # Genera un ID único dentro del VM de Erlang (monotónico, nunca se repite).
   # Reemplaza System.system_time/1 que podía colisionar en llamadas concurrentes.
- def generar_id(prefijo) do
+  @doc """
+  Genera un ID único con el formato `\"prefijo_<16 hex chars>\"`.
+
+  Usa 8 bytes criptográficamente aleatorios para garantizar unicidad global,
+  incluso en llamadas concurrentes desde distintos procesos.
+  """
+  def generar_id(prefijo) do
   sufijo = :crypto.strong_rand_bytes(8) |> Base.encode16(case: :lower)
   "#{prefijo}_#{sufijo}"
 end

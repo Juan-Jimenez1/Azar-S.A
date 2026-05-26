@@ -1,16 +1,21 @@
 defmodule AzarAppWeb.Admin.SorteoController do
+  @moduledoc "Controlador de sorteos para el panel de administración."
+
   use AzarAppWeb, :controller
   alias AzarApp.Sorteos
 
+  @doc "Lista todos los sorteos del sistema (realizados y pendientes)."
   def index(conn, _params) do
   sorteos = Sorteos.listar_sorteos()
   render(conn, :index, sorteos: sorteos)
 end
 
+  @doc "Renderiza el formulario de creación de un nuevo sorteo."
   def new(conn, _params) do
     render(conn, :new)
   end
 
+  @doc "Procesa el formulario y crea el sorteo con los billetes iniciales."
   def create(conn, %{"sorteo" => params}) do
     params = %{
       "nombre"              => params["nombre"],
@@ -27,6 +32,7 @@ end
     |> redirect(to: ~p"/admin/sorteos")
   end
 
+  @doc "Muestra el detalle del sorteo: ingresos, compradores, ganador y estado."
   def show(conn, %{"id" => id}) do
     case Sorteos.get_sorteo(id) do
       {:ok, sorteo} ->
@@ -70,6 +76,7 @@ end
     end
   end
 
+  @doc "Elimina el sorteo. Solo es posible si no tiene premio asignado."
   def delete(conn, %{"id" => id}) do
     case Sorteos.eliminar_sorteo(id) do
       :ok ->
@@ -84,13 +91,15 @@ end
     end
   end
 
+  @doc "Reporte de premios entregados en sorteos pasados. Acepta parámetro `orden` (`\"asc\"` o `\"desc\"`)."
   def premios_entregados(conn, params) do
     orden = Map.get(params, "orden", "asc")
     premios = Sorteos.premios_entregados(orden)
     render(conn, :premios_entregados, premios: premios)
   end
 
-def balance(conn, _params) do
+  @doc "Muestra el balance financiero global: ingresos, premios y ganancia neta de todos los sorteos realizados."
+  def balance(conn, _params) do
   balance        = Sorteos.balance_sorteos_pasados()
   total_ingresos = Enum.reduce(balance, 0, &(&1.ingresos + &2))
   total_premios  = Enum.reduce(balance, 0, &(&1.valor_premio + &2))

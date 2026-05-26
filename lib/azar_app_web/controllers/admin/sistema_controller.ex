@@ -1,7 +1,10 @@
 defmodule AzarAppWeb.Admin.SistemaController do
+  @moduledoc "Controlador para operaciones de sistema: ejecución manual de sorteos."
+
   use AzarAppWeb, :controller
   alias AzarApp.Sorteos
 
+  @doc "Ejecuta todos los sorteos con fecha vencida que aún no hayan sido realizados."
   def ejecutar_sorteos_pendientes(conn, _params) do
     resultados = Sorteos.ejecutar_sorteos_pendientes()
 
@@ -18,6 +21,7 @@ defmodule AzarAppWeb.Admin.SistemaController do
     |> redirect(to: ~p"/admin/sorteos")
   end
 
+  @doc "Ejecuta un sorteo específico por su `id`, de forma inmediata e independientemente de su fecha."
   def ejecutar_sorteo(conn, %{"id" => sorteo_id}) do
   case AzarApp.Sorteos.ejecutar_sorteo(sorteo_id) do
     {:ok, ganador} ->

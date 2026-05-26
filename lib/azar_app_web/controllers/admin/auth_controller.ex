@@ -1,11 +1,15 @@
 defmodule AzarAppWeb.Admin.AuthController do
+  @moduledoc "Controlador de autenticación para administradores."
+
   use AzarAppWeb, :controller
   alias AzarApp.Admins
 
+  @doc "Renderiza el formulario de inicio de sesión de administrador."
   def login(conn, _params) do
     render(conn, :login)
   end
 
+    @doc "Procesa el formulario de login. Renueva la sesión e inicia con `:admin_id` si las credenciales son válidas."
   def do_login(conn, %{"admin" => params}) do
   case Admins.login(params["nombre"], params["password"]) do
     {:ok, admin} ->
@@ -22,7 +26,8 @@ defmodule AzarAppWeb.Admin.AuthController do
   end
 end
 
-def logout(conn, _params) do
+  @doc "Cierra la sesión del administrador descartando la sesión completa."
+  def logout(conn, _params) do
   conn
   |> configure_session(drop: true)
   |> redirect(to: ~p"/admin/")

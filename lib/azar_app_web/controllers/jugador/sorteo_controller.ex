@@ -1,7 +1,13 @@
 defmodule AzarAppWeb.Jugador.SorteoController do
+  @moduledoc "Controlador de navegación de sorteos para el jugador."
+
   use AzarAppWeb, :controller
   alias AzarApp.Sorteos
 
+  @doc """
+  Muestra el catálogo de sorteos disponibles junto con estadísticas del sistema:
+  jackpot del día, top 3 ganadores, compradores y suertudos.
+  """
   def index(conn, _params) do
     sorteos     = Sorteos.listar_sorteos_disponibles()
     cliente     = conn.assigns.cliente_actual
@@ -20,6 +26,7 @@ defmodule AzarAppWeb.Jugador.SorteoController do
     )
   end
 
+  @doc "Muestra el detalle de un sorteo con los billetes disponibles y los del cliente."
   def show(conn, %{"id" => id}) do
     case Sorteos.get_sorteo(id) do
       {:ok, sorteo} ->

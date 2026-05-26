@@ -464,6 +464,22 @@
       "nombre": "juan",
       "notificaciones": [
         {
+          "cuerpo": "Billete #1001 completo: Ganaste $1200000001 en \",\". Premio: Dinero.",
+          "fecha": "2026-05-26 10:05:11.137000-05:00 -05 America/Bogota",
+          "id": "notif_03ad020deb79090f",
+          "leida": false,
+          "tipo": "premio",
+          "titulo": "Ganaste $1200000001 en ,!"
+        },
+        {
+          "cuerpo": "El billete ganador fue el #1001. Premio: Dinero ($1200000001). Entra a ver tus resultados.",
+          "fecha": "2026-05-26 10:05:11.129000-05:00 -05 America/Bogota",
+          "id": "notif_7e1a4b0737a9d465",
+          "leida": false,
+          "tipo": "sorteo_realizado",
+          "titulo": "Sorteo \",\" finalizado"
+        },
+        {
           "cuerpo": "Compraste el billete #1001 del sorteo ',' por $9.",
           "fecha": "2026-05-25 23:27:00.619000-05:00 -05 America/Bogota",
           "id": "notif_a616bc66b0ef5543",
@@ -611,7 +627,7 @@
       "password_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
       "pregunta_secreta": null,
       "respuesta_hash": null,
-      "saldo": 2020135426245
+      "saldo": 2021335426246
     },
     {
       "documento": "2",
@@ -699,6 +715,16 @@
       "pregunta_secreta": "¿Cuál es el nombre de tu primera mascota?",
       "respuesta_hash": "9baf3a40312f39849f46dad1040f2f039f1cffa1238c41e9db675315cfad39b6",
       "saldo": 0
+    },
+    {
+      "documento": "12823673",
+      "id": "cliente_260adda0f720bdee",
+      "nombre": "Jeronimo Valderrama",
+      "notificaciones": [],
+      "password_hash": "50d2c94a1d020df447bda9fc435fb60e37ba60eeb2f752e9a37eff9e2f74a959",
+      "pregunta_secreta": "¿En qué ciudad naciste?",
+      "respuesta_hash": "1d5a04fbeace6278ac78229ccac4064ede1f7c62ce18b6989e72a52ff99c9259",
+      "saldo": 100000
     }
   ]
 }

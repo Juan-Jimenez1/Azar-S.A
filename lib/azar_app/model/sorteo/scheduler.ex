@@ -1,9 +1,19 @@
 defmodule AzarApp.Sorteo.Scheduler do
+  @moduledoc """
+  GenServer que ejecuta automáticamente los sorteos con fecha vencida.
+
+  Se activa cada minuto (configurable vía `@intervalo`) y busca sorteos cuya
+  `fecha` (en formato ISO 8601) sea anterior a la fecha actual en Colombia
+  (`America/Bogota`) y que aún no hayan sido realizados. Por cada uno invoca
+  `SorteoServer.ejecutar/1` y registra el resultado en el log de Elixir.
+  """
+
   use GenServer
   require Logger
 
-  @intervalo :timer.minutes(1) # revisa cada minuto
+  @intervalo :timer.minutes(1)
 
+  @doc "Inicia el GenServer del scheduler con nombre `AzarApp.Sorteo.Scheduler`."
   def start_link(_opts) do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end

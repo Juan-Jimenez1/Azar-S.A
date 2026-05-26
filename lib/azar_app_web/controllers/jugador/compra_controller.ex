@@ -1,8 +1,21 @@
 defmodule AzarAppWeb.Jugador.CompraController do
+  @moduledoc """
+  Controlador de compras y devoluciones de billetes para el jugador.
+
+  Gestiona tres modalidades de compra:
+  1. Billete completo — el cliente adquiere el billete entero
+  2. Fracción individual — el cliente elige qué fracción(es) comprar
+  3. Fracciones restantes — compra todas las fracciones libres del billete
+
+  Todas las compras siguen el patrón: descontar saldo → registrar billete → notificar.
+  Las devoluciones revierten ese proceso: liberar billete → acreditar saldo → notificar.
+  """
+
   use AzarAppWeb, :controller
 
   # ── Comprar billete completo ───────────────────────────────────────────────
 
+  @doc "Compra el billete completo para el cliente. Descuenta el valor del saldo antes de registrar."
   def comprar_billete(conn, %{"id" => sorteo_id, "numero" => numero}) do
     cliente_doc = get_session(conn, :cliente_doc)
     numero      = String.to_integer(numero)
@@ -30,6 +43,7 @@ defmodule AzarAppWeb.Jugador.CompraController do
 
   # ── Comprar fracciones restantes ───────────────────────────────────────────
 
+  @doc "Compra todas las fracciones libres del billete. Calcula el valor total antes de descontar el saldo."
   def comprar_fracciones_restantes(conn, %{"id" => sorteo_id, "numero" => numero}) do
     cliente_doc = get_session(conn, :cliente_doc)
     numero      = String.to_integer(numero)
@@ -63,7 +77,13 @@ defmodule AzarAppWeb.Jugador.CompraController do
 
   # ── Comprar fracciones individuales (lista desde checkboxes) ───────────────
 
-  # Cuando se selecciona al menos una fracción
+  @doc """
+  Compra las fracciones seleccionadas del billete.
+
+  Recibe `fracciones` como lista de strings desde checkboxes del formulario.
+  Si alguna fracción falla al comprarse, revierte el descuento del saldo.
+  Si el formulario se envía vacío (sin fracciones), redirige con mensaje de error.
+  """
   def comprar_fraccion(conn, %{"id" => sorteo_id, "numero" => numero, "fracciones" => fracciones}) do
     cliente_doc = get_session(conn, :cliente_doc)
     numero      = String.to_integer(numero)
@@ -114,7 +134,6 @@ defmodule AzarAppWeb.Jugador.CompraController do
     end
   end
 
-  # Cuando no se selecciona ninguna fracción (form enviado vacío)
   def comprar_fraccion(conn, %{"id" => sorteo_id}) do
     conn
     |> put_flash(:error, "Selecciona al menos una fracción.")
@@ -123,6 +142,12 @@ defmodule AzarAppWeb.Jugador.CompraController do
 
   # ── Devolver compra ────────────────────────────────────────────────────────
 
+  @doc """
+  Devuelve una compra del cliente y acredita el monto correspondiente.
+
+  Si no se envía `fracciones`, devuelve todas las fracciones del cliente.
+  Si se envía una lista, devuelve solo las fracciones indicadas.
+  """
   def devolver(conn, %{"sorteo_id" => sorteo_id, "numero" => numero} = params) do
     cliente_doc        = get_session(conn, :cliente_doc)
     numero             = String.to_integer(numero)

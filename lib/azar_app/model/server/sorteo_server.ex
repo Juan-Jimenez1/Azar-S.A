@@ -1,27 +1,67 @@
 defmodule AzarApp.SorteoServer do
+  @moduledoc """
+  GenServer que mantiene el estado en memoria de un sorteo individual.
+
+  Se crea un proceso por cada sorteo mediante `SorteoSupervisor`. Todos los
+  procesos se registran en `AzarApp.SorteoRegistry` bajo su `sorteo_id`,
+  lo que permite localizarlos por ID sin necesidad de guardar el PID.
+
+  Responsabilidades:
+  - Serializar las operaciones de compra/devolución para evitar condiciones de carrera
+  - Persistir cada cambio de estado en `JsonStore` de forma atómica
+  - Notificar a todos los participantes al ejecutar el sorteo (vía `Clientes`)
+  - Acreditar el premio al(los) ganador(es) y transmitir el evento por PubSub
+  """
+
   use GenServer
   alias AzarApp.{JsonStore, Clientes}
 
+  @doc "Inicia el GenServer registrándolo en el Registry bajo `sorteo_id`."
   def start_link(sorteo_id) do
     GenServer.start_link(__MODULE__, sorteo_id, name: via(sorteo_id))
   end
 
+  @doc "Retorna `{:ok, sorteo}` con el estado actual del sorteo en memoria."
   def get(sorteo_id),
     do: GenServer.call(via(sorteo_id), :get)
 
+  @doc "Actualiza los campos indicados en `campos` (mapa) y persiste el estado. Retorna `{:ok, sorteo}`."
   def update(sorteo_id, campos),
     do: GenServer.call(via(sorteo_id), {:update, campos})
 
+  @doc """
+  Registra la compra del billete completo `numero_billete` para el cliente.
+
+  Falla si el billete ya fue vendido completo, si tiene fracciones tomadas,
+  o si el sorteo ya fue ejecutado.
+  """
   def comprar_billete(sorteo_id, numero_billete, cliente_doc),
     do: GenServer.call(via(sorteo_id), {:comprar_billete, numero_billete, cliente_doc})
 
+  @doc """
+  Compra todas las fracciones libres del billete `numero_billete` para el cliente.
+
+  Retorna `{:ok, billete, cantidad_comprada}` con el número de fracciones adquiridas.
+  """
   def comprar_fracciones_restantes(sorteo_id, numero_billete, cliente_doc),
     do:
       GenServer.call(via(sorteo_id), {:comprar_fracciones_restantes, numero_billete, cliente_doc})
 
+  @doc """
+  Compra la fracción específica `fraccion` del billete `numero_billete`.
+
+  La fracción debe estar en el rango `1..cantidad_fracciones` y no haber sido vendida.
+  Retorna `{:ok, billete}` o `{:error, motivo}`.
+  """
   def comprar_fraccion(sorteo_id, numero_billete, fraccion, cliente_doc),
     do: GenServer.call(via(sorteo_id), {:comprar_fraccion, numero_billete, fraccion, cliente_doc})
 
+  @doc """
+  Revierte la compra del cliente en el billete indicado.
+
+  `fracciones_a_devolver` puede ser `:todas` o una lista de enteros.
+  No opera si el sorteo ya fue ejecutado.
+  """
   def devolver_compra(sorteo_id, numero_billete, cliente_doc, fracciones_a_devolver \\ :todas),
     do:
       GenServer.call(
@@ -29,9 +69,16 @@ defmodule AzarApp.SorteoServer do
         {:devolver_compra, numero_billete, cliente_doc, fracciones_a_devolver}
       )
 
+  @doc """
+  Ejecuta el sorteo: elige un billete ganador al azar, persiste el resultado,
+  notifica a todos los participantes y acredita el premio al ganador.
+
+  Retorna `{:ok, numero_ganador}` o `{:error, motivo}`.
+  """
   def ejecutar(sorteo_id),
     do: GenServer.call(via(sorteo_id), :ejecutar)
 
+  @doc "Retorna `{:ok, billetes}` con los billetes que aún tienen fracciones disponibles."
   def billetes_disponibles(sorteo_id),
     do: GenServer.call(via(sorteo_id), :billetes_disponibles)
 

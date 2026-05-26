@@ -1,23 +1,48 @@
 defmodule AzarApp.Sorteos do
+  @moduledoc """
+  Contexto principal de gestión de sorteos (loterías).
+
+  Centraliza todas las operaciones del dominio de sorteos:
+  - CRUD de sorteos y sus premios asociados
+  - Compra y devolución de billetes (completos o fraccionados)
+  - Ejecución de sorteos (manual o automática)
+  - Consultas financieras: ingresos, balance por sorteo y global
+  - Reportes para administrador y para el jugador
+
+  Las operaciones de compra/devolución/ejecución se delegan a `SorteoServer`,
+  un GenServer que mantiene el estado del sorteo en memoria y garantiza
+  atomicidad en operaciones concurrentes.
+  """
+
   alias AzarApp.{JsonStore, SorteoServer, SorteoSupervisor}
   alias AzarApp.Model.Structure.{Sorteo, Premio}
 
   # ── Gestión de sorteos ─────────────────────────────────────────────────────
 
+  @doc "Retorna todos los sorteos ordenados por fecha ascendente."
   def listar_sorteos do
     JsonStore.all(:sorteos)
     |> Enum.sort_by(& &1.fecha)
   end
 
+  @doc "Retorna los sorteos que aún no han sido ejecutados, ordenados por fecha."
   def listar_sorteos_disponibles do
     listar_sorteos()
     |> Enum.reject(& &1.realizado)
   end
 
+  @doc "Busca un sorteo por su `id`. Retorna `{:ok, sorteo}` o `:error`."
   def get_sorteo(id) do
     JsonStore.get(:sorteos, id)
   end
 
+  @doc """
+  Crea un nuevo sorteo y lanza su proceso `SorteoServer`.
+
+  `params` debe contener: `"nombre"`, `"fecha"` (ISO 8601), `"valor_billete"`,
+  `"cantidad_fracciones"` y `"cantidad_billetes"` (como enteros).
+  Genera los billetes numerados desde 1001. Retorna `{:ok, sorteo}`.
+  """
   def crear_sorteo(params) do
     id = JsonStore.generar_id("sorteo")
 
@@ -39,6 +64,12 @@ defmodule AzarApp.Sorteos do
     {:ok, sorteo}
   end
 
+  @doc """
+  Elimina el sorteo con el `id` dado.
+
+  No se puede eliminar si el sorteo ya tiene un premio asignado.
+  Retorna `:ok` o `{:error, motivo}`.
+  """
   def eliminar_sorteo(id) do
     case get_sorteo(id) do
       {:ok, sorteo} ->
@@ -55,6 +86,12 @@ defmodule AzarApp.Sorteos do
 
   # ── Gestión de premios ─────────────────────────────────────────────────────
 
+  @doc """
+  Asigna un premio al sorteo indicado.
+
+  Solo se permite un premio por sorteo. `params` debe incluir `"nombre"` y
+  `"valor"` (entero). Retorna `{:ok, premio}` o `{:error, motivo}`.
+  """
   def crear_premio(sorteo_id, params) do
     case get_sorteo(sorteo_id) do
       {:ok, sorteo} ->
@@ -76,6 +113,11 @@ defmodule AzarApp.Sorteos do
     end
   end
 
+  @doc """
+  Elimina el premio del sorteo indicado.
+
+  No está permitido si ya hay billetes vendidos. Retorna `:ok` o `{:error, motivo}`.
+  """
   def eliminar_premio(sorteo_id) do
     case get_sorteo(sorteo_id) do
       {:ok, sorteo} ->
@@ -93,29 +135,55 @@ defmodule AzarApp.Sorteos do
 
   # ── Compras ────────────────────────────────────────────────────────────────
 
+  @doc "Compra el billete completo `numero` del sorteo para el cliente. Delega a `SorteoServer`."
   def comprar_billete(sorteo_id, numero, cliente_doc) do
     SorteoServer.comprar_billete(sorteo_id, numero, cliente_doc)
   end
 
+  @doc "Compra la `fraccion` indicada del billete `numero`. Delega a `SorteoServer`."
   def comprar_fraccion(sorteo_id, numero, fraccion, cliente_doc) do
     SorteoServer.comprar_fraccion(sorteo_id, numero, fraccion, cliente_doc)
   end
 
+  @doc """
+  Compra todas las fracciones disponibles del billete `numero` para el cliente.
+
+  Retorna `{:ok, billete, cantidad_comprada}` o `{:error, motivo}`.
+  """
   def comprar_fracciones_restantes(sorteo_id, numero, cliente_doc) do
     SorteoServer.comprar_fracciones_restantes(sorteo_id, numero, cliente_doc)
   end
 
+  @doc """
+  Devuelve una compra del cliente en el billete `numero`.
+
+  `fracciones` puede ser `:todas` (devuelve todas las fracciones del cliente)
+  o una lista de enteros con los números de fracción a devolver.
+  No se puede devolver si el sorteo ya fue ejecutado.
+  Retorna `:ok` o `{:error, motivo}`.
+  """
   def devolver_compra(sorteo_id, numero, cliente_doc, fracciones \\ :todas) do
     SorteoServer.devolver_compra(sorteo_id, numero, cliente_doc, fracciones)
   end
 
+  @doc "Retorna `{:ok, billetes}` con los billetes que aún tienen fracciones disponibles para comprar."
   def billetes_disponibles(sorteo_id) do
     SorteoServer.billetes_disponibles(sorteo_id)
   end
 
   # ── Clientes de un sorteo ──────────────────────────────────────────────────
 
- def clientes_por_sorteo(sorteo_id) do
+  @doc """
+  Retorna los compradores del sorteo separados en dos grupos.
+
+  Retorna:
+
+      {:ok, %{
+        completos: [%{doc, nombre, billete}],
+        fracciones: [%{doc, nombre, billete, fraccion}]
+      }}
+  """
+  def clientes_por_sorteo(sorteo_id) do
   case get_sorteo(sorteo_id) do
     {:ok, sorteo} ->
       clientes = AzarApp.JsonStore.all(:clientes)
@@ -168,10 +236,22 @@ end
 
   # ── Ejecución ──────────────────────────────────────────────────────────────
 
+  @doc """
+  Ejecuta el sorteo: selecciona un billete ganador al azar y notifica a los participantes.
+
+  Retorna `{:ok, numero_ganador}` o `{:error, motivo}` si ya fue realizado
+  o no hay billetes vendidos.
+  """
   def ejecutar_sorteo(sorteo_id) do
     SorteoServer.ejecutar(sorteo_id)
   end
 
+  @doc """
+  Ejecuta todos los sorteos cuya fecha ya pasó y que aún no han sido realizados.
+
+  Retorna una lista de `{sorteo_id, numero_ganador}` por cada sorteo ejecutado.
+  Los sorteos sin billetes vendidos se omiten silenciosamente.
+  """
   def ejecutar_sorteos_pendientes do
     hoy = Date.utc_today() |> Date.to_string()
 
@@ -224,6 +304,16 @@ end
     end
   end
 
+  @doc """
+  Calcula el balance financiero de un sorteo ya realizado.
+
+  Retorna:
+
+      {:ok, %{ingresos: integer, valor_premio: integer,
+              balance: integer, resultado: "ganancia" | "pérdida"}}
+
+  Falla con `{:error, motivo}` si el sorteo no ha sido ejecutado.
+  """
   def balance_sorteo(sorteo_id) do
     case get_sorteo(sorteo_id) do
       {:ok, %Sorteo{realizado: false}} ->
@@ -392,6 +482,7 @@ end
     end)
   end
 
+  @doc "Retorna los billetes (completos o fraccionados) que posee el cliente en el sorteo."
   def billetes_del_cliente(sorteo_id, cliente_doc) do
     case get_sorteo(sorteo_id) do
       {:ok, sorteo} ->
@@ -416,6 +507,12 @@ end
     end
   end
 
+  @doc """
+  Retorna el resumen financiero de todos los sorteos ya realizados.
+
+  Cada entrada incluye: nombre, fecha, ingresos, premio entregado,
+  ganancia neta, resultado y nombre del ganador.
+  """
   def balance_sorteos_pasados do
     listar_sorteos()
     |> Enum.filter(& &1.realizado)

@@ -1,8 +1,18 @@
 defmodule AzarApp.Plugs.RequestLogger do
+  @moduledoc """
+  Plug que registra cada petición HTTP en `AzarApp.Logger`.
+
+  Usa el callback `register_before_send/2` para capturar el resultado
+  de la respuesta (código de estado) antes de enviarla al cliente.
+  Extrae: fecha, método, ruta, clasificación del status, IP remota y
+  el identificador del usuario activo (cliente o admin).
+  """
+
   import Plug.Conn
 
   def init(opts), do: opts
 
+  @doc "Registra el request en el logger de auditoría al finalizar la respuesta."
   def call(conn, _opts) do
     register_before_send(conn, fn conn ->
       entrada = %{

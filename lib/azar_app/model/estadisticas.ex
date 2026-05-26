@@ -1,6 +1,21 @@
 defmodule AzarApp.Estadisticas do
+  @moduledoc """
+  Módulo de cálculo de estadísticas y rankings de jugadores.
+
+  Lee en tiempo real los datos de `JsonStore` para calcular métricas
+  agregadas: total gastado, total ganado y número de sorteos ganados
+  por cliente. Expone rankings y el jackpot del día para la pantalla
+  principal del jugador.
+  """
+
   alias AzarApp.JsonStore
 
+  @doc """
+  Calcula las métricas de todos los clientes.
+
+  Retorna una lista de mapas con:
+  `nombre`, `documento`, `total_gastado`, `total_ganado`, `sorteos_ganados`.
+  """
   def ranking do
     clientes  = JsonStore.all(:clientes)
     sorteos   = JsonStore.all(:sorteos)
@@ -75,24 +90,33 @@ defmodule AzarApp.Estadisticas do
     end)
   end
 
+  @doc "Retorna los `n` clientes con mayor `total_ganado` en premios. Por defecto `n = 3`."
   def top_ganadores(n \\ 3) do
     ranking()
     |> Enum.sort_by(& &1.total_ganado, :desc)
     |> Enum.take(n)
   end
 
+  @doc "Retorna los `n` clientes que más han gastado en total. Por defecto `n = 3`."
   def top_compradores(n \\ 3) do
     ranking()
     |> Enum.sort_by(& &1.total_gastado, :desc)
     |> Enum.take(n)
   end
 
+  @doc "Retorna los `n` clientes con mayor cantidad de sorteos ganados. Por defecto `n = 3`."
   def top_suertudos(n \\ 3) do
     ranking()
     |> Enum.sort_by(& &1.sorteos_ganados, :desc)
     |> Enum.take(n)
   end
 
+  @doc """
+  Retorna el sorteo con mayor valor de premio entre los disponibles (no ejecutados).
+
+  Recibe la lista de `sorteos` ya filtrada. Retorna el sorteo o `nil` si no hay
+  ninguno con premio asignado.
+  """
   def jackpot_del_dia(sorteos) do
     sorteos
     |> Enum.filter(&(!&1.realizado && &1.premio))
