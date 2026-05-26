@@ -35,3 +35,6 @@ azar_app-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Claude Code configuration (local only, no subir al repositorio).
+.claude/
+

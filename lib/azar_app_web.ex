@@ -86,6 +86,7 @@ defmodule AzarAppWeb do
       import Phoenix.HTML
       # Core UI components
       import AzarAppWeb.CoreComponents
+      import AzarAppWeb.Helpers.NumeroHelper
 
       # Common modules used in templates
       alias Phoenix.LiveView.JS

@@ -1,4 +1,19 @@
 defmodule AzarApp.Model.Structure.Sorteo do
+  @moduledoc """
+  Estructura de datos para un sorteo (lotería).
+
+  Campos:
+  - `id` — identificador único
+  - `nombre` — nombre descriptivo del sorteo
+  - `fecha` — fecha de realización en formato ISO 8601 (`"YYYY-MM-DD"`)
+  - `valor_billete` — precio del billete completo en pesos (entero)
+  - `cantidad_fracciones` — número de fracciones en que se divide cada billete
+  - `cantidad_billetes` — total de billetes generados al crear el sorteo
+  - `premio` — struct `Premio` asignado, o `nil` si no hay premio
+  - `numero_ganador` — número del billete ganador, o `nil` antes de ejecutar
+  - `realizado` — `true` si el sorteo ya fue ejecutado
+  - `billetes` — lista de mapas que representan el estado de cada billete
+  """
 
   alias AzarApp.Model.Structure.Premio
 
@@ -15,6 +30,7 @@ defmodule AzarApp.Model.Structure.Sorteo do
     billetes: []
   ]
 
+  @doc "Deserializa un mapa con claves string (proveniente de JSON) a una struct `Sorteo`, incluyendo el `Premio` anidado."
   def to_struct(m) do
     %__MODULE__{
       id:                  m["id"],
@@ -35,6 +51,7 @@ defmodule AzarApp.Model.Structure.Sorteo do
     }
   end
 
+  @doc "Serializa una struct `Sorteo` a un mapa con claves string para persistir en JSON."
   def to_map(%__MODULE__{} = s) do
     %{
       "id"                  => s.id,

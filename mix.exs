@@ -63,7 +63,8 @@ defmodule AzarApp.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
       {:jason, "~> 1.4"},
-      {:number, "~> 1.0"}
+      {:number, "~> 1.0"},
+      {:tz, "~> 0.28"}
     ]
   end
 

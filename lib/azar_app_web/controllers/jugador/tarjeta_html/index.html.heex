@@ -1,0 +1,282 @@
+<div class="min-h-screen bg-[#0a0a0f] flex flex-col">
+
+  <!-- Header -->
+  <div class="bg-[#0f0f17] border-b border-white/5">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-1">
+            <div class="w-8 h-8 rounded-full bg-red-500 opacity-90"></div>
+            <div class="w-8 h-8 rounded-full bg-yellow-400 opacity-90 -ml-3"></div>
+          </div>
+          <span class="text-white font-black text-sm">Mastercard</span>
+        </div>
+        <div class="h-6 w-px bg-white/10"></div>
+        <div class="text-blue-400 font-black text-xl tracking-widest italic">VISA</div>
+        <div class="h-6 w-px bg-white/10"></div>
+        <div>
+          <p class="text-gray-300 font-semibold text-sm leading-none">Azar S.A</p>
+          <p class="text-gray-600 text-[10px]">Pago seguro con tarjeta</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 text-xs text-gray-500">
+        <span class="text-green-400">🔒</span>
+        <span>SSL 256-bit</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido -->
+  <div class="flex-1 max-w-4xl mx-auto w-full px-6 py-8 grid lg:grid-cols-3 gap-8">
+
+    <!-- Formulario -->
+    <div class="lg:col-span-2 space-y-6">
+
+      <!-- Tarjeta visual -->
+      <div class="relative h-48 rounded-[24px] overflow-hidden shadow-2xl"
+           style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)">
+        <div class="absolute inset-0 opacity-20"
+             style="background-image: radial-gradient(circle at 20% 80%, white 1px, transparent 1px); background-size: 20px 20px;">
+        </div>
+        <div class="absolute top-5 right-5 flex items-center gap-1">
+          <div id="logo-mc" class="flex items-center gap-1">
+            <div class="w-8 h-8 rounded-full bg-red-500 opacity-90"></div>
+            <div class="w-8 h-8 rounded-full bg-yellow-400 opacity-90 -ml-3"></div>
+          </div>
+          <div id="logo-visa" class="hidden text-white font-black text-xl tracking-widest italic">VISA</div>
+        </div>
+        <div class="absolute top-5 left-5">
+          <div class="w-10 h-7 rounded-md bg-yellow-400/80 border border-yellow-300/50 flex items-center justify-center">
+            <div class="w-6 h-4 rounded-sm bg-yellow-600/50 border border-yellow-500/30"></div>
+          </div>
+        </div>
+        <div class="absolute bottom-5 left-5 right-5">
+          <p id="card-number-display" class="text-white font-mono text-lg tracking-[0.3em] mb-3">
+            •••• •••• •••• ••••
+          </p>
+          <div class="flex items-end justify-between">
+            <div>
+              <p class="text-white/40 text-[10px] uppercase tracking-widest mb-1">Titular</p>
+              <p id="card-name-display" class="text-white font-semibold text-sm uppercase tracking-wide">NOMBRE APELLIDO</p>
+            </div>
+            <div>
+              <p class="text-white/40 text-[10px] uppercase tracking-widest mb-1">Vence</p>
+              <p id="card-exp-display" class="text-white font-semibold text-sm">MM/AA</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="bg-[#0f0f17] rounded-2xl border border-white/5 p-6">
+
+        <form action="/tarjeta/procesar" method="post" class="space-y-5">
+          <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+          <input type="hidden" name="valor" value={@valor} />
+
+          <!-- Tipo tarjeta -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2">Tipo de tarjeta</label>
+            <div class="flex gap-3">
+              <label class="flex-1 flex items-center gap-3 rounded-xl border border-white/5 bg-[#17171a] px-4 py-3 cursor-pointer has-[:checked]:border-yellow-400/50 has-[:checked]:bg-yellow-400/5 transition">
+                <input type="radio" name="tipo" value="Crédito" checked class="accent-yellow-400" onchange="updateTipo(this)" />
+                <span class="text-sm text-gray-300 font-medium">Crédito</span>
+              </label>
+              <label class="flex-1 flex items-center gap-3 rounded-xl border border-white/5 bg-[#17171a] px-4 py-3 cursor-pointer has-[:checked]:border-yellow-400/50 has-[:checked]:bg-yellow-400/5 transition">
+                <input type="radio" name="tipo" value="Débito" class="accent-yellow-400" onchange="updateTipo(this)" />
+                <span class="text-sm text-gray-300 font-medium">Débito</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Número tarjeta -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2">Número de tarjeta</label>
+            <input
+              type="text"
+              name="numero"
+              id="card-number"
+              placeholder="1234 5678 9012 3456"
+              maxlength="19"
+              required
+              oninput="formatCard(this)"
+              class="w-full h-12 rounded-xl bg-[#17171a] border border-white/5
+                     focus:border-yellow-400/50 focus:ring-2 focus:ring-yellow-400/10
+                     px-4 text-white placeholder-gray-600 font-mono
+                     outline-none transition-all duration-300"
+            />
+          </div>
+
+          <!-- Nombre -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2">Nombre del titular</label>
+            <input
+              type="text"
+              name="nombre"
+              id="card-name"
+              placeholder="JUAN PÉREZ"
+              required
+              oninput="updateName(this)"
+              class="w-full h-12 rounded-xl bg-[#17171a] border border-white/5
+                     focus:border-yellow-400/50 focus:ring-2 focus:ring-yellow-400/10
+                     px-4 text-white placeholder-gray-600 uppercase
+                     outline-none transition-all duration-300"
+            />
+          </div>
+
+          <!-- Vencimiento y CVV -->
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-gray-300 mb-2">Vencimiento</label>
+              <input
+                type="text"
+                name="expiracion"
+                id="card-exp"
+                placeholder="MM/AA"
+                maxlength="5"
+                required
+                oninput="formatExp(this)"
+                class="w-full h-12 rounded-xl bg-[#17171a] border border-white/5
+                       focus:border-yellow-400/50 focus:ring-2 focus:ring-yellow-400/10
+                       px-4 text-white placeholder-gray-600 font-mono
+                       outline-none transition-all duration-300"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-300 mb-2">CVV</label>
+              <input
+                type="password"
+                name="cvv"
+                placeholder="•••"
+                maxlength="4"
+                required
+                class="w-full h-12 rounded-xl bg-[#17171a] border border-white/5
+                       focus:border-yellow-400/50 focus:ring-2 focus:ring-yellow-400/10
+                       px-4 text-white placeholder-gray-600 font-mono
+                       outline-none transition-all duration-300"
+              />
+            </div>
+          </div>
+
+          <!-- Cuotas -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-2">Cuotas</label>
+            <select
+              name="cuotas"
+              class="w-full h-12 rounded-xl bg-[#17171a] border border-white/5
+                     focus:border-yellow-400/50 px-4 text-gray-300 text-sm
+                     outline-none transition"
+            >
+              <option value="1">1 cuota (sin intereses)</option>
+              <option value="3">3 cuotas</option>
+              <option value="6">6 cuotas</option>
+              <option value="12">12 cuotas</option>
+              <option value="24">24 cuotas</option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full rounded-xl py-4 font-black text-black text-lg
+                   bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500
+                   hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(250,204,21,0.3)]
+                   transition-all duration-300 flex items-center justify-center gap-2"
+          >
+            🔒 Pagar $<%= @valor %>
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+    <!-- Resumen -->
+    <div class="space-y-4">
+
+      <div class="bg-[#0f0f17] rounded-2xl border border-white/5 p-6">
+        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Resumen</h3>
+        <div class="space-y-3">
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-500">Comercio</span>
+            <span class="text-gray-200 font-semibold">Azar S.A</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-500">Concepto</span>
+            <span class="text-gray-200 font-semibold">Recarga saldo</span>
+          </div>
+          <div class="border-t border-white/5 pt-3 flex justify-between">
+            <span class="text-gray-300 font-bold">Total</span>
+            <span class="text-yellow-400 font-black text-xl">$<%= @valor %></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-[#0f0f17] rounded-2xl border border-white/5 p-6">
+        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Seguridad</h3>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3 text-sm text-gray-400">
+            <span class="text-green-400">✓</span><span>Cifrado SSL 256-bit</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-400">
+            <span class="text-green-400">✓</span><span>3D Secure</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-400">
+            <span class="text-green-400">✓</span><span>PCI DSS Compliant</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-400">
+            <span class="text-green-400">✓</span><span>Datos no almacenados</span>
+          </div>
+        </div>
+      </div>
+
+      <a href="/perfil" class="block text-center text-sm text-gray-600 hover:text-gray-400 transition">
+        ← Cancelar y volver
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="bg-[#0f0f17] border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4 text-xs text-gray-600">
+        <span>Visa · Mastercard · American Express</span>
+      </div>
+      <span class="text-xs text-gray-600">🔒 Pago 100% seguro</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function formatCard(input) {
+    let val = input.value.replace(/\D/g, '').slice(0, 16);
+    input.value = val.replace(/(\d{4})(?=\d)/g, '$1 ');
+    const display = val.padEnd(16, '•');
+    document.getElementById('card-number-display').textContent =
+      display.slice(0,4) + ' ' + display.slice(4,8) + ' ' + display.slice(8,12) + ' ' + display.slice(12,16);
+
+    // Detectar red
+    if (val.startsWith('4')) {
+      document.getElementById('logo-mc').classList.add('hidden');
+      document.getElementById('logo-visa').classList.remove('hidden');
+    } else {
+      document.getElementById('logo-mc').classList.remove('hidden');
+      document.getElementById('logo-visa').classList.add('hidden');
+    }
+  }
+
+  function updateName(input) {
+    document.getElementById('card-name-display').textContent =
+      input.value.toUpperCase() || 'NOMBRE APELLIDO';
+  }
+
+  function formatExp(input) {
+    let val = input.value.replace(/\D/g, '').slice(0, 4);
+    if (val.length >= 2) val = val.slice(0,2) + '/' + val.slice(2);
+    input.value = val;
+    document.getElementById('card-exp-display').textContent = val || 'MM/AA';
+  }
+</script>

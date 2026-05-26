@@ -1,0 +1,206 @@
+<div class="min-h-screen bg-[#070707] relative overflow-hidden">
+
+  <div class="absolute inset-0">
+    <div class="absolute top-[-120px] left-[-120px] w-[320px] h-[320px] bg-emerald-500/10 blur-3xl rounded-full animate-pulse"></div>
+    <div class="absolute bottom-[-120px] right-[-120px] w-[320px] h-[320px] bg-amber-400/10 blur-3xl rounded-full animate-pulse"></div>
+  </div>
+
+  <div class="absolute inset-0 opacity-[0.03]"
+       style="background-image: linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px); background-size: 42px 42px;">
+  </div>
+
+  <div class="relative z-10 max-w-lg mx-auto px-4 py-10">
+
+    <a href="/index" class="inline-flex items-center gap-2 text-sm text-[#d4a017] hover:text-[#f6d06b] transition mb-6">
+      ← Volver a sorteos
+    </a>
+
+    <div class="mb-8 text-center">
+      <div class="relative inline-flex mb-5">
+        <div class="absolute inset-0 bg-emerald-400/20 blur-2xl rounded-full"></div>
+        <div class="relative w-20 h-20 rounded-3xl bg-gradient-to-br from-[#181818] to-[#111111] border border-white/10 flex items-center justify-center shadow-[0_0_40px_rgba(16,185,129,0.15)]">
+          <span class="text-4xl">👤</span>
+        </div>
+      </div>
+      <h1 class="text-4xl font-black tracking-tight text-white">Mi perfil</h1>
+      <p class="text-gray-500 mt-3 text-sm">Administra tu cuenta y recarga saldo para seguir participando.</p>
+    </div>
+
+    <div class="relative overflow-hidden rounded-[30px] bg-[#101012]/90 backdrop-blur-xl border border-white/5 shadow-2xl p-7">
+      <div class="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-transparent pointer-events-none"></div>
+
+      <div class="relative z-10">
+
+        <div class="flex items-center gap-4 mb-7">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400/20 to-emerald-500/5 border border-emerald-400/20 flex items-center justify-center text-2xl">
+            🎟️
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white"><%= @cliente.nombre %></h2>
+            <p class="text-sm text-gray-500 mt-1">Usuario registrado</p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div class="rounded-2xl bg-[#17171a] border border-[#242428] p-4">
+            <p class="text-xs uppercase tracking-wide text-gray-500 mb-1">Documento</p>
+            <p class="text-white font-semibold text-lg tracking-wide"><%= @cliente.documento %></p>
+          </div>
+
+          <div class="rounded-2xl bg-gradient-to-r from-emerald-500/10 to-green-400/5 border border-emerald-400/20 p-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs uppercase tracking-wide text-emerald-300/70 mb-1">Saldo disponible</p>
+                <p class="text-3xl font-black text-emerald-400">$<%= formatear(@cliente.saldo) %></p>
+              </div>
+              <div class="w-14 h-14 rounded-2xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center text-2xl">
+                💸
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navegación cuenta -->
+        <div class="grid grid-cols-3 gap-3 mt-6">
+          <a href="/cuenta/historial"
+             class="flex flex-col items-center gap-2 rounded-2xl border border-[#2a2a2f] bg-[#17171a] px-3 py-4 hover:border-[#d4a017]/30 transition group">
+            <span class="text-2xl">🎟️</span>
+            <span class="text-xs text-gray-400 group-hover:text-white transition font-medium text-center">Historial</span>
+          </a>
+          <a href="/cuenta/premios"
+             class="flex flex-col items-center gap-2 rounded-2xl border border-[#2a2a2f] bg-[#17171a] px-3 py-4 hover:border-[#d4a017]/30 transition group">
+            <span class="text-2xl">🏆</span>
+            <span class="text-xs text-gray-400 group-hover:text-white transition font-medium text-center">Premios</span>
+          </a>
+          <a href="/cuenta/balance"
+             class="flex flex-col items-center gap-2 rounded-2xl border border-[#2a2a2f] bg-[#17171a] px-3 py-4 hover:border-[#d4a017]/30 transition group">
+            <span class="text-2xl">📊</span>
+            <span class="text-xs text-gray-400 group-hover:text-white transition font-medium text-center">Balance</span>
+          </a>
+        </div>
+
+        <!-- Recargar -->
+        <div class="mt-8">
+          <div class="mb-5">
+            <h3 class="text-lg font-bold text-white">Recargar saldo</h3>
+            <p class="text-sm text-gray-500 mt-1">Ingresa el monto y elige tu método de pago.</p>
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-sm font-semibold text-gray-300 mb-2">Monto a recargar</label>
+            <div class="relative group">
+              <div class="absolute left-0 top-0 h-full w-12 flex items-center justify-center text-gray-500 group-focus-within:text-emerald-300 transition">
+                $
+              </div>
+              <input
+                id="monto-input"
+                type="number"
+                placeholder="Ej: 50000"
+                min="1"
+                class="w-full h-14 rounded-2xl bg-[#17171a] border border-[#2a2a2f]
+                       focus:border-emerald-400/50 focus:ring-4 focus:ring-emerald-400/10
+                       pl-12 pr-4 text-white placeholder-gray-600
+                       outline-none transition-all duration-300"
+              />
+            </div>
+
+            <div class="flex gap-2 mt-3 flex-wrap">
+              <button type="button" onclick="setMonto(10000)"
+                      class="px-3 py-1.5 rounded-xl bg-[#1b1b1f] border border-white/5 text-xs text-gray-400 hover:text-white hover:border-emerald-400/20 transition">
+                +10K
+              </button>
+              <button type="button" onclick="setMonto(50000)"
+                      class="px-3 py-1.5 rounded-xl bg-[#1b1b1f] border border-white/5 text-xs text-gray-400 hover:text-white hover:border-emerald-400/20 transition">
+                +50K
+              </button>
+              <button type="button" onclick="setMonto(100000)"
+                      class="px-3 py-1.5 rounded-xl bg-[#1b1b1f] border border-white/5 text-xs text-gray-400 hover:text-white hover:border-emerald-400/20 transition">
+                +100K
+              </button>
+              <button type="button" onclick="setMonto(500000)"
+                      class="px-3 py-1.5 rounded-xl bg-[#1b1b1f] border border-white/5 text-xs text-gray-400 hover:text-white hover:border-emerald-400/20 transition">
+                +500K
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-300 mb-3">Método de pago</label>
+            <div class="grid grid-cols-2 gap-3">
+
+              <button type="button" onclick="irAPagar('pse')"
+                      class="flex flex-col items-center gap-3 rounded-2xl border border-[#2a2a2f] bg-[#17171a] px-4 py-5 cursor-pointer hover:border-blue-400/50 hover:bg-blue-500/5 transition group">
+                <div class="w-14 h-14 rounded-2xl bg-[#00529b] flex items-center justify-center shadow-lg">
+                  <span class="text-white font-black text-lg">PSE</span>
+                </div>
+                <div class="text-center">
+                  <p class="text-sm text-white font-semibold group-hover:text-blue-300 transition">PSE</p>
+                  <p class="text-xs text-gray-500 mt-0.5">Débito bancario</p>
+                </div>
+              </button>
+
+              <button type="button" onclick="irAPagar('tarjeta')"
+                      class="flex flex-col items-center gap-3 rounded-2xl border border-[#2a2a2f] bg-[#17171a] px-4 py-5 cursor-pointer hover:border-yellow-400/50 hover:bg-yellow-500/5 transition group">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1a1a2e] to-[#16213e] border border-white/10 flex items-center justify-center shadow-lg overflow-hidden relative">
+                  <div class="absolute top-2 left-2 w-4 h-3 rounded-sm bg-yellow-400/80"></div>
+                  <div class="flex gap-1 mt-2">
+                    <div class="w-5 h-5 rounded-full bg-red-500/80"></div>
+                    <div class="w-5 h-5 rounded-full bg-yellow-400/80 -ml-2"></div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <p class="text-sm text-white font-semibold group-hover:text-yellow-300 transition">Tarjeta</p>
+                  <p class="text-xs text-gray-500 mt-0.5">Crédito / Débito</p>
+                </div>
+              </button>
+
+            </div>
+
+            <div class="flex items-center justify-center gap-4 mt-4">
+              <div class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#1a1a2e] border border-white/5">
+                <div class="w-4 h-4 rounded-full bg-red-500"></div>
+                <div class="w-4 h-4 rounded-full bg-yellow-400 -ml-1.5"></div>
+                <span class="text-[10px] text-gray-400 ml-1">Mastercard</span>
+              </div>
+              <div class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#00529b]/20 border border-[#00529b]/20">
+                <span class="text-[10px] text-blue-300 font-bold">VISA</span>
+              </div>
+              <div class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#00529b]/10 border border-[#00529b]/20">
+                <span class="text-[10px] text-blue-300 font-bold">PSE</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-5 flex items-center justify-center gap-2 text-xs text-gray-600">
+            <span>🔒</span>
+            <span>Transacciones cifradas con SSL 256-bit</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-center gap-6 mt-8 text-gray-700 text-xl">
+      <span class="hover:text-emerald-400 hover:-translate-y-1 transition-all duration-300 cursor-default">♠</span>
+      <span class="hover:text-red-400 hover:-translate-y-1 transition-all duration-300 cursor-default">♥</span>
+      <span class="hover:text-blue-400 hover:-translate-y-1 transition-all duration-300 cursor-default">♦</span>
+      <span class="hover:text-yellow-400 hover:-translate-y-1 transition-all duration-300 cursor-default">♣</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function setMonto(valor) {
+    document.getElementById('monto-input').value = valor;
+  }
+
+  function irAPagar(metodo) {
+    const valor = document.getElementById('monto-input').value;
+    if (!valor || valor <= 0) {
+      alert('Ingresa un monto válido primero.');
+      return;
+    }
+    window.location.href = '/' + metodo + '?valor=' + valor;
+  }
+</script>

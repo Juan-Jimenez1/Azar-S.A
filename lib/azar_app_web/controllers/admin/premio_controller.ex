@@ -1,12 +1,23 @@
 defmodule AzarAppWeb.Admin.PremioController do
+  @moduledoc "Controlador para la gestión del premio de un sorteo."
+
   use AzarAppWeb, :controller
   alias AzarApp.Sorteos
 
+  @doc "Renderiza el formulario para asignar un premio al sorteo indicado."
   def new(conn, %{"sorteo_id" => sorteo_id}) do
-    {:ok, sorteo} = Sorteos.get_sorteo(sorteo_id)
-    render(conn, :new, sorteo: sorteo)
+    case Sorteos.get_sorteo(sorteo_id) do
+      {:ok, sorteo} ->
+        render(conn, :new, sorteo: sorteo)
+
+      :error ->
+        conn
+        |> put_flash(:error, "Sorteo no encontrado.")
+        |> redirect(to: ~p"/admin/sorteos")
+    end
   end
 
+  @doc "Crea y asigna el premio al sorteo. Solo se permite un premio por sorteo."
   def create(conn, %{"sorteo_id" => sorteo_id, "premio" => params}) do
     params = %{
       "nombre" => params["nombre"],
@@ -26,6 +37,7 @@ defmodule AzarAppWeb.Admin.PremioController do
     end
   end
 
+  @doc "Elimina el premio del sorteo. Solo es posible si no hay billetes vendidos."
   def delete(conn, %{"sorteo_id" => sorteo_id}) do
     case Sorteos.eliminar_premio(sorteo_id) do
       :ok ->

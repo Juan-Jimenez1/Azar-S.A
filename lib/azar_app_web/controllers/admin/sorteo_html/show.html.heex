@@ -1,156 +1,499 @@
-<div class="max-w-5xl mx-auto px-4 py-8">
+<div class="min-h-screen bg-[#07090d] relative overflow-hidden px-4 py-10 font-[Outfit]">
 
-  <div class="flex items-center justify-between mb-6">
-    <div>
-      <a href="/admin/sorteos" class="text-blue-600 hover:underline text-sm">
-        ← Volver a sorteos
-      </a>
-      <h1 class="text-2xl font-bold text-gray-800 mt-1"><%= @sorteo.nombre %></h1>
+  <!-- Background -->
+  <div class="absolute inset-0 overflow-hidden">
+
+    <!-- Glow -->
+    <div class="absolute top-[-250px] left-[-150px] w-[550px] h-[550px] bg-yellow-400/[0.04] rounded-full blur-3xl"></div>
+
+    <div class="absolute bottom-[-250px] right-[-150px] w-[550px] h-[550px] bg-amber-500/[0.03] rounded-full blur-3xl"></div>
+
+    <!-- Grid -->
+    <div
+      class="absolute inset-0 opacity-[0.03]"
+      style="
+        background-image:
+        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+        background-size: 42px 42px;
+      ">
     </div>
-    <%= if @sorteo.realizado do %>
-      <span class="px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
-        Realizado
-      </span>
-    <% else %>
-      <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
-        Pendiente
-      </span>
-    <% end %>
+
+    <!-- Floating -->
+    <div class="absolute top-[12%] left-[6%] text-yellow-400/[0.04] text-8xl font-black rotate-[-8deg] select-none">
+      LUCK
+    </div>
+
+    <div class="absolute bottom-[8%] right-[6%] text-white/[0.03] text-7xl font-black rotate-[8deg] select-none">
+      1001
+    </div>
+
   </div>
 
-  <%= if @flash["info"] do %>
-    <div class="mb-4 p-3 bg-green-100 text-green-800 rounded"><%= @flash["info"] %></div>
-  <% end %>
+  <div class="relative max-w-7xl mx-auto">
 
-  <%= if @flash["error"] do %>
-    <div class="mb-4 p-3 bg-red-100 text-red-800 rounded"><%= @flash["error"] %></div>
-  <% end %>
+    <!-- Header -->
+    <div class="flex flex-col xl:flex-row xl:items-start xl:justify-between gap-6 mb-10">
 
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-    <div class="bg-white border rounded-lg p-4 shadow-sm">
-      <p class="text-xs text-gray-500 uppercase">Fecha</p>
-      <p class="text-lg font-semibold text-gray-800"><%= @sorteo.fecha %></p>
-    </div>
-    <div class="bg-white border rounded-lg p-4 shadow-sm">
-      <p class="text-xs text-gray-500 uppercase">Valor billete</p>
-      <p class="text-lg font-semibold text-gray-800">$<%= @sorteo.valor_billete %></p>
-    </div>
-    <div class="bg-white border rounded-lg p-4 shadow-sm">
-      <p class="text-xs text-gray-500 uppercase">Fracciones</p>
-      <p class="text-lg font-semibold text-gray-800"><%= @sorteo.cantidad_fracciones %></p>
-    </div>
-    <div class="bg-white border rounded-lg p-4 shadow-sm">
-      <p class="text-xs text-gray-500 uppercase">Ingresos</p>
-      <p class="text-lg font-semibold text-green-700">$<%= @ingresos %></p>
-    </div>
-  </div>
+      <div>
 
-  <%= if @sorteo.realizado and @sorteo.numero_ganador != nil do %>
-    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
-      <h2 class="font-semibold text-yellow-800 mb-2">🏆 Número ganador</h2>
-      <div class="flex items-center gap-4">
-        <span class="text-3xl font-bold text-yellow-700"><%= @sorteo.numero_ganador %></span>
-        <%= if @sorteo.premio do %>
-          <div>
-            <p class="font-medium text-yellow-800"><%= @sorteo.premio.nombre %></p>
-            <p class="text-sm text-yellow-600">$<%= @sorteo.premio.valor %></p>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
-
-  <!-- Premio -->
-  <div class="mb-8">
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="text-lg font-semibold text-gray-700">Premio</h2>
-      <%= if !@sorteo.realizado and @sorteo.premio == nil do %>
-        <% url_nuevo_premio = "/admin/sorteos/" <> @sorteo.id <> "/premios/nuevo" %>
-        <a href={url_nuevo_premio} class="text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">
-          + Agregar premio
+        <a
+          href="/admin/sorteos"
+          class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-yellow-400 transition-all duration-300 hover:-translate-x-0.5"
+        >
+          ← Volver a sorteos
         </a>
-      <% end %>
+
+        <div class="mt-5">
+
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-yellow-500/20 bg-yellow-500/[0.04] text-yellow-400 text-xs font-semibold tracking-wide uppercase">
+
+            <span class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
+
+            Panel del sorteo
+
+          </div>
+
+          <h1 class="mt-6 text-5xl font-black text-white tracking-tight leading-none">
+            <%= @sorteo.nombre %>
+          </h1>
+
+          <p class="text-gray-500 mt-4 text-lg leading-relaxed max-w-2xl">
+            Administra información, compradores y resultados del sorteo.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+
+        <%= if @sorteo.realizado do %>
+
+          <div class="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-gray-300 backdrop-blur-xl">
+
+            <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+
+            Realizado
+
+          </div>
+
+        <% else %>
+
+          <div class="inline-flex items-center gap-2 rounded-2xl border border-green-500/20 bg-green-500/[0.06] px-5 py-3 text-sm font-semibold text-green-400 backdrop-blur-xl">
+
+            <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+
+            Pendiente
+
+          </div>
+
+        <% end %>
+
+        <%= if !@sorteo.realizado do %>
+
+          <form action={"/admin/sorteos/" <> @sorteo.id <> "/ejecutar"} method="post">
+
+            <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+
+            <button
+              type="submit"
+              onclick="return confirm('¿Ejecutar este sorteo ahora?')"
+              class="group relative overflow-hidden inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-red-500 to-rose-500 px-6 py-3 text-sm font-bold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_10px_35px_rgba(239,68,68,0.35)]"
+            >
+
+              <div class="absolute inset-0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"></div>
+
+              <span class="relative z-10">
+                Ejecutar sorteo
+              </span>
+
+            </button>
+
+          </form>
+
+        <% end %>
+
+      </div>
+
     </div>
 
-    <%= if @sorteo.premio == nil do %>
-      <p class="text-gray-400 text-sm">Sin premio registrado.</p>
-    <% else %>
-      <% url_delete_premio = "/admin/sorteos/" <> @sorteo.id <> "/premios" %>
-      <div class="flex items-center justify-between bg-white border rounded-lg px-4 py-3 shadow-sm">
-        <div>
-          <p class="font-medium text-gray-800"><%= @sorteo.premio.nombre %></p>
-          <p class="text-sm text-gray-500">$<%= @sorteo.premio.valor %></p>
+    <!-- Flash -->
+    <%= if @flash["info"] do %>
+
+      <div class="mb-6 rounded-2xl border border-green-500/20 bg-green-500/[0.05] px-5 py-4 backdrop-blur-xl">
+
+        <div class="flex items-center gap-3">
+
+          <div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-400">
+            ✓
+          </div>
+
+          <p class="text-sm text-green-300">
+            <%= @flash["info"] %>
+          </p>
+
         </div>
-        <%= if !@sorteo.realizado do %>
-          <form action={url_delete_premio} method="post" onsubmit="return confirm('¿Eliminar este premio?')">
-            <input type="hidden" name="_method" value="delete" />
-            <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
-            <button type="submit" class="text-red-400 hover:text-red-600 text-sm">
-              Eliminar
-            </button>
-          </form>
-        <% end %>
+
+      </div>
+
+    <% end %>
+
+    <%= if @flash["error"] do %>
+
+      <div class="mb-6 rounded-2xl border border-red-500/20 bg-red-500/[0.05] px-5 py-4 backdrop-blur-xl">
+
+        <div class="flex items-center gap-3">
+
+          <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400">
+            ⚠
+          </div>
+
+          <p class="text-sm text-red-300">
+            <%= @flash["error"] %>
+          </p>
+
+        </div>
+
+      </div>
+
+    <% end %>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-10">
+
+      <!-- Card -->
+      <div class="group rounded-[28px] border border-white/10 bg-[#101216]/80 p-6 backdrop-blur-2xl transition-all duration-300 hover:border-yellow-500/20 hover:-translate-y-1">
+
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+          Fecha
+        </p>
+
+        <p class="mt-4 text-3xl font-black text-white tracking-tight">
+          <%= @sorteo.fecha %>
+        </p>
+
+      </div>
+
+      <!-- Card -->
+      <div class="group rounded-[28px] border border-white/10 bg-[#101216]/80 p-6 backdrop-blur-2xl transition-all duration-300 hover:border-yellow-500/20 hover:-translate-y-1">
+
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+          Valor billete
+        </p>
+
+        <p class="mt-4 text-3xl font-black text-white tracking-tight">
+          $<%= formatear(@sorteo.valor_billete) %>
+        </p>
+
+      </div>
+
+      <!-- Card -->
+      <div class="group rounded-[28px] border border-white/10 bg-[#101216]/80 p-6 backdrop-blur-2xl transition-all duration-300 hover:border-yellow-500/20 hover:-translate-y-1">
+
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+          Fracciones
+        </p>
+
+        <p class="mt-4 text-3xl font-black text-white tracking-tight">
+          <%= @sorteo.cantidad_fracciones %>
+        </p>
+
+      </div>
+
+      <!-- Card -->
+      <div class="group rounded-[28px] border border-green-500/20 bg-gradient-to-br from-green-500/[0.08] to-emerald-500/[0.03] p-6 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1">
+
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-green-400">
+          Ingresos
+        </p>
+
+        <p class="mt-4 text-3xl font-black text-green-300 tracking-tight">
+          $<%= formatear(@ingresos) %>
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- Ganador -->
+    <%= if @sorteo.realizado and @sorteo.numero_ganador != nil do %>
+      <div class="mb-10 overflow-hidden rounded-[32px] border border-yellow-500/20 bg-gradient-to-br from-yellow-500/[0.12] via-[#17120a] to-[#0f0c07] shadow-[0_20px_80px_rgba(0,0,0,.5)]">
+        <div class="p-8">
+          <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-8">
+            <div>
+              <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-yellow-500/20 bg-yellow-500/[0.08] text-yellow-300 text-xs font-bold uppercase tracking-[0.2em]">
+                🏆 Resultado
+              </div>
+              <div class="mt-6 text-7xl font-black text-yellow-300 tracking-[0.08em]">
+                #<%= @sorteo.numero_ganador %>
+              </div>
+              <%= if @ganador_nombre do %>
+                <p class="mt-3 text-xl text-white font-semibold">
+                  <%= @ganador_nombre %>
+                </p>
+                <p class="text-gray-500 text-sm mt-1">
+                  Ganador(es)
+                </p>
+              <% end %>
+            </div>
+
+            <%= if @sorteo.premio do %>
+              <div class="rounded-3xl border border-yellow-500/20 bg-black/20 backdrop-blur-xl px-7 py-6">
+                <p class="text-sm uppercase tracking-[0.2em] text-yellow-400 font-semibold">
+                  Premio
+                </p>
+                <p class="mt-3 text-3xl font-black text-white">
+                  <%= @sorteo.premio.nombre %>
+                </p>
+                <p class="mt-2 text-lg text-yellow-300 font-semibold">
+                  $<%= formatear(@sorteo.premio.valor) %>
+                </p>
+              </div>
+            <% end %>
+          </div>
+        </div>
       </div>
     <% end %>
-  </div>
 
-  <!-- Clientes -->
-  <div>
-    <h2 class="text-lg font-semibold text-gray-700 mb-3">Clientes</h2>
+    <!-- Premio -->
+    <div class="mb-10">
 
-    <div class="mb-4">
-      <h3 class="text-sm font-semibold text-gray-500 uppercase mb-2">Billete completo</h3>
-      <%= if @clientes.completos == [] do %>
-        <p class="text-gray-400 text-sm">Sin compradores.</p>
-      <% else %>
-        <div class="overflow-x-auto rounded border border-gray-200">
-          <table class="w-full text-sm">
-            <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
-              <tr>
-                <th class="px-4 py-2 text-left">Documento</th>
-                <th class="px-4 py-2 text-left">Billete</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <%= for c <- @clientes.completos do %>
-                <tr>
-                  <td class="px-4 py-2 text-gray-700"><%= c.doc %></td>
-                  <td class="px-4 py-2 text-gray-700">#<%= c.billete %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-5">
+
+        <div>
+
+          <h2 class="text-3xl font-black text-white tracking-tight">
+            Premio
+          </h2>
+
+          <p class="text-gray-500 mt-2">
+            Premio asociado al sorteo actual.
+          </p>
+
         </div>
+
+        <%= if !@sorteo.realizado and @sorteo.premio == nil do %>
+
+          <% url_nuevo_premio = "/admin/sorteos/" <> @sorteo.id <> "/premios/nuevo" %>
+
+          <a
+            href={url_nuevo_premio}
+            class="inline-flex items-center rounded-2xl bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 px-5 py-3 text-sm font-black text-black transition-all duration-300 hover:scale-[1.02]"
+          >
+            + Agregar premio
+          </a>
+
+        <% end %>
+
+      </div>
+
+      <%= if @sorteo.premio == nil do %>
+
+        <div class="rounded-[30px] border border-dashed border-white/10 bg-[#101216]/60 py-14 text-center backdrop-blur-xl">
+
+          <div class="text-6xl opacity-70 mb-5">
+            🎁
+          </div>
+
+          <p class="text-xl font-bold text-white">
+            Sin premio registrado
+          </p>
+
+          <p class="text-gray-500 mt-2">
+            Agrega un premio antes de ejecutar el sorteo.
+          </p>
+
+        </div>
+
+      <% else %>
+
+        <% url_delete_premio = "/admin/sorteos/" <> @sorteo.id <> "/premios" %>
+
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 rounded-[30px] border border-white/10 bg-[#101216]/80 p-7 backdrop-blur-2xl">
+
+          <div>
+
+            <p class="text-3xl font-black text-white tracking-tight">
+              <%= @sorteo.premio.nombre %>
+            </p>
+
+            <p class="mt-3 text-sm text-gray-500">
+              Valor del premio
+            </p>
+
+            <p class="mt-1 text-2xl font-bold text-green-400">
+              $<%= formatear(@sorteo.premio.valor) %>
+            </p>
+
+          </div>
+
+          <%= if !@sorteo.realizado do %>
+
+            <form
+              action={url_delete_premio}
+              method="post"
+              onsubmit="return confirm('¿Eliminar este premio?')"
+            >
+
+              <input type="hidden" name="_method" value="delete" />
+              <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+
+              <button
+                type="submit"
+                class="rounded-2xl border border-red-500/20 bg-red-500/[0.06] px-5 py-3 text-sm font-semibold text-red-400 transition-all duration-300 hover:bg-red-500/[0.12]"
+              >
+                Eliminar premio
+              </button>
+
+            </form>
+
+          <% end %>
+
+        </div>
+
       <% end %>
+
     </div>
 
+    <!-- Clientes -->
     <div>
-      <h3 class="text-sm font-semibold text-gray-500 uppercase mb-2">Por fracción</h3>
-      <%= if @clientes.fracciones == [] do %>
-        <p class="text-gray-400 text-sm">Sin compradores.</p>
-      <% else %>
-        <div class="overflow-x-auto rounded border border-gray-200">
-          <table class="w-full text-sm">
-            <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
-              <tr>
-                <th class="px-4 py-2 text-left">Documento</th>
-                <th class="px-4 py-2 text-left">Billete</th>
-                <th class="px-4 py-2 text-left">Fracción</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <%= for c <- @clientes.fracciones do %>
-                <tr>
-                  <td class="px-4 py-2 text-gray-700"><%= c.doc %></td>
-                  <td class="px-4 py-2 text-gray-700">#<%= c.billete %></td>
-                  <td class="px-4 py-2 text-gray-700"><%= c.fraccion %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+
+      <div class="mb-6">
+
+        <h2 class="text-3xl font-black text-white tracking-tight">
+          Clientes
+        </h2>
+
+        <p class="text-gray-500 mt-2">
+          Participantes registrados en este sorteo.
+        </p>
+
+      </div>
+
+      <!-- Completos -->
+      <div class="mb-10">
+
+        <div class="flex items-center gap-3 mb-4">
+
+          <div class="h-2 w-2 rounded-full bg-blue-400"></div>
+
+          <h3 class="text-sm font-bold uppercase tracking-[0.2em] text-gray-500">
+            Billete completo
+          </h3>
+
         </div>
-      <% end %>
+
+        <%= if @clientes.completos == [] do %>
+
+          <div class="rounded-[28px] border border-dashed border-white/10 bg-[#101216]/60 py-10 text-center backdrop-blur-xl">
+
+            <p class="text-gray-500">
+              Sin compradores registrados.
+            </p>
+
+          </div>
+
+        <% else %>
+
+          <div class="overflow-hidden rounded-[28px] border border-white/10 bg-[#101216]/80 backdrop-blur-2xl">
+
+            <div class="overflow-x-auto">
+
+              <table class="min-w-full text-sm">
+
+                <thead class="border-b border-white/5 bg-white/[0.02]">
+                <tr class="text-left text-xs font-bold uppercase tracking-[0.18em] text-gray-500">
+                  <th class="px-6 py-5">Nombre</th>
+                  <th class="px-6 py-5">Documento</th>
+                  <th class="px-6 py-5">Billete</th>
+                </tr>
+              </thead>
+
+              <tbody class="divide-y divide-white/[0.04]">
+                <%= for c <- Enum.sort_by(@clientes.completos, & &1.nombre) do %>
+                  <tr class="hover:bg-white/[0.03] transition">
+                    <td class="px-6 py-5 font-semibold text-white"><%= c.nombre %></td>
+                    <td class="px-6 py-5 text-gray-300"><%= c.doc %></td>
+                    <td class="px-6 py-5 font-bold text-white">#<%= c.billete %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        <% end %>
+
+      </div>
+
+      <!-- Fracciones -->
+      <div>
+
+        <div class="flex items-center gap-3 mb-4">
+
+          <div class="h-2 w-2 rounded-full bg-purple-400"></div>
+
+          <h3 class="text-sm font-bold uppercase tracking-[0.2em] text-gray-500">
+            Por fracción
+          </h3>
+
+        </div>
+
+        <%= if @clientes.fracciones == [] do %>
+
+          <div class="rounded-[28px] border border-dashed border-white/10 bg-[#101216]/60 py-10 text-center backdrop-blur-xl">
+
+            <p class="text-gray-500">
+              Sin compradores registrados.
+            </p>
+
+          </div>
+
+        <% else %>
+
+          <div class="overflow-hidden rounded-[28px] border border-white/10 bg-[#101216]/80 backdrop-blur-2xl">
+
+            <div class="overflow-x-auto">
+
+              <table class="min-w-full text-sm">
+
+                <thead class="border-b border-white/5 bg-white/[0.02]">
+                  <tr class="text-left text-xs font-bold uppercase tracking-[0.18em] text-gray-500">
+                    <th class="px-6 py-5">Nombre</th>
+                    <th class="px-6 py-5">Documento</th>
+                    <th class="px-6 py-5">Billete</th>
+                    <th class="px-6 py-5">Fracción</th>
+                  </tr>
+                </thead>
+
+                <tbody class="divide-y divide-white/[0.04]">
+                  <%= for c <- Enum.sort_by(@clientes.fracciones, & &1.nombre) do %>
+                    <tr class="hover:bg-white/[0.03] transition">
+                      <td class="px-6 py-5 font-semibold text-white"><%= c.nombre %></td>
+                      <td class="px-6 py-5 text-gray-300"><%= c.doc %></td>
+                      <td class="px-6 py-5 font-bold text-white">#<%= c.billete %></td>
+                      <td class="px-6 py-5 text-purple-300 font-semibold"><%= c.fraccion %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        <% end %>
+
+      </div>
+
     </div>
+
   </div>
 
 </div>
