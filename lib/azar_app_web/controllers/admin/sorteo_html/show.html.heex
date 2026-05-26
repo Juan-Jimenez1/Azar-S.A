@@ -403,40 +403,22 @@
               <table class="min-w-full text-sm">
 
                 <thead class="border-b border-white/5 bg-white/[0.02]">
+                <tr class="text-left text-xs font-bold uppercase tracking-[0.18em] text-gray-500">
+                  <th class="px-6 py-5">Nombre</th>
+                  <th class="px-6 py-5">Documento</th>
+                  <th class="px-6 py-5">Billete</th>
+                </tr>
+              </thead>
 
-                  <tr class="text-left text-xs font-bold uppercase tracking-[0.18em] text-gray-500">
-
-                    <th class="px-6 py-5">
-                      Documento
-                    </th>
-
-                    <th class="px-6 py-5">
-                      Billete
-                    </th>
-
+              <tbody class="divide-y divide-white/[0.04]">
+                <%= for c <- Enum.sort_by(@clientes.completos, & &1.nombre) do %>
+                  <tr class="hover:bg-white/[0.03] transition">
+                    <td class="px-6 py-5 font-semibold text-white"><%= c.nombre %></td>
+                    <td class="px-6 py-5 text-gray-300"><%= c.doc %></td>
+                    <td class="px-6 py-5 font-bold text-white">#<%= c.billete %></td>
                   </tr>
-
-                </thead>
-
-                <tbody class="divide-y divide-white/[0.04]">
-
-                  <%= for c <- @clientes.completos do %>
-
-                    <tr class="hover:bg-white/[0.03] transition">
-
-                      <td class="px-6 py-5 text-gray-300">
-                        <%= c.doc %>
-                      </td>
-
-                      <td class="px-6 py-5 font-bold text-white">
-                        #<%= c.billete %>
-                      </td>
-
-                    </tr>
-
-                  <% end %>
-
-                </tbody>
+                <% end %>
+              </tbody>
 
               </table>
 
@@ -480,47 +462,23 @@
               <table class="min-w-full text-sm">
 
                 <thead class="border-b border-white/5 bg-white/[0.02]">
-
                   <tr class="text-left text-xs font-bold uppercase tracking-[0.18em] text-gray-500">
-
-                    <th class="px-6 py-5">
-                      Documento
-                    </th>
-
-                    <th class="px-6 py-5">
-                      Billete
-                    </th>
-
-                    <th class="px-6 py-5">
-                      Fracción
-                    </th>
-
+                    <th class="px-6 py-5">Nombre</th>
+                    <th class="px-6 py-5">Documento</th>
+                    <th class="px-6 py-5">Billete</th>
+                    <th class="px-6 py-5">Fracción</th>
                   </tr>
-
                 </thead>
 
                 <tbody class="divide-y divide-white/[0.04]">
-
-                  <%= for c <- @clientes.fracciones do %>
-
+                  <%= for c <- Enum.sort_by(@clientes.fracciones, & &1.nombre) do %>
                     <tr class="hover:bg-white/[0.03] transition">
-
-                      <td class="px-6 py-5 text-gray-300">
-                        <%= c.doc %>
-                      </td>
-
-                      <td class="px-6 py-5 font-bold text-white">
-                        #<%= c.billete %>
-                      </td>
-
-                      <td class="px-6 py-5 text-purple-300 font-semibold">
-                        <%= c.fraccion %>
-                      </td>
-
+                      <td class="px-6 py-5 font-semibold text-white"><%= c.nombre %></td>
+                      <td class="px-6 py-5 text-gray-300"><%= c.doc %></td>
+                      <td class="px-6 py-5 font-bold text-white">#<%= c.billete %></td>
+                      <td class="px-6 py-5 text-purple-300 font-semibold"><%= c.fraccion %></td>
                     </tr>
-
                   <% end %>
-
                 </tbody>
 
               </table>
