@@ -3,43 +3,73 @@
   <!-- Header -->
   <div class="bg-white border-b border-gray-200 shadow-sm">
     <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-2">
+
           <div class="w-10 h-10 rounded-lg bg-[#00529b] flex items-center justify-center">
             <span class="text-white font-black text-sm">PSE</span>
           </div>
+
           <div>
-            <p class="text-[#00529b] font-black text-lg leading-none">PSE</p>
-            <p class="text-gray-400 text-[10px] leading-none">Pagos Seguros en Línea</p>
+            <p class="text-[#00529b] font-black text-lg leading-none">
+              PSE
+            </p>
+            <p class="text-gray-400 text-[10px] leading-none">
+              Pagos Seguros en Línea
+            </p>
           </div>
+
         </div>
       </div>
+
       <div class="flex items-center gap-2 text-xs text-gray-500">
         <span class="text-green-500">🔒</span>
         <span>Conexión segura SSL</span>
       </div>
+
     </div>
   </div>
 
   <!-- Barra de progreso completa -->
   <div class="bg-white border-b border-gray-100">
     <div class="max-w-4xl mx-auto px-6 py-3">
+
       <div class="flex items-center gap-2 text-xs">
+
         <div class="flex items-center gap-1.5">
-          <div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-[10px]">✓</div>
-          <span class="text-green-600 font-semibold">Datos del pago</span>
+          <div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-[10px]">
+            ✓
+          </div>
+          <span class="text-green-600 font-semibold">
+            Datos del pago
+          </span>
         </div>
+
         <div class="flex-1 h-px bg-green-300"></div>
+
         <div class="flex items-center gap-1.5">
-          <div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-[10px]">✓</div>
-          <span class="text-green-600 font-semibold">Autenticación</span>
+          <div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-[10px]">
+            ✓
+          </div>
+          <span class="text-green-600 font-semibold">
+            Autenticación
+          </span>
         </div>
+
         <div class="flex-1 h-px bg-green-300"></div>
+
         <div class="flex items-center gap-1.5">
-          <div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-[10px]">✓</div>
-          <span class="text-green-600 font-semibold">Confirmación</span>
+          <div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-[10px]">
+            ✓
+          </div>
+          <span class="text-green-600 font-semibold">
+            Confirmación
+          </span>
         </div>
+
       </div>
+
     </div>
   </div>
 
@@ -57,8 +87,13 @@
         APROBADA
       </div>
 
-      <h1 class="text-3xl font-black text-gray-800 mb-2">¡Transacción exitosa!</h1>
-      <p class="text-gray-500 text-sm">Tu pago fue procesado correctamente por PSE y ACH Colombia.</p>
+      <h1 class="text-3xl font-black text-gray-800 mb-2">
+        ¡Transacción exitosa!
+      </h1>
+
+      <p class="text-gray-500 text-sm">
+        Tu pago fue procesado correctamente por PSE y ACH Colombia.
+      </p>
 
     </div>
 
@@ -66,64 +101,121 @@
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
 
       <div class="bg-[#00529b] px-6 py-4">
+
         <div class="flex items-center justify-between">
+
           <div>
-            <p class="text-white/70 text-xs uppercase tracking-wide">Comprobante de pago</p>
-            <p class="text-white font-bold text-lg mt-0.5">PSE — ACH Colombia</p>
+            <p class="text-white/70 text-xs uppercase tracking-wide">
+              Comprobante de pago
+            </p>
+
+            <p class="text-white font-bold text-lg mt-0.5">
+              PSE — ACH Colombia
+            </p>
           </div>
-          <div class="text-white/80 text-3xl">🏦</div>
+
+          <div class="text-white/80 text-3xl">
+            🏦
+          </div>
+
         </div>
+
       </div>
 
       <div class="p-6 space-y-4">
 
         <div class="flex justify-between py-3 border-b border-gray-50">
-          <span class="text-gray-500 text-sm">CUS (Cód. Único de Seguimiento)</span>
+          <span class="text-gray-500 text-sm">
+            CUS (Cód. Único de Seguimiento)
+          </span>
+
           <span class="text-gray-800 font-mono font-bold text-sm">
             <%= :crypto.strong_rand_bytes(6) |> Base.encode16() %>
           </span>
         </div>
 
         <div class="flex justify-between py-3 border-b border-gray-50">
-          <span class="text-gray-500 text-sm">Estado</span>
-          <span class="text-green-600 font-bold text-sm">✓ Aprobada</span>
+          <span class="text-gray-500 text-sm">
+            Estado
+          </span>
+
+          <span class="text-green-600 font-bold text-sm">
+            ✓ Aprobada
+          </span>
         </div>
 
         <div class="flex justify-between py-3 border-b border-gray-50">
-          <span class="text-gray-500 text-sm">Entidad financiera</span>
-          <span class="text-gray-800 font-semibold text-sm"><%= @info.banco %></span>
+          <span class="text-gray-500 text-sm">
+            Entidad financiera
+          </span>
+
+          <span class="text-gray-800 font-semibold text-sm">
+            <%= @info.banco %>
+          </span>
         </div>
 
         <div class="flex justify-between py-3 border-b border-gray-50">
-          <span class="text-gray-500 text-sm">Tipo de cuenta</span>
-          <span class="text-gray-800 font-semibold text-sm capitalize"><%= @info.cuenta %></span>
+          <span class="text-gray-500 text-sm">
+            Numero cuenta
+          </span>
+
+          <span class="text-gray-800 font-semibold text-sm capitalize">
+            <%= @info.cuenta %>
+          </span>
         </div>
 
         <div class="flex justify-between py-3 border-b border-gray-50">
-          <span class="text-gray-500 text-sm">Comercio</span>
-          <span class="text-gray-800 font-semibold text-sm">Azar S.A</span>
+          <span class="text-gray-500 text-sm">
+            Comercio
+          </span>
+
+          <span class="text-gray-800 font-semibold text-sm">
+            Azar S.A
+          </span>
         </div>
 
         <div class="flex justify-between py-3 border-b border-gray-50">
-          <span class="text-gray-500 text-sm">Concepto</span>
-          <span class="text-gray-800 font-semibold text-sm">Recarga de saldo</span>
+          <span class="text-gray-500 text-sm">
+            Concepto
+          </span>
+
+          <span class="text-gray-800 font-semibold text-sm">
+            Recarga de saldo
+          </span>
         </div>
 
         <div class="flex justify-between py-3 border-b border-gray-50">
-          <span class="text-gray-500 text-sm">Fecha y hora</span>
+          <span class="text-gray-500 text-sm">
+            Fecha y hora
+          </span>
+
           <span class="text-gray-800 font-semibold text-sm">
             <%= NaiveDateTime.local_now() |> NaiveDateTime.to_string() |> String.slice(0, 16) %>
           </span>
         </div>
 
         <div class="flex justify-between py-4 bg-green-50 rounded-xl px-4 -mx-0 mt-2">
-          <span class="text-gray-700 font-bold">Valor pagado</span>
-          <span class="text-[#00529b] font-black text-2xl">$<%= @info.valor %></span>
+
+          <span class="text-gray-700 font-bold">
+            Valor pagado
+          </span>
+
+          <span class="text-[#00529b] font-black text-2xl">
+            $<%=formatear (@info.valor) %>
+          </span>
+
         </div>
 
         <div class="flex justify-between py-3 bg-emerald-50 rounded-xl px-4">
-          <span class="text-gray-700 font-bold">Nuevo saldo en Azar S.A</span>
-          <span class="text-emerald-600 font-black text-xl">$<%= @info.saldo %></span>
+
+          <span class="text-gray-700 font-bold">
+            Nuevo saldo en Azar S.A
+          </span>
+
+          <span class="text-emerald-600 font-black text-xl">
+            $<%= formatear(@info.saldo) %>
+          </span>
+
         </div>
 
       </div>
@@ -132,29 +224,44 @@
 
     <!-- Nota correo -->
     <div class="flex items-start gap-3 bg-blue-50 border border-blue-100 rounded-xl px-5 py-4 mb-6">
-      <span class="text-blue-400">📧</span>
+
+      <span class="text-blue-400">
+        📧
+      </span>
+
       <p class="text-xs text-blue-600 leading-relaxed">
-        Se ha enviado una copia de este comprobante a tu correo electrónico registrado en PSE. Guarda el número CUS para cualquier reclamación ante tu entidad financiera.
+        Se ha enviado una copia de este comprobante a tu correo electrónico registrado en PSE.
+        Guarda el número CUS para cualquier reclamación ante tu entidad financiera.
       </p>
+
     </div>
 
     <!-- Botones -->
     <div class="flex flex-col sm:flex-row gap-3">
-      <a href="/index"
-         class="flex-1 text-center rounded-xl bg-[#d4a017] hover:bg-[#b8880f] py-4 text-black font-black text-sm transition hover:shadow-lg">
+
+      <a
+        href="/index"
+        class="flex-1 text-center rounded-xl bg-[#d4a017] hover:bg-[#b8880f] py-4 text-black font-black text-sm transition hover:shadow-lg"
+      >
         🎰 Ver sorteos
       </a>
-      <a href="/perfil"
-         class="flex-1 text-center rounded-xl border border-gray-200 bg-white hover:bg-gray-50 py-4 text-gray-700 font-semibold text-sm transition">
+
+      <a
+        href="/perfil"
+        class="flex-1 text-center rounded-xl border border-gray-200 bg-white hover:bg-gray-50 py-4 text-gray-700 font-semibold text-sm transition"
+      >
         👤 Volver al perfil
       </a>
+
     </div>
 
   </div>
 
   <!-- Footer -->
   <div class="bg-white border-t border-gray-200">
+
     <div class="max-w-4xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+
       <div class="flex items-center gap-3 text-xs text-gray-400">
         <span class="font-bold text-[#00529b]">PSE</span>
         <span>·</span>
@@ -162,12 +269,15 @@
         <span>·</span>
         <span>NIT 830.053.940-4</span>
       </div>
+
       <div class="flex items-center gap-4 text-xs text-gray-400">
         <span>🔒 Sitio seguro</span>
         <span>·</span>
         <span>Soporte 24/7</span>
       </div>
+
     </div>
+
   </div>
 
 </div>

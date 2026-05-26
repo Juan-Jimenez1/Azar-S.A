@@ -1765,8 +1765,10 @@
     {
       "billetes": [
         {
-          "disponible": true,
-          "numero": 1001
+          "disponible": false,
+          "numero": 1001,
+          "propietario_doc": "1",
+          "tipo": "completo"
         },
         {
           "disponible": true,
@@ -1799,9 +1801,495 @@
       "id": "sorteo_dbe697d6fd2cae67",
       "nombre": ",",
       "numero_ganador": null,
-      "premio": null,
+      "premio": {
+        "id": "premio_3628217f0e1beba5",
+        "nombre": "Dinero",
+        "valor": 1200000001
+      },
       "realizado": false,
       "valor_billete": 9
+    },
+    {
+      "billetes": [
+        {
+          "disponible": false,
+          "fracciones_tomadas": [],
+          "numero": 1001,
+          "propietario_doc": "1",
+          "tipo": "completo"
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        },
+        {
+          "disponible": true,
+          "numero": 1003
+        },
+        {
+          "disponible": true,
+          "numero": 1004
+        },
+        {
+          "disponible": true,
+          "numero": 1005
+        },
+        {
+          "disponible": true,
+          "numero": 1006
+        }
+      ],
+      "cantidad_billetes": 6,
+      "cantidad_fracciones": 3,
+      "fecha": "2026-05-25",
+      "id": "sorteo_f53aadf0d9185207",
+      "nombre": "1",
+      "numero_ganador": 1001,
+      "premio": {
+        "id": "premio_1bf506a6f13bb676",
+        "nombre": "Dinero",
+        "valor": 1200000000
+      },
+      "realizado": true,
+      "valor_billete": 5000000
+    },
+    {
+      "billetes": [
+        {
+          "disponible": false,
+          "numero": 1001,
+          "propietario_doc": "1",
+          "tipo": "completo"
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        },
+        {
+          "disponible": true,
+          "numero": 1003
+        },
+        {
+          "disponible": true,
+          "numero": 1004
+        },
+        {
+          "disponible": true,
+          "numero": 1005
+        },
+        {
+          "disponible": true,
+          "numero": 1006
+        },
+        {
+          "disponible": true,
+          "numero": 1007
+        },
+        {
+          "disponible": true,
+          "numero": 1008
+        },
+        {
+          "disponible": true,
+          "numero": 1009
+        },
+        {
+          "disponible": true,
+          "numero": 1010
+        },
+        {
+          "disponible": true,
+          "numero": 1011
+        },
+        {
+          "disponible": true,
+          "numero": 1012
+        },
+        {
+          "disponible": true,
+          "numero": 1013
+        },
+        {
+          "disponible": true,
+          "numero": 1014
+        },
+        {
+          "disponible": true,
+          "numero": 1015
+        },
+        {
+          "disponible": true,
+          "numero": 1016
+        },
+        {
+          "disponible": true,
+          "numero": 1017
+        },
+        {
+          "disponible": true,
+          "numero": 1018
+        },
+        {
+          "disponible": true,
+          "numero": 1019
+        },
+        {
+          "disponible": true,
+          "numero": 1020
+        },
+        {
+          "disponible": true,
+          "numero": 1021
+        },
+        {
+          "disponible": true,
+          "numero": 1022
+        },
+        {
+          "disponible": true,
+          "numero": 1023
+        },
+        {
+          "disponible": true,
+          "numero": 1024
+        },
+        {
+          "disponible": true,
+          "numero": 1025
+        },
+        {
+          "disponible": true,
+          "numero": 1026
+        },
+        {
+          "disponible": true,
+          "numero": 1027
+        },
+        {
+          "disponible": true,
+          "numero": 1028
+        },
+        {
+          "disponible": true,
+          "numero": 1029
+        },
+        {
+          "disponible": true,
+          "numero": 1030
+        },
+        {
+          "disponible": true,
+          "numero": 1031
+        },
+        {
+          "disponible": true,
+          "numero": 1032
+        },
+        {
+          "disponible": true,
+          "numero": 1033
+        },
+        {
+          "disponible": true,
+          "numero": 1034
+        },
+        {
+          "disponible": true,
+          "numero": 1035
+        },
+        {
+          "disponible": true,
+          "numero": 1036
+        },
+        {
+          "disponible": true,
+          "numero": 1037
+        },
+        {
+          "disponible": true,
+          "numero": 1038
+        },
+        {
+          "disponible": true,
+          "numero": 1039
+        },
+        {
+          "disponible": true,
+          "numero": 1040
+        },
+        {
+          "disponible": true,
+          "numero": 1041
+        },
+        {
+          "disponible": true,
+          "numero": 1042
+        },
+        {
+          "disponible": true,
+          "numero": 1043
+        },
+        {
+          "disponible": true,
+          "numero": 1044
+        },
+        {
+          "disponible": true,
+          "numero": 1045
+        },
+        {
+          "disponible": true,
+          "numero": 1046
+        },
+        {
+          "disponible": true,
+          "numero": 1047
+        },
+        {
+          "disponible": true,
+          "numero": 1048
+        },
+        {
+          "disponible": true,
+          "numero": 1049
+        },
+        {
+          "disponible": true,
+          "numero": 1050
+        },
+        {
+          "disponible": true,
+          "numero": 1051
+        },
+        {
+          "disponible": true,
+          "numero": 1052
+        },
+        {
+          "disponible": true,
+          "numero": 1053
+        },
+        {
+          "disponible": true,
+          "numero": 1054
+        },
+        {
+          "disponible": true,
+          "numero": 1055
+        },
+        {
+          "disponible": true,
+          "numero": 1056
+        },
+        {
+          "disponible": true,
+          "numero": 1057
+        },
+        {
+          "disponible": true,
+          "numero": 1058
+        },
+        {
+          "disponible": true,
+          "numero": 1059
+        },
+        {
+          "disponible": true,
+          "numero": 1060
+        },
+        {
+          "disponible": true,
+          "numero": 1061
+        },
+        {
+          "disponible": true,
+          "numero": 1062
+        },
+        {
+          "disponible": true,
+          "numero": 1063
+        },
+        {
+          "disponible": true,
+          "numero": 1064
+        },
+        {
+          "disponible": true,
+          "numero": 1065
+        },
+        {
+          "disponible": true,
+          "numero": 1066
+        },
+        {
+          "disponible": true,
+          "numero": 1067
+        },
+        {
+          "disponible": true,
+          "numero": 1068
+        },
+        {
+          "disponible": true,
+          "numero": 1069
+        },
+        {
+          "disponible": true,
+          "numero": 1070
+        },
+        {
+          "disponible": true,
+          "numero": 1071
+        },
+        {
+          "disponible": true,
+          "numero": 1072
+        },
+        {
+          "disponible": true,
+          "numero": 1073
+        },
+        {
+          "disponible": true,
+          "numero": 1074
+        },
+        {
+          "disponible": true,
+          "numero": 1075
+        },
+        {
+          "disponible": true,
+          "numero": 1076
+        },
+        {
+          "disponible": true,
+          "numero": 1077
+        },
+        {
+          "disponible": true,
+          "numero": 1078
+        },
+        {
+          "disponible": true,
+          "numero": 1079
+        },
+        {
+          "disponible": true,
+          "numero": 1080
+        },
+        {
+          "disponible": true,
+          "numero": 1081
+        },
+        {
+          "disponible": true,
+          "numero": 1082
+        },
+        {
+          "disponible": true,
+          "numero": 1083
+        },
+        {
+          "disponible": true,
+          "numero": 1084
+        },
+        {
+          "disponible": true,
+          "numero": 1085
+        },
+        {
+          "disponible": true,
+          "numero": 1086
+        },
+        {
+          "disponible": true,
+          "numero": 1087
+        },
+        {
+          "disponible": true,
+          "numero": 1088
+        },
+        {
+          "disponible": true,
+          "numero": 1089
+        },
+        {
+          "disponible": true,
+          "numero": 1090
+        },
+        {
+          "disponible": true,
+          "numero": 1091
+        },
+        {
+          "disponible": true,
+          "numero": 1092
+        },
+        {
+          "disponible": true,
+          "numero": 1093
+        },
+        {
+          "disponible": true,
+          "numero": 1094
+        },
+        {
+          "disponible": true,
+          "numero": 1095
+        },
+        {
+          "disponible": true,
+          "numero": 1096
+        },
+        {
+          "disponible": true,
+          "numero": 1097
+        },
+        {
+          "disponible": true,
+          "numero": 1098
+        }
+      ],
+      "cantidad_billetes": 98,
+      "cantidad_fracciones": 3,
+      "fecha": "2026-05-25",
+      "id": "sorteo_e71d0ba71ecfa66a",
+      "nombre": "algo",
+      "numero_ganador": 1001,
+      "premio": {
+        "id": "premio_1e20680aadbc4810",
+        "nombre": "Dinero",
+        "valor": 18931808879
+      },
+      "realizado": true,
+      "valor_billete": 50001
+    },
+    {
+      "billetes": [
+        {
+          "disponible": false,
+          "numero": 1001,
+          "propietario_doc": "1",
+          "tipo": "completo"
+        },
+        {
+          "disponible": true,
+          "numero": 1002
+        }
+      ],
+      "cantidad_billetes": 2,
+      "cantidad_fracciones": 10,
+      "fecha": "2026-05-25",
+      "id": "sorteo_f7819817d348a44e",
+      "nombre": "hola",
+      "numero_ganador": 1001,
+      "premio": {
+        "id": "premio_763c4cf7c28ed6fb",
+        "nombre": "Dinero",
+        "valor": 2000000000000
+      },
+      "realizado": true,
+      "valor_billete": 50000
     }
   ]
 }

@@ -53,7 +53,7 @@
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">Total ingresos</p>
             <div class="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/5 flex items-center justify-center text-lg">💰</div>
           </div>
-          <p class="text-4xl font-black text-white tracking-tight">$<%= @total_ingresos %></p>
+          <p class="text-4xl font-black text-white tracking-tight">$<%= formatear(@total_ingresos) %></p>
           <p class="text-xs text-gray-600 mt-3">Suma de todos los billetes vendidos</p>
         </div>
 
@@ -62,7 +62,7 @@
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-red-400/70">Premios entregados</p>
             <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-lg">🏆</div>
           </div>
-          <p class="text-4xl font-black text-red-300 tracking-tight">$<%= @total_premios %></p>
+          <p class="text-4xl font-black text-red-300 tracking-tight">$<%= formatear(@total_premios) %></p>
           <p class="text-xs text-red-400/50 mt-3">Total pagado en premios</p>
         </div>
 
@@ -82,7 +82,7 @@
             </div>
           </div>
           <p class={"text-4xl font-black tracking-tight " <> if @total_ganancia >= 0, do: "text-green-300", else: "text-red-300"}>
-            <%= if @total_ganancia >= 0, do: "+", else: "" %>$<%= @total_ganancia %>
+            <%= if @total_ganancia >= 0, do: "+", else: "" %>$<%= formatear(@total_ganancia) %>
           </p>
           <p class={"text-xs mt-3 " <> if @total_ganancia >= 0, do: "text-green-400/50", else: "text-red-400/50"}>
             Ingresos menos premios entregados
@@ -139,11 +139,11 @@
                   </td>
 
                   <td class="px-8 py-6">
-                    <p class="font-black text-white text-lg">$<%= b.ingresos %></p>
+                    <p class="font-black text-white text-lg">$<%= formatear(b.ingresos) %></p>
                   </td>
 
                   <td class="px-8 py-6">
-                    <p class="font-bold text-red-300">$<%= b.valor_premio %></p>
+                    <p class="font-bold text-red-300">$<%= formatear(b.valor_premio) %></p>
                   </td>
 
                   <td class="px-8 py-6">
@@ -152,7 +152,7 @@
                         do: "border-green-500/20 bg-green-500/[0.08] text-green-300",
                         else: "border-red-500/20 bg-red-500/[0.08] text-red-300"}>
                       <%= if b.resultado == "ganancia", do: "▲", else: "▼" %>
-                      <%= if b.ganancia >= 0, do: "+", else: "" %>$<%= b.ganancia %>
+                      <%= if b.ganancia >= 0, do: "+", else: "" %>$<%= formatear(b.ganancia) %>
                     </div>
                   </td>
 
@@ -164,15 +164,15 @@
             <tfoot class="border-t border-white/10 bg-white/[0.02]">
               <tr>
                 <td colspan="4" class="px-8 py-5 text-sm font-bold text-gray-400 uppercase tracking-widest">Total acumulado</td>
-                <td class="px-8 py-5 font-black text-white text-lg">$<%= @total_ingresos %></td>
-                <td class="px-8 py-5 font-black text-red-300 text-lg">$<%= @total_premios %></td>
+                <td class="px-8 py-5 font-black text-white text-lg">$<%= formatear(@total_ingresos) %></td>
+                <td class="px-8 py-5 font-black text-red-300 text-lg">$<%= formatear(@total_premios) %></td>
                 <td class="px-8 py-5">
                   <div class={"inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-black border " <>
                     if @total_ganancia >= 0,
                       do: "border-green-500/30 bg-green-500/[0.12] text-green-200",
                       else: "border-red-500/30 bg-red-500/[0.12] text-red-200"}>
                     <%= if @total_ganancia >= 0, do: "▲", else: "▼" %>
-                    <%= if @total_ganancia >= 0, do: "+", else: "" %>$<%= @total_ganancia %>
+                    <%= if @total_ganancia >= 0, do: "+", else: "" %>$<%= formatear(@total_ganancia) %>
                   </div>
                 </td>
               </tr>

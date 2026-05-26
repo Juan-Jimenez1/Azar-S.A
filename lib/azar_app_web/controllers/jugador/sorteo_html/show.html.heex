@@ -25,7 +25,7 @@
         </div>
         <div class="rounded-2xl border border-[#23262f] bg-[#12141a]/90 backdrop-blur-xl px-5 py-4 shadow-xl">
           <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Billetes disponibles</p>
-          <p class="text-3xl font-black text-[#d4a017] mt-1"><%= length(@billetes) %></p>
+          <p class="text-3xl font-black text-[#d4a017]"><%= length(@billetes) %></p>
         </div>
       </div>
     </div>
@@ -51,16 +51,21 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-10">
       <div class="rounded-[26px] border border-[#23262f] bg-[#101217]/90 backdrop-blur-xl p-5 shadow-2xl">
         <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Billete completo</p>
-        <p class="mt-3 text-3xl font-black text-white">$<%= @sorteo.valor_billete %></p>
+        <p class="mt-3 text-3xl font-black text-white">$<%= formatear(@sorteo.valor_billete) %></p>
       </div>
+
       <div class="rounded-[26px] border border-[#23262f] bg-[#101217]/90 backdrop-blur-xl p-5 shadow-2xl">
         <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Valor fracción</p>
-        <p class="mt-3 text-3xl font-black text-[#d4a017]">$<%= div(@sorteo.valor_billete, @sorteo.cantidad_fracciones) %></p>
+        <p class="mt-3 text-3xl font-black text-[#d4a017]">
+          $<%= formatear(div(@sorteo.valor_billete, @sorteo.cantidad_fracciones)) %>
+        </p>
       </div>
+
       <div class="rounded-[26px] border border-[#23262f] bg-[#101217]/90 backdrop-blur-xl p-5 shadow-2xl">
         <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Fracciones</p>
         <p class="mt-3 text-3xl font-black text-white"><%= @sorteo.cantidad_fracciones %></p>
       </div>
+
       <div class="rounded-[26px] border border-[#1f3a2c] bg-[#0f1713]/90 backdrop-blur-xl p-5 shadow-2xl">
         <p class="text-xs uppercase tracking-[0.2em] text-emerald-500">Disponibles</p>
         <p class="mt-3 text-3xl font-black text-emerald-400"><%= length(@billetes) %></p>
@@ -75,9 +80,14 @@
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4a017]/10 border border-[#d4a017]/20 text-[#f6d06b] text-xs font-semibold mb-4">
                 🏆 Premio mayor
               </div>
-              <h2 class="text-4xl font-black text-[#f6d06b] leading-none">$<%= @sorteo.premio.valor %></h2>
+
+              <h2 class="text-4xl font-black text-[#f6d06b] leading-none">
+                $<%= formatear(@sorteo.premio.valor) %>
+              </h2>
+
               <p class="text-gray-300 mt-3 text-sm"><%= @sorteo.premio.nombre %></p>
             </div>
+
             <div class="w-28 h-28 rounded-full bg-[#d4a017]/10 border border-[#d4a017]/20 flex items-center justify-center text-6xl shadow-inner">
               💰
             </div>
@@ -129,6 +139,7 @@
                     <p class="text-xs text-gray-500 mb-2">
                       Selecciona las fracciones a devolver:
                     </p>
+
                     <div class="flex flex-wrap gap-2">
                       <%= for f <- nums_mios do %>
                         <label class="flex items-center gap-1.5 cursor-pointer group/check">
@@ -143,6 +154,7 @@
                             onchange={"recalcularReembolso(#{numero_mio})"}
                             class="w-4 h-4 rounded accent-red-400 cursor-pointer"
                           />
+
                           <span class="px-2 py-1 rounded-lg text-xs font-bold bg-blue-500/30 text-blue-300 border border-blue-400/40 group-hover/check:border-red-400/40 transition">
                             Frac. <%= f %>
                           </span>
@@ -161,15 +173,18 @@
 
                 <div class="flex items-center justify-between text-sm border-t border-white/5 pt-3">
                   <span class="text-gray-500">Valor pagado</span>
-                  <span class="text-white font-black text-base">$<%= valor_mio %></span>
+                  <span class="text-white font-black text-base">
+                    $<%= formatear(valor_mio) %>
+                  </span>
                 </div>
 
-                
                 <div class="flex items-center justify-between text-sm bg-emerald-500/5 border border-emerald-500/10 rounded-xl px-3 py-2"
                     id={"reembolso-#{numero_mio}"}>
+
                   <span class="text-emerald-400/70 text-xs">Reembolso máx.</span>
+
                   <span class="text-emerald-400 font-black" id={"monto-#{numero_mio}"}>
-                    $<%= valor_mio %>
+                    $<%= formatear(valor_mio) %>
                   </span>
                 </div>
 
@@ -179,6 +194,7 @@
                     onsubmit="return confirm('¿Estás seguro? Se devolverán las fracciones seleccionadas.')">
                 <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
                 <input type="hidden" name="_method" value="delete" />
+
                 <button type="submit"
                   class="w-full rounded-2xl border border-red-500/30 bg-red-500/10 py-3 text-sm font-bold text-red-400 transition hover:bg-red-500/20 hover:border-red-500/50 flex items-center justify-center gap-2">
                   <span>↩️</span>
@@ -208,9 +224,11 @@
           <p class="text-gray-500 mt-3 text-sm">Todos los billetes ya fueron vendidos.</p>
         </div>
       <% else %>
+
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 
           <%= for billete <- @billetes do %>
+
             <% numero             = billete["numero"] %>
             <% fracciones_tomadas = Map.get(billete, "fracciones_tomadas", []) %>
             <% nums_tomados       = Enum.map(fracciones_tomadas, & &1["fraccion"]) %>
@@ -229,6 +247,7 @@
                     <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Billete</p>
                     <h3 class="text-4xl font-black text-white mt-2 tracking-wide">#<%= numero %></h3>
                   </div>
+
                   <div class="w-14 h-14 rounded-2xl bg-[#181b22] border border-[#2a2d36] flex items-center justify-center text-2xl">
                     🎟️
                   </div>
@@ -236,34 +255,56 @@
 
                 <div class="mb-4">
                   <p class="text-xs text-gray-500 mb-2">Fracciones:</p>
+
                   <div class="flex flex-wrap gap-1">
                     <%= for f <- 1..@sorteo.cantidad_fracciones do %>
+
                       <span class={"px-2 py-1 rounded-lg text-xs font-bold " <> if f in nums_tomados, do: "bg-red-500/20 text-red-400 border border-red-500/30", else: "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"}>
                         <%= f %>
                       </span>
+
                     <% end %>
                   </div>
                 </div>
 
                 <div class="rounded-2xl border border-[#272b35] bg-[#14171d] p-4 mb-5">
+
                   <%= if tiene_fracciones do %>
+
                     <div class="flex items-center justify-between text-sm">
                       <span class="text-gray-500">Fracciones restantes</span>
-                      <span class="font-bold text-[#d4a017]"><%= length(fracciones_libres) %> / <%= @sorteo.cantidad_fracciones %></span>
+
+                      <span class="font-bold text-[#d4a017]">
+                        <%= length(fracciones_libres) %> / <%= @sorteo.cantidad_fracciones %>
+                      </span>
                     </div>
+
                     <div class="flex items-center justify-between text-sm mt-2">
                       <span class="text-gray-500">Precio restante</span>
-                      <span class="font-bold text-white">$<%= valor_restante %></span>
+
+                      <span class="font-bold text-white">
+                        $<%= formatear(valor_restante) %>
+                      </span>
                     </div>
+
                   <% else %>
+
                     <div class="flex items-center justify-between text-sm">
                       <span class="text-gray-500">Completo</span>
-                      <span class="font-bold text-white">$<%= @sorteo.valor_billete %></span>
+
+                      <span class="font-bold text-white">
+                        $<%= formatear(@sorteo.valor_billete) %>
+                      </span>
                     </div>
+
                     <div class="flex items-center justify-between text-sm mt-3">
                       <span class="text-gray-500">Fracción</span>
-                      <span class="font-bold text-[#d4a017]">$<%= valor_fraccion %></span>
+
+                      <span class="font-bold text-[#d4a017]">
+                        $<%= formatear(valor_fraccion) %>
+                      </span>
                     </div>
+
                   <% end %>
                 </div>
 
@@ -271,25 +312,38 @@
                   <form action={url_fracciones_restantes} method="post" class="mb-4">
                     <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
                     <input type="hidden" name="numero" value={numero} />
+
                     <button type="submit"
                       class="w-full rounded-2xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] px-4 py-3 text-sm font-black text-black transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,160,23,0.4)]">
-                      Comprar <%= length(fracciones_libres) %> restantes — $<%= valor_restante %>
+
+                      Comprar <%= length(fracciones_libres) %> restantes —
+                      $<%= formatear(valor_restante) %>
+
                     </button>
                   </form>
+
                 <% else %>
+
                   <form action={url_comprar_billete} method="post" class="mb-4">
                     <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
                     <input type="hidden" name="numero" value={numero} />
+
                     <button type="submit"
                       class="w-full rounded-2xl bg-gradient-to-r from-[#9e7714] via-[#d4a017] to-[#f6d06b] px-4 py-3 text-sm font-black text-black transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,160,23,0.4)]">
-                      Comprar completo — $<%= @sorteo.valor_billete %>
+
+                      Comprar completo —
+                      $<%= formatear(@sorteo.valor_billete) %>
+
                     </button>
                   </form>
+
                 <% end %>
 
                 <!-- Comprar múltiples fracciones -->
                 <%= if fracciones_libres != [] do %>
+
                   <details class="group/details">
+
                     <summary class="flex items-center justify-center gap-2 cursor-pointer rounded-2xl border border-[#2b2f39] bg-[#16191f] px-4 py-3 text-sm font-semibold text-gray-300 transition hover:border-[#d4a017]/40 hover:text-white">
                       Comprar fracciones
                       <span class="transition-transform group-open/details:rotate-180">⌄</span>
@@ -298,11 +352,17 @@
                     <% frac_form_id = "form-frac-#{numero}" %>
 
                     <div class="mt-4 space-y-3">
-                      <p class="text-xs text-gray-500">Selecciona las fracciones que quieres comprar:</p>
+
+                      <p class="text-xs text-gray-500">
+                        Selecciona las fracciones que quieres comprar:
+                      </p>
 
                       <div class="flex flex-wrap gap-2">
+
                         <%= for f <- fracciones_libres do %>
+
                           <label class="flex items-center gap-1.5 cursor-pointer group/fcheck">
+
                             <input
                               type="checkbox"
                               form={frac_form_id}
@@ -310,27 +370,38 @@
                               value={f}
                               class="w-4 h-4 rounded accent-yellow-400 cursor-pointer"
                             />
+
                             <span class="px-2 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 group-hover/fcheck:border-[#d4a017]/40 transition">
-                              Frac. <%= f %> — $<%= valor_fraccion %>
+                              Frac. <%= f %> —
+                              $<%= formatear(valor_fraccion) %>
                             </span>
+
                           </label>
+
                         <% end %>
+
                       </div>
 
                       <form id={frac_form_id} action={url_comprar_fraccion} method="post">
                         <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
                         <input type="hidden" name="numero" value={numero} />
+
                         <button type="submit"
                           class="w-full rounded-2xl bg-[#1c212a] border border-[#2b2f39] py-3 text-sm font-bold text-white transition hover:border-[#d4a017]/40 hover:bg-[#222832]">
+
                           Confirmar compra
+
                         </button>
                       </form>
+
                     </div>
                   </details>
+
                 <% end %>
 
               </div>
             </div>
+
           <% end %>
 
         </div>
@@ -338,16 +409,25 @@
     </div>
 
   </div>
+
   <script>
     function recalcularReembolso(numeroBillete) {
       const checkboxes = document.querySelectorAll(
         `input[type="checkbox"][data-billete="${numeroBillete}"]`
       );
-      const valorUnitario = parseInt(checkboxes[0]?.dataset.valor || 0);
-      const seleccionadas = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+      const valorUnitario = parseInt(
+        checkboxes[0]?.dataset.valor || 0
+      );
+
+      const seleccionadas = Array.from(checkboxes)
+        .filter(cb => cb.checked).length;
+
       const total = seleccionadas * valorUnitario;
 
-      document.getElementById(`monto-${numeroBillete}`).textContent = `$${total}`;
+      document.getElementById(`monto-${numeroBillete}`).textContent =
+        `$${total.toLocaleString("es-CO")}`;
     }
   </script>
+
 </div>

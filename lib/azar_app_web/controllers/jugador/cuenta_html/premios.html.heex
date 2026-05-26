@@ -1,54 +1,207 @@
-<div class="min-h-screen bg-[#06070a] px-4 py-10 text-white">
-  <div class="max-w-4xl mx-auto">
+<div class="min-h-screen bg-[#06070a] relative overflow-hidden px-4 py-10 text-white font-[Outfit]">
 
-    <div class="mb-8">
-      <a href="/perfil" class="text-sm text-[#d4a017] hover:text-[#f6d06b] transition">← Volver al perfil</a>
-      <h1 class="text-4xl font-black mt-4">Premios obtenidos</h1>
-      <p class="text-gray-500 mt-2 text-sm">Sorteos en los que fuiste ganador.</p>
+  <!-- Background -->
+  <div class="absolute inset-0 overflow-hidden">
+
+    <!-- Glow -->
+    <div class="absolute top-[-220px] left-[-120px] w-[520px] h-[520px] bg-[#d4a017]/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-[-240px] right-[-120px] w-[520px] h-[520px] bg-yellow-400/10 rounded-full blur-3xl"></div>
+
+    <!-- Grid -->
+    <div
+      class="absolute inset-0 opacity-[0.03]"
+      style="
+        background-image:
+        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+        background-size: 42px 42px;
+      ">
+    </div>
+
+    <!-- Floating -->
+    <div class="absolute top-[8%] left-[4%] text-[120px] font-black text-white/[0.02] rotate-[-10deg] select-none">
+      JACKPOT
+    </div>
+
+    <div class="absolute bottom-[6%] right-[4%] text-[90px] font-black text-[#d4a017]/[0.03] rotate-[8deg] select-none">
+      WINNER
+    </div>
+
+  </div>
+
+  <div class="relative max-w-5xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-10">
+
+      <a
+        href="/perfil"
+        class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#d4a017] transition-all duration-300 hover:-translate-x-1"
+      >
+        ← Volver al perfil
+      </a>
+
+      <div class="mt-6">
+
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#d4a017]/20 bg-[#d4a017]/5 text-[#d4a017] text-xs font-bold uppercase tracking-[0.2em]">
+
+          <div class="w-2 h-2 rounded-full bg-[#d4a017] animate-pulse"></div>
+
+          Premios y ganancias
+
+        </div>
+
+        <h1 class="mt-6 text-5xl md:text-6xl font-black tracking-tight leading-none">
+          Premios obtenidos
+        </h1>
+
+        <p class="text-gray-500 mt-4 text-lg leading-relaxed max-w-2xl">
+          Todos los sorteos donde la suerte estuvo de tu lado.
+        </p>
+
+      </div>
+
     </div>
 
     <!-- Total ganado -->
-    <div class="rounded-2xl bg-[#101217] border border-[#d4a017]/20 p-6 mb-8">
-      <p class="text-xs uppercase tracking-widest text-[#d4a017]/70 mb-1">Total ganado</p>
-      <p class="text-4xl font-black text-[#d4a017]">$<%= @total_ganado %></p>
+    <div class="relative overflow-hidden rounded-[34px] border border-[#d4a017]/20 bg-gradient-to-br from-[#d4a017]/10 via-[#101217] to-[#101217] p-8 mb-10 backdrop-blur-2xl">
+
+      <div class="absolute top-[-40px] right-[-40px] w-56 h-56 rounded-full bg-[#d4a017]/10 blur-3xl"></div>
+
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+
+        <div>
+
+          <p class="text-xs uppercase tracking-[0.25em] text-[#d4a017]/70 font-bold mb-3">
+            Total ganado
+          </p>
+
+          <p class="text-5xl md:text-6xl font-black text-[#f6d06b] tracking-tight">
+            +$<%= Number.Delimit.number_to_delimited(@total_ganado, precision: 0, delimiter: ".") %>
+          </p>
+
+        </div>
+
+        <div class="hidden md:flex w-24 h-24 rounded-[28px] bg-[#d4a017]/10 border border-[#d4a017]/10 items-center justify-center text-5xl">
+          🏆
+        </div>
+
+      </div>
+
     </div>
 
+    <!-- Empty -->
     <%= if @premios == [] do %>
-      <div class="text-center py-20 text-gray-500">
-        <div class="text-6xl mb-4">🏆</div>
-        <p class="text-xl font-bold text-white">Sin premios aún</p>
-        <p class="text-sm mt-2">¡Sigue participando, la suerte puede cambiar!</p>
-        <a href="/" class="inline-block mt-6 px-6 py-3 rounded-xl bg-[#d4a017] text-black font-bold text-sm">
-          Ver sorteos
-        </a>
-      </div>
-    <% else %>
-      <div class="space-y-4">
-        <%= for premio <- @premios do %>
-          <div class="rounded-2xl bg-gradient-to-r from-[#1a1407] to-[#15110a] border border-[#d4a017]/20 p-5 flex items-center justify-between gap-4">
 
-            <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded-xl bg-[#d4a017]/10 border border-[#d4a017]/20 flex items-center justify-center text-xl">
-                🏆
+      <div class="relative overflow-hidden rounded-[36px] border border-dashed border-white/10 bg-[#101217]/70 py-24 text-center backdrop-blur-2xl">
+
+        <div class="absolute inset-0 bg-gradient-to-br from-[#d4a017]/[0.03] to-transparent"></div>
+
+        <div class="relative z-10">
+
+          <div class="text-7xl mb-6">
+            🏆
+          </div>
+
+          <p class="text-3xl font-black text-white tracking-tight">
+            Sin premios aún
+          </p>
+
+          <p class="text-gray-500 mt-3 text-lg">
+            Sigue participando, la próxima puede ser la ganadora.
+          </p>
+
+          <a
+            href="/"
+            class="group relative overflow-hidden inline-flex items-center justify-center mt-8 rounded-2xl bg-gradient-to-r from-[#d4a017] via-[#f6d06b] to-[#d4a017] px-8 py-4 text-sm font-black text-black transition-all duration-300 hover:scale-[1.02]"
+          >
+
+            <div class="absolute inset-0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"></div>
+
+            <span class="relative z-10">
+              Ver sorteos
+            </span>
+
+          </a>
+
+        </div>
+
+      </div>
+
+    <% else %>
+
+      <!-- Premios -->
+      <div class="space-y-5">
+
+        <%= for premio <- @premios do %>
+
+          <div class="group relative overflow-hidden rounded-[30px] border border-[#d4a017]/10 bg-gradient-to-r from-[#1a1407]/90 to-[#15110a]/90 p-6 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1 hover:border-[#d4a017]/30 hover:shadow-[0_15px_50px_rgba(212,160,23,.08)]">
+
+            <!-- Hover glow -->
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-[#d4a017]/[0.05] via-transparent to-transparent"></div>
+
+            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+
+              <!-- Left -->
+              <div class="flex items-center gap-5">
+
+                <div class="w-16 h-16 rounded-3xl bg-gradient-to-br from-[#2a210d] to-[#1c160b] border border-[#d4a017]/20 flex items-center justify-center text-3xl shadow-[0_10px_30px_rgba(0,0,0,.35)]">
+                  🏆
+                </div>
+
+                <div>
+
+                  <p class="text-2xl font-black text-white tracking-tight">
+                    <%= premio.sorteo_nombre %>
+                  </p>
+
+                  <div class="flex flex-wrap items-center gap-2 mt-2 text-sm text-gray-400">
+
+                    <span class="px-3 py-1 rounded-full bg-white/[0.04] border border-white/5">
+                      Billete #<%= premio.numero %>
+                    </span>
+
+                    <%= if premio.tipo == :fraccion do %>
+
+                      <span class="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/10 text-purple-300">
+                        Fracción <%= premio.fraccion %>
+                      </span>
+
+                    <% end %>
+
+                    <span class="px-3 py-1 rounded-full bg-[#d4a017]/10 border border-[#d4a017]/10 text-[#f6d06b]">
+                      <%= premio.premio_nombre %>
+                    </span>
+
+                  </div>
+
+                </div>
+
               </div>
-              <div>
-                <p class="font-bold text-white"><%= premio.sorteo_nombre %></p>
-                <p class="text-sm text-gray-400 mt-0.5">
-                  Billete #<%= premio.numero %>
-                  <%= if premio.tipo == :fraccion do %>
-                    · Fracción <%= premio.fraccion %>
-                  <% end %>
-                  · <%= premio.premio_nombre %>
+
+              <!-- Right -->
+              <div class="text-left lg:text-right">
+
+                <p class="text-4xl font-black text-[#f6d06b] tracking-tight">
+                  +$<%= Number.Delimit.number_to_delimited(premio.valor, precision: 0, delimiter: ".") %>
                 </p>
+
+                <p class="text-xs font-bold uppercase tracking-[0.18em] mt-2 text-[#d4a017]/60">
+                  Premio reclamado
+                </p>
+
               </div>
+
             </div>
 
-            <p class="text-2xl font-black text-[#d4a017]">$<%= premio.valor %></p>
-
           </div>
+
         <% end %>
+
       </div>
+
     <% end %>
 
   </div>
+
 </div>

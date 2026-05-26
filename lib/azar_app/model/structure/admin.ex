@@ -14,7 +14,6 @@ defmodule AzarApp.Model.Structure.Admin do
     }
   end
 
-  
   def to_struct_list(list) when is_list(list) do
     Enum.map(list, &to_struct/1)
   end

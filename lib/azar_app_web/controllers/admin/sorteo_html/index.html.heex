@@ -111,7 +111,7 @@
           <div>
             <h2 class="text-2xl font-bold text-white tracking-tight">Lista de sorteos</h2>
             <p class="text-sm text-gray-500 mt-2">
-              Total registrados: <span class="text-yellow-400 font-semibold"><%= length(@sorteos) %></span>
+              Total registrados: <span class="text-yellow-400 font-semibold"><%= formatear(length(@sorteos)) %></span>
             </p>
           </div>
 
@@ -198,13 +198,13 @@
                     </div>
                   </td>
                   <td class="px-8 py-6 text-gray-300"><%= sorteo.fecha %></td>
-                  <td class="px-8 py-6"><span class="font-bold text-yellow-400">$<%= sorteo.valor_billete %></span></td>
+                  <td class="px-8 py-6"><span class="font-bold text-yellow-400">$<%= formatear(sorteo.valor_billete) %></span></td>
                   <td class="px-8 py-6 text-gray-300"><%= sorteo.cantidad_billetes %></td>
                   <td class="px-8 py-6">
                     <%= if sorteo.premio do %>
                       <div>
                         <p class="font-semibold text-white"><%= sorteo.premio.nombre %></p>
-                        <p class="text-xs text-yellow-400 mt-0.5">$<%= sorteo.premio.valor %></p>
+                        <p class="text-xs text-yellow-400 mt-0.5">$<%= formatear(sorteo.premio.valor) %></p>
                       </div>
                     <% else %>
                       <span class="text-gray-500">Sin premio</span>

@@ -51,7 +51,7 @@
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-xs uppercase tracking-wide text-emerald-300/70 mb-1">Saldo disponible</p>
-                <p class="text-3xl font-black text-emerald-400">$<%= @cliente.saldo %></p>
+                <p class="text-3xl font-black text-emerald-400">$<%= formatear(@cliente.saldo) %></p>
               </div>
               <div class="w-14 h-14 rounded-2xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center text-2xl">
                 💸
