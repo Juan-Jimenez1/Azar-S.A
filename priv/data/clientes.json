@@ -1,80 +1,6 @@
 {
   "clientes": [
-    {
-      "documento": "11267809",
-      "id": "cliente_1778814429536315",
-      "nombre": "Pablito",
-      "notificaciones": [],
-      "password_hash": "594ebf8373a864de5204b43ef4f10360390b3fc006f920332676a7e182971b31",
-      "pregunta_secreta": null,
-      "respuesta_hash": null,
-      "saldo": 60000
-    },
-    {
-      "documento": "8388883",
-      "id": "cliente_1778819321369478",
-      "nombre": "PABLITO",
-      "notificaciones": [],
-      "password_hash": "198676f9e8a91c1e6b81e7b37cd688b737902360fa1355b8de0515dd1f0a4b54",
-      "pregunta_secreta": null,
-      "respuesta_hash": null,
-      "saldo": 0
-    },
-    {
-      "documento": "1234",
-      "id": "cliente_1778979047448390",
-      "nombre": "Carlitos",
-      "notificaciones": [],
-      "password_hash": "fa3cfb3f1bb823aa9501f88f1f95f732ee6fef2c3a48be7f1d38037b216a549f",
-      "pregunta_secreta": null,
-      "respuesta_hash": null,
-      "saldo": 0
-    },
-    {
-      "documento": "123",
-      "id": "cliente_1778979182605843",
-      "nombre": "Juan",
-      "notificaciones": [
-        {
-          "cuerpo": "El billete ganador fue el #1001. Premio: Hola ($99998). Entra a ver tus resultados.",
-          "fecha": "2026-05-21 03:41:09.081000Z",
-          "id": "notif_6",
-          "leida": true,
-          "tipo": "sorteo_realizado",
-          "titulo": "Sorteo \"Ancheta del dia del padre\" finalizado"
-        },
-        {
-          "cuerpo": "Compraste el billete #1004 del sorteo 'Ancheta del dia del padre' por $4000.",
-          "fecha": "2026-05-21 03:38:53.196000Z",
-          "id": "notif_1",
-          "leida": true,
-          "tipo": "compra",
-          "titulo": "Billete comprado"
-        },
-        {
-          "cuerpo": "El número ganador fue el billete #1001. ¡Revisa si ganaste!",
-          "fecha": "2026-05-18 05:55:27.291000Z",
-          "id": "notif_1779083727289775",
-          "leida": true,
-          "tipo": "sorteo_realizado",
-          "titulo": "🎰 Sorteo realizado: s"
-        }
-      ],
-      "password_hash": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
-      "pregunta_secreta": null,
-      "respuesta_hash": null,
-      "saldo": 1037668
-    },
-    {
-      "documento": "10359027",
-      "id": "cliente_1778991953443836",
-      "nombre": "Pablito",
-      "notificaciones": [],
-      "password_hash": "594ebf8373a864de5204b43ef4f10360390b3fc006f920332676a7e182971b31",
-      "pregunta_secreta": null,
-      "respuesta_hash": null,
-      "saldo": 0
-    },
+  
     {
       "documento": "1126905118",
       "id": "cliente_1778992165719139",
@@ -438,26 +364,7 @@
       "respuesta_hash": null,
       "saldo": 60744315
     },
-    {
-      "documento": "25081555",
-      "id": "cliente_1779035426290028",
-      "nombre": "Deina",
-      "notificaciones": [],
-      "password_hash": "2acb99a26fb3d8e390f96c8935c43f6646cb517ba3b2e70409dd1b432de65661",
-      "pregunta_secreta": null,
-      "respuesta_hash": null,
-      "saldo": 100005000
-    },
-    {
-      "documento": "200016666",
-      "id": "cliente_1779038178321601",
-      "nombre": "Sergio",
-      "notificaciones": [],
-      "password_hash": "9bcbdfa04fb53ac0e8baa9938cbfaa27e716db65a0d8bbd68cab18a26050117d",
-      "pregunta_secreta": null,
-      "respuesta_hash": null,
-      "saldo": 6009000
-    },
+ 
     {
       "documento": "1",
       "id": "cliente_1779068061052676",
@@ -679,26 +586,7 @@
       "pregunta_secreta": null,
       "respuesta_hash": null,
       "saldo": 123582
-    },
-    {
-      "documento": "1126",
-      "id": "cliente_11",
-      "nombre": "Alejandra ",
-      "notificaciones": [],
-      "password_hash": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
-      "pregunta_secreta": null,
-      "respuesta_hash": null,
-      "saldo": 0
-    },
-    {
-      "documento": "0",
-      "id": "cliente_77f82888b34fe203",
-      "nombre": "Andres",
-      "notificaciones": [],
-      "password_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
-      "pregunta_secreta": "¿Cuál es el nombre de tu primera mascota?",
-      "respuesta_hash": "9baf3a40312f39849f46dad1040f2f039f1cffa1238c41e9db675315cfad39b6",
-      "saldo": 0
     }
+    
   ]
 }
